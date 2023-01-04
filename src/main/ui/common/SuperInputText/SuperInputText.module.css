@@ -1,0 +1,31 @@
+.input:focus {
+}
+
+.input {
+    width: 100%;
+    height: 40px;
+    font-size: 16px;
+    padding: 0 10px;
+    border-radius: 3px;
+    border: 1px solid black;
+}
+
+.inputWrapper {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.superInput {
+}
+
+.errorInput {
+    border: 1px solid var(--palette-cardinal);
+}
+
+.errorInput:focus {
+    outline: 1px solid var(--palette-cardinal);
+}
+
+.error {
+    color: var(--palette-cardinal);
+}

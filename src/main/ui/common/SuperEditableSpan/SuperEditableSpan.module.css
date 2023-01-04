@@ -1,0 +1,18 @@
+.spanBlock {
+    display: flex;
+    align-items: center;
+    margin-bottom: 22px;
+}
+
+.span {
+    margin-left: 10px;
+    font-weight: 500;
+    color: var(--palette-azure);
+}
+
+.input {
+
+}
+
+.pen {
+}
