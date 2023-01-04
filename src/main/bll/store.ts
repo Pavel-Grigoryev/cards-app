@@ -15,6 +15,5 @@ export const store = legacy_createStore(rootReducer, applyMiddleware(thunkMiddle
 
 export type AppRootStateType = ReturnType<typeof rootReducer>
 
-
 //@ts-ignore
 window.store = store;
