@@ -1,10 +1,8 @@
 
 
-const initialState = {
+const initialState = {}
 
-}
-
-export const authReducer = (state: InitialAuthStateType, action:any):InitialAuthStateType => {
+export const authReducer = (state: InitialAuthStateType = initialState , action:any):InitialAuthStateType => {
     switch (action.type) {
         default:
             return state

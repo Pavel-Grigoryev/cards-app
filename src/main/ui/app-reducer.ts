@@ -3,7 +3,7 @@ const initialState = {
 
 }
 
-export const appReducer = (state: InitialAppStateType, action:any):InitialAppStateType => {
+export const appReducer = (state: InitialAppStateType = initialState, action:any):InitialAppStateType => {
     switch (action.type) {
         default:
             return state
