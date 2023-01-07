@@ -9,6 +9,7 @@ import { PATH } from '../common/routes/routes'
 import { TestPage } from '../common/testPage/TestPage'
 import { Login } from '../features/auth/login/Login'
 import { Profile } from '../features/profile/Profile'
+import {SignUp} from "../features/auth/signUp/SignUp";
 
 const App = () => (
   <div className="App">
@@ -16,7 +17,7 @@ const App = () => (
       <Route path={'/'} element={<Layout />}>
         <Route index element={<Profile />} />
         <Route path={PATH.LOGIN} element={<Login />} />
-        <Route path={PATH.SIGN_UP} element={<h1>SignUp</h1>} />
+        <Route path={PATH.SIGN_UP} element={<SignUp />} />
         <Route path={PATH.PROFILE} element={<h1>Profile</h1>} />
         <Route path={PATH.PASSWORD_RECOVERY} element={<h1>Password recovery</h1>} />
         <Route path={PATH.NEW_PASSWORD} element={<h1>New password</h1>} />
