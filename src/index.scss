@@ -1,0 +1,21 @@
+@import './common/styles/reset.scss';
+@import './common/styles/varaibles';
+
+body {
+  margin: 0;
+
+  font-family: 'Montserrat', sans-serif;
+  //font-family: 'Bebas Neue', cursive; cards font
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  color: $textColor;
+  background-color: $primaryColor;
+}
+
+h1 {
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 32px;
+}
