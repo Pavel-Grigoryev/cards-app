@@ -1,6 +1,6 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { AnyAction, applyMiddleware, combineReducers, legacy_createStore } from 'redux'
-import thunkMiddleware, { ThunkDispatch } from 'redux-thunk'
+import thunkMiddleware, { ThunkAction, ThunkDispatch } from 'redux-thunk'
 
 import { authReducer } from '../features/auth/login/auth-reducer'
 
@@ -19,6 +19,13 @@ export const useAppDispatch = () => useDispatch<AppThunkDispatch>()
 export const useAppSelector: TypedUseSelectorHook<AppRootStateType> = useSelector
 
 //Types
+
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  AppRootStateType,
+  unknown,
+  AnyAction
+>
 
 export type AppRootStateType = ReturnType<typeof rootReducer>
 

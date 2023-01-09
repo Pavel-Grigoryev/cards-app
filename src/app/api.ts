@@ -10,7 +10,7 @@ export const authAPI = {
     return
   },
   me() {
-    return
+    return instance.post('/auth/me')
   },
   logout() {
     return
