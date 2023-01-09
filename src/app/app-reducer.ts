@@ -10,9 +10,13 @@ const initialState = {
 
 export const appReducer = (
   state: InitialAppStateType = initialState,
-  action: AppActionsType
+  action: ActionsType
 ): InitialAppStateType => {
   switch (action.type) {
+    case 'APP/SET-STATUS':
+      return { ...state, status: action.status }
+    case 'APP/SET-ERROR':
+      return { ...state, error: action.error }
     default:
       return state
   }
@@ -20,13 +24,13 @@ export const appReducer = (
 
 //Actions
 
+export const setAppErrorAC = (error: string | null) => ({ type: 'APP/SET-ERROR', error } as const)
 export const setAppStatusAC = (status: RequestStatusType) =>
   ({ type: 'APP/SET-STATUS', status } as const)
-export const setAppErrorAC = (error: null | string) => ({ type: 'APP/SET-ERROR', error } as const)
 export const setAppInitializedAC = (isInitialized: boolean) =>
-  ({ type: 'APP/SET-INITIALIZED', isInitialized } as const)
+    ({ type: 'APP/SET-INITIALIZED', isInitialized } as const)
 
-//Thunks
+    /Thunks
 
 export const initializeAppTC = (): AppThunk => async dispatch => {
   dispatch(setAppStatusAC('loading'))
@@ -43,13 +47,13 @@ export const initializeAppTC = (): AppThunk => async dispatch => {
 }
 
 //Types
+export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 export type InitialAppStateType = typeof initialState
 
-export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 type SetAppInitializedAT = ReturnType<typeof setAppInitializedAC>
 type SetAppStatusAT = ReturnType<typeof setAppStatusAC>
 type SetAppErrorAT = ReturnType<typeof setAppErrorAC>
 
-export type AppActionsType = SetAppStatusAT | SetAppErrorAT | SetAppInitializedAT
+export type ActionsType = SetAppStatusAT | SetAppErrorAT | SetAppInitializedAT

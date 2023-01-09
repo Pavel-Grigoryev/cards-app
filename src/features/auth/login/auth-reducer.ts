@@ -1,15 +1,45 @@
-const initialState = {}
+import { AxiosError } from 'axios'
+import { Dispatch } from 'redux'
+
+import { authAPI, AuthType } from '../../../app/api'
+
+const initialState = {
+  isLoggedIn: false,
+  isInitialized: false,
+}
+
+type InitialStateType = typeof initialState
+
+type ActionsType = ReturnType<typeof loginAC> | ReturnType<typeof initializeAC>
 
 export const authReducer = (
-  state: InitialAuthStateType = initialState,
-  action: any
-): InitialAuthStateType => {
+  state: InitialStateType = initialState,
+  action: ActionsType
+): InitialStateType => {
   switch (action.type) {
+    case 'LOGIN':
+      return { ...state, isLoggedIn: action.value }
+    case 'INITIALIZE':
+      return { ...state, isInitialized: action.value }
     default:
       return state
   }
 }
+// actions
+export const loginAC = (value: boolean) => ({ type: 'LOGIN', value } as const)
 
-//Types
+export const initializeAC = (value: boolean) => ({ type: 'INITIALIZE', value } as const)
 
-export type InitialAuthStateType = typeof initialState
+//thunks
+export const loginTC = (data: AuthType) => (dispatch: Dispatch<ActionsType>) => {
+  authAPI
+    .login(data)
+    .then(res => {
+      console.log(res)
+    })
+    .catch((err: AxiosError<{ error: string }>) => {
+      const error = err.response ? err.response.data.error : err.message
+
+      console.log('error: ', error)
+    })
+}
