@@ -8,8 +8,8 @@ import { Layout } from '../common/layout/Layout'
 import { PATH } from '../common/routes/routes'
 import { TestPage } from '../common/testPage/TestPage'
 import { Login } from '../features/auth/login/Login'
+import { SignUp } from '../features/auth/signUp/SignUp'
 import { Profile } from '../features/profile/Profile'
-import {SignUp} from "../features/auth/signUp/SignUp";
 
 const App = () => (
   <div className="App">
