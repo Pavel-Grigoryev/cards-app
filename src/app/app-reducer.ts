@@ -1,4 +1,4 @@
-import { loginAC } from '../features/auth/login/auth-reducer'
+import { setLoginAC } from '../features/auth/login/auth-reducer'
 import { setProfileAC } from '../features/profile/profile-reducer'
 
 import { authAPI } from './api'
@@ -39,7 +39,7 @@ export const initializeAppTC = (): AppThunk => async dispatch => {
   try {
     const res = await authAPI.me()
 
-    dispatch(loginAC(true))
+    dispatch(setLoginAC(true))
     dispatch(setProfileAC(res.data))
     dispatch(setAppStatusAC('succeeded'))
   } catch (e) {
