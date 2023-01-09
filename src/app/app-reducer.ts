@@ -1,11 +1,13 @@
+import { loginAC } from '../features/auth/login/auth-reducer'
+import { setProfileAC } from '../features/profile/profile-reducer'
+
 import { authAPI } from './api'
 import { AppThunk } from './store'
 
 const initialState = {
   status: 'idle' as RequestStatusType,
   error: null as null | string,
-  isInitialized: false,
-  isAuth: false,
+  isInit: false,
 }
 
 export const appReducer = (
@@ -27,17 +29,18 @@ export const appReducer = (
 export const setAppErrorAC = (error: string | null) => ({ type: 'APP/SET-ERROR', error } as const)
 export const setAppStatusAC = (status: RequestStatusType) =>
   ({ type: 'APP/SET-STATUS', status } as const)
-export const setAppInitializedAC = (isInitialized: boolean) =>
-    ({ type: 'APP/SET-INITIALIZED', isInitialized } as const)
+export const setAppInitializedAC = (isInit: boolean) =>
+  ({ type: 'APP/SET-INITIALIZED', isInit } as const)
 
-    /Thunks
+//Thunk
 
 export const initializeAppTC = (): AppThunk => async dispatch => {
   dispatch(setAppStatusAC('loading'))
   try {
     const res = await authAPI.me()
 
-    // dispatch(setIsLoggedInAC(true))
+    dispatch(loginAC(true))
+    dispatch(setProfileAC(res.data))
     dispatch(setAppStatusAC('succeeded'))
   } catch (e) {
     console.log(e)
@@ -50,7 +53,6 @@ export const initializeAppTC = (): AppThunk => async dispatch => {
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 export type InitialAppStateType = typeof initialState
-
 
 type SetAppInitializedAT = ReturnType<typeof setAppInitializedAC>
 type SetAppStatusAT = ReturnType<typeof setAppStatusAC>
