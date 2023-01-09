@@ -18,7 +18,7 @@ import { useFormik } from 'formik'
 
 import { useAppDispatch, useAppSelector } from '../../../app/store'
 
-import { loginTC } from './auth-reducer'
+import { signInTC } from './auth-reducer'
 import style from './Login.module.scss'
 
 type FormikErrorType = {
@@ -63,7 +63,7 @@ export const Login = () => {
     },
 
     onSubmit: values => {
-      dispatch(loginTC(values))
+      dispatch(signInTC(values))
       formik.resetForm()
     },
   })

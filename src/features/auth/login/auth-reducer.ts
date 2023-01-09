@@ -10,7 +10,7 @@ const initialState = {
 
 type InitialStateType = typeof initialState
 
-type ActionsType = ReturnType<typeof loginAC> | ReturnType<typeof initializeAC>
+type ActionsType = ReturnType<typeof setLoginAC> | ReturnType<typeof setInitializeAC>
 
 export const authReducer = (
   state: InitialStateType = initialState,
@@ -26,12 +26,12 @@ export const authReducer = (
   }
 }
 // actions
-export const loginAC = (value: boolean) => ({ type: 'LOGIN', value } as const)
+export const setLoginAC = (value: boolean) => ({ type: 'LOGIN', value } as const)
 
-export const initializeAC = (value: boolean) => ({ type: 'INITIALIZE', value } as const)
+export const setInitializeAC = (value: boolean) => ({ type: 'INITIALIZE', value } as const)
 
 //thunks
-export const loginTC = (data: AuthType) => (dispatch: Dispatch<ActionsType>) => {
+export const signInTC = (data: AuthType) => (dispatch: Dispatch<ActionsType>) => {
   authAPI
     .login(data)
     .then(res => {
