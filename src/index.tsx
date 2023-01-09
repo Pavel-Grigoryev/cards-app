@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom/client'
 import './index.scss'
 import { Provider } from 'react-redux'
 import { HashRouter } from 'react-router-dom'
+// eslint-disable-next-line import/order
+import { ThemeProvider, createTheme } from '@mui/material/styles'
 
 import App from './app/App'
 import { store } from './app/store'
@@ -11,13 +13,26 @@ import reportWebVitals from './reportWebVitals'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#fff',
+    },
+    secondary: {
+      main: '#366eff',
+    },
+  },
+})
+
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <HashRouter>
-        <App />
-      </HashRouter>
-    </Provider>
+    <ThemeProvider theme={theme}>
+      <Provider store={store}>
+        <HashRouter>
+          <App />
+        </HashRouter>
+      </Provider>
+    </ThemeProvider>
   </React.StrictMode>
 )
 
