@@ -1,5 +1,6 @@
 import React from 'react'
 
+import Container from '@mui/material/Container'
 import { Outlet } from 'react-router-dom'
 
 import { Header } from '../header/Header'
@@ -9,7 +10,14 @@ export const Layout = () => {
     <>
       <Header />
       <main>
-        <Outlet />
+        <Container
+          style={{
+            maxWidth: '1056px',
+            paddingTop: '60px',
+          }}
+        >
+          <Outlet />
+        </Container>
       </main>
     </>
   )
