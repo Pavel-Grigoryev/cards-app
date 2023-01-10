@@ -15,8 +15,11 @@ export const authAPI = {
   logout() {
     return instance.delete<ResponseType>('/auth/login')
   },
-  signup() {
-    return
+  signup(data: AuthType) {
+    return instance.post<AuthType, AxiosResponse<ResponseType>>('/auth/register', {
+      email: data.email,
+      password: data.password,
+    })
   },
 }
 
