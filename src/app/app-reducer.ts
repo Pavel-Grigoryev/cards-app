@@ -1,4 +1,4 @@
-import { setLoginAC } from '../features/auth/login/auth-reducer'
+import { setLoginAC } from '../features/auth/auth-reducer'
 import { setProfileAC } from '../features/profile/profile-reducer'
 
 import { authAPI } from './api'
