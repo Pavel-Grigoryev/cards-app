@@ -48,6 +48,7 @@ export const initializeAppTC = (): AppThunk => async dispatch => {
     console.log(e)
   } finally {
     dispatch(setAppInitializedAC(true))
+    dispatch(setAppStatusAC('idle'))
   }
 }
 
