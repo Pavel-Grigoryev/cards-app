@@ -3,9 +3,11 @@ import React from 'react'
 import AppBar from '@mui/material/AppBar'
 import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
+import LinearProgress from '@mui/material/LinearProgress'
 import Toolbar from '@mui/material/Toolbar'
 import { useNavigate } from 'react-router-dom'
 
+import { RequestStatusType } from '../../app/app-reducer'
 import { useAppSelector } from '../../app/store'
 import logo from '../../assets/images/logo.png'
 import { ProfileType } from '../../features/profile/profile-reducer'
@@ -18,32 +20,30 @@ export const Header = () => {
 
   const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
 
+  const status = useAppSelector<RequestStatusType>(state => state.app.status)
+
   const profile = useAppSelector<ProfileType | null>(state => state.userProfile.profile)
 
   return (
     <>
-      <AppBar position="fixed" style={{ height: '60px' }}>
+      <AppBar className={s.header} position="fixed">
         <Container
           style={{
             maxWidth: '1056px',
           }}
         >
-          <Toolbar
-            style={{
-              padding: '0',
-              justifyContent: 'space-between',
-            }}
-          >
+          <Toolbar className={s.toolbar}>
             <img className={s.image} src={logo} alt="Logo image" />
-            <div className={s.butCont}>
-              {isLoggedIn ? (
-                <div className={s.profileBlock}>
-                  <p>{profile?.name}</p>
-                  <div>
-                    <img src={profile?.avatar} alt="" />
-                  </div>
+
+            {isLoggedIn ? (
+              <div className={s.profileBlock}>
+                <p className={s.profileName}>{profile?.name}</p>
+                <div className={s.profileImgWrap}>
+                  <img className={s.profileImg} src={profile?.avatar} alt="" />
                 </div>
-              ) : (
+              </div>
+            ) : (
+              <div className={s.butCont}>
                 <Button
                   color="secondary"
                   variant="contained"
@@ -60,10 +60,20 @@ export const Header = () => {
                 >
                   Sing in
                 </Button>
-              )}
-            </div>
+              </div>
+            )}
           </Toolbar>
         </Container>
+        {status === 'loading' && (
+          <LinearProgress
+            color={'secondary'}
+            style={{
+              position: 'absolute',
+              bottom: '0',
+              width: '100%',
+            }}
+          />
+        )}
       </AppBar>
     </>
   )
