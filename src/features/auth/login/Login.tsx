@@ -176,7 +176,7 @@ export const Login = () => {
               >
                 Sign in
               </Button>
-              <div style={{ margin: '10px 0 -25px 0' }}>No account?</div>
+              <div style={{ margin: '10px 0 -10px 0' }}>No account?</div>
 
               <a
                 href={'#/signUp'}
