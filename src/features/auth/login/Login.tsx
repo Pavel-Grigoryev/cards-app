@@ -15,11 +15,13 @@ import FormGroup from '@mui/material/FormGroup'
 import FormLabel from '@mui/material/FormLabel'
 import Grid from '@mui/material/Grid'
 import { useFormik } from 'formik'
+import { Navigate } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../../app/store'
+import { PATH } from '../../../common/routes/routes'
 import { signInTC } from '../auth-reducer'
 
-import style from './Login.module.scss'
+import styles from './Login.module.scss'
 
 type FormikErrorType = {
   email?: string
@@ -68,31 +70,55 @@ export const Login = () => {
     },
   })
 
-  // if(isLoggedIn) {
-  //   return <Navigate to={'/'}/>
-  // }
+  if (isLoggedIn) {
+    return <Navigate to={PATH.PROFILE} />
+  }
 
   return (
-    <div>
-      <Grid container justifyContent={'center'}>
-        <Grid item justifyContent={'center'} className={style.loginContainer}>
+    <Grid container justifyContent={'center'} alignItems={'center'}>
+      <Grid item justifyContent={'center'}>
+        <FormControl
+          style={{
+            justifyContent: 'space-evenly',
+            marginTop: '30%',
+            padding: '30px 0',
+          }}
+          className={styles.loginContainer}
+        >
           <FormLabel>
             <h1 style={{ color: '#000000' }}>Sign in</h1>
           </FormLabel>
           <form onSubmit={formik.handleSubmit}>
-            <FormGroup>
-              <FormControl sx={{ m: 1, width: '40ch' }} variant="standard">
-                <InputLabel>Email</InputLabel>
-                <Input id="standard-basic" type={'text'} {...formik.getFieldProps('email')} />
+            <FormGroup
+              style={{
+                justifyContent: 'space-around',
+                alignItems: 'center',
+                height: '400px',
+              }}
+            >
+              <FormControl sx={{ width: '80%' }} variant="standard">
+                <InputLabel color={'secondary'}>Email</InputLabel>
+                <Input
+                  id="standard-basic"
+                  type={'text'}
+                  color={'secondary'}
+                  {...formik.getFieldProps('email')}
+                />
                 {formik.touched.email && formik.errors.email && (
-                  <div style={{ color: 'red' }}>{formik.errors.email}</div>
+                  <div style={{ color: 'red', margin: '10px 0', textAlign: 'left' }}>
+                    {formik.errors.email}
+                  </div>
                 )}
               </FormControl>
-              <FormControl sx={{ m: 1, width: '40ch' }} variant="standard">
-                <InputLabel>Password</InputLabel>
+              <FormControl
+                sx={{ width: '80%', marginBottom: '-30px', marginTop: '-30px' }}
+                variant="standard"
+              >
+                <InputLabel color={'secondary'}>Password</InputLabel>
                 <Input
                   id="standard-adornment-password"
                   type={showPassword ? 'text' : 'password'}
+                  color={'secondary'}
                   {...formik.getFieldProps('password')}
                   endAdornment={
                     <InputAdornment position="end">
@@ -107,44 +133,67 @@ export const Login = () => {
                   }
                 />
                 {formik.touched.password && formik.errors.password && (
-                  <div style={{ color: 'red' }}>{formik.errors.password}</div>
+                  <div style={{ color: 'red', margin: '10px 0', textAlign: 'left' }}>
+                    {formik.errors.password}
+                  </div>
                 )}
               </FormControl>
               <FormControlLabel
+                style={{ alignSelf: 'flex-start', marginLeft: '30px' }}
                 label={'Remember me'}
                 control={
                   <Checkbox
+                    color={'secondary'}
                     {...formik.getFieldProps('RememberMe')}
                     checked={formik.values.RememberMe}
                   />
                 }
               />
-              <div style={{ margin: '25px' }}>
+              <div
+                style={{
+                  color: '#000000',
+                  alignSelf: 'flex-end',
+                  marginRight: '30px',
+                  fontSize: '14px',
+                  marginTop: '-25px',
+                  marginBottom: '25px',
+                }}
+              >
                 <a href={'#/passRecovery'}>Forgot Password?</a>
               </div>
-              <div>
-                <Button
-                  type={'submit'}
-                  variant={'contained'}
-                  color={'secondary'}
-                  fullWidth
-                  style={{
-                    fontSize: '16px',
-                    textTransform: 'capitalize',
-                    borderRadius: '9999px',
-                    padding: '4px 16px',
-                    width: '80%',
-                  }}
-                >
-                  Sign in
-                </Button>
-              </div>
-              <div style={{ margin: '30px 0 10px 0' }}>Already have an account?</div>
-              <a href={'#/signUp'}>Sign Up</a>
+              <Button
+                type={'submit'}
+                variant={'contained'}
+                color={'secondary'}
+                fullWidth
+                style={{
+                  fontSize: '16px',
+                  textTransform: 'capitalize',
+                  borderRadius: '9999px',
+                  padding: '4px 16px',
+                  width: '80%',
+                }}
+              >
+                Sign in
+              </Button>
+              <div style={{ margin: '10px 0 -25px 0' }}>No account?</div>
+
+              <a
+                href={'#/signUp'}
+                color={'secondary'}
+                style={{
+                  textDecoration: 'underline',
+                  color: '#366eff',
+                  fontSize: '16px',
+                  marginBottom: '-20px',
+                }}
+              >
+                Sign Up
+              </a>
             </FormGroup>
           </form>
-        </Grid>
+        </FormControl>
       </Grid>
-    </div>
+    </Grid>
   )
 }

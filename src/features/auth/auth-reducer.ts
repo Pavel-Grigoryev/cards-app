@@ -2,6 +2,7 @@ import { AxiosError } from 'axios'
 import { Dispatch } from 'redux'
 
 import { authAPI, AuthType } from '../../app/api'
+import { setProfileAC } from '../profile/profile-reducer'
 
 const initialState = {
   isLoggedIn: false,
@@ -10,7 +11,7 @@ const initialState = {
 
 type InitialStateType = typeof initialState
 
-type ActionsType = ReturnType<typeof setLoginAC> | ReturnType<typeof setInitializeAC>
+type ActionsType = ReturnType<typeof setLoginAC> | ReturnType<typeof setProfileAC>
 
 export const authReducer = (
   state: InitialStateType = initialState,
@@ -19,8 +20,6 @@ export const authReducer = (
   switch (action.type) {
     case 'LOGIN':
       return { ...state, isLoggedIn: action.value }
-    case 'INITIALIZE':
-      return { ...state, isInitialized: action.value }
     default:
       return state
   }
@@ -28,14 +27,13 @@ export const authReducer = (
 // actions
 export const setLoginAC = (value: boolean) => ({ type: 'LOGIN', value } as const)
 
-export const setInitializeAC = (value: boolean) => ({ type: 'INITIALIZE', value } as const)
-
 //thunks
 export const signInTC = (data: AuthType) => (dispatch: Dispatch<ActionsType>) => {
   authAPI
     .login(data)
     .then(res => {
-      console.log(res)
+      dispatch(setProfileAC(res.data))
+      dispatch(setLoginAC(true))
     })
     .catch((err: AxiosError<{ error: string }>) => {
       const error = err.response ? err.response.data.error : err.message
