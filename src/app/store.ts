@@ -2,7 +2,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { AnyAction, applyMiddleware, combineReducers, legacy_createStore } from 'redux'
 import thunkMiddleware, { ThunkAction, ThunkDispatch } from 'redux-thunk'
 
-import { authReducer } from '../features/auth/login/auth-reducer'
+import { authReducer } from '../features/auth/auth-reducer'
 import { profileReducer } from '../features/profile/profile-reducer'
 
 import { appReducer } from './app-reducer'
