@@ -26,24 +26,13 @@ export const Header = () => {
 
   return (
     <>
-      <AppBar
-        position="fixed"
-        style={{
-          height: '64px',
-        }}
-      >
+      <AppBar className={s.header} position="fixed">
         <Container
           style={{
             maxWidth: '1056px',
           }}
         >
-          <Toolbar
-            style={{
-              padding: '0',
-              justifyContent: 'space-between',
-              flexWrap: 'wrap',
-            }}
-          >
+          <Toolbar className={s.toolbar}>
             <img className={s.image} src={logo} alt="Logo image" />
 
             {isLoggedIn ? (

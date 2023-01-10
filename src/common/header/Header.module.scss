@@ -1,26 +1,53 @@
 @import '../styles/varaibles';
 
+.header {
+  height: 64px;
+
+  @media screen and (max-width: 500px) {
+    height: auto;
+  }
+}
+
+.toolbar {
+  padding: 0;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  min-height: 64px !important;
+
+  @media screen and (max-width: 500px) {
+    justify-content: right;
+  }
+}
+
 .image {
   width: 210px;
-  margin-right: 12px;
 
-  @media screen and (max-width: 470px) {
+  @media screen and (max-width: 500px) {
+    margin: 5px 0;
     width: 170px;
   }
 
 }
 
 .butCont {
+  margin-left: 12px;
   width: 113px;
+  @media screen and (max-width: 470px) {
+    margin: 5px 0 5px 12px;
+  }
 }
 
 .profileBlock {
+  margin-left: 12px;
   display: flex;
   align-items: center;
+  @media screen and (max-width: 470px) {
+    margin: 5px 0 5px 12px;
+  }
 }
 
 .profileName {
-  margin-right:12px;
+  margin-right: 12px;
   font-weight: 500;
   font-size: 16px;
   line-height: 24px;

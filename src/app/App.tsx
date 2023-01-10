@@ -39,7 +39,7 @@ const App = () => {
           <Route index element={<Profile />} />
           <Route path={PATH.LOGIN} element={<Login />} />
           <Route path={PATH.SIGN_UP} element={<SignUp />} />
-          <Route path={PATH.PROFILE} element={<h1>Profile</h1>} />
+          <Route path={PATH.PROFILE} element={<Profile />} />
           <Route path={PATH.PASSWORD_RECOVERY} element={<h1>Password recovery</h1>} />
           <Route path={PATH.NEW_PASSWORD} element={<h1>New password</h1>} />
           <Route path={PATH.NOT_FOUND} element={<Error404 />} />
