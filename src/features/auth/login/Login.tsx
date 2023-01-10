@@ -17,8 +17,8 @@ import Grid from '@mui/material/Grid'
 import { useFormik } from 'formik'
 
 import { useAppDispatch, useAppSelector } from '../../../app/store'
+import { signInTC } from '../auth-reducer'
 
-import { signInTC } from './auth-reducer'
 import style from './Login.module.scss'
 
 type FormikErrorType = {
