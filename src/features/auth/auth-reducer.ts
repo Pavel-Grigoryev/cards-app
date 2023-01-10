@@ -2,6 +2,7 @@ import { AxiosError } from 'axios'
 import { Dispatch } from 'redux'
 
 import { authAPI, AuthType } from '../../app/api'
+import { setAppErrorAC, setAppStatusAC } from '../../app/app-reducer'
 import { setProfileAC } from '../profile/profile-reducer'
 
 const initialState = {
@@ -11,7 +12,11 @@ const initialState = {
 
 type InitialStateType = typeof initialState
 
-type ActionsType = ReturnType<typeof setLoginAC> | ReturnType<typeof setProfileAC>
+type ActionsType =
+  | ReturnType<typeof setLoginAC>
+  | ReturnType<typeof setProfileAC>
+  | ReturnType<typeof setAppStatusAC>
+  | ReturnType<typeof setAppErrorAC>
 
 export const authReducer = (
   state: InitialStateType = initialState,
@@ -29,16 +34,19 @@ export const setLoginAC = (value: boolean) => ({ type: 'LOGIN', value } as const
 
 //thunks
 export const signInTC = (data: AuthType) => (dispatch: Dispatch<ActionsType>) => {
+  dispatch(setAppStatusAC('loading'))
   authAPI
     .login(data)
     .then(res => {
       dispatch(setProfileAC(res.data))
       dispatch(setLoginAC(true))
+      dispatch(setAppStatusAC('succeeded'))
     })
     .catch((err: AxiosError<{ error: string }>) => {
       const error = err.response ? err.response.data.error : err.message
 
-      console.log('error: ', error)
+      dispatch(setAppStatusAC('failed'))
+      dispatch(setAppErrorAC(error))
     })
 }
 
