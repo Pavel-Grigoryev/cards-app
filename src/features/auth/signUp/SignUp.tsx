@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import {
@@ -13,9 +13,11 @@ import {
 } from '@mui/material'
 import FormControl from '@mui/material/FormControl'
 import { useFormik } from 'formik'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
+import { useAppDispatch } from '../../../app/store'
 import { PATH } from '../../../common/routes/routes'
+import { signUpTC } from '../auth-reducer'
 
 import styles from './SignUp.module.scss'
 
@@ -26,7 +28,10 @@ type ErrorsType = {
 }
 
 export const SignUp = () => {
-  const navigate = useNavigate()
+  const [showPassword, setShowPassword] = useState(false)
+
+  const handleShowPassword = () => setShowPassword(show => !show)
+  const dispatch = useAppDispatch()
 
   const formik = useFormik({
     initialValues: {
@@ -55,7 +60,8 @@ export const SignUp = () => {
       return errors
     },
     onSubmit: values => {
-      console.log(values)
+      dispatch(signUpTC(values))
+      formik.resetForm()
     },
   })
 
@@ -70,7 +76,7 @@ export const SignUp = () => {
           }}
           className={styles.item}
         >
-          <FormLabel>
+          <FormLabel style={{ color: '#000000' }}>
             <h1>Sign Up</h1>
           </FormLabel>
           <form onSubmit={formik.handleSubmit}>
@@ -82,61 +88,76 @@ export const SignUp = () => {
               }}
             >
               <FormControl sx={{ width: '80%' }} variant="standard">
-                <InputLabel htmlFor="email-handle-input">Email</InputLabel>
+                <InputLabel color={'secondary'} htmlFor="email-handle-input">
+                  Email
+                </InputLabel>
                 <Input
                   id="email-handle-input"
                   type={'text'}
+                  color={'secondary'}
                   error={formik.touched.email && !!formik.errors.email}
                   {...formik.getFieldProps('email')}
                 />
                 {formik.touched.email && formik.errors.email && (
-                  <div style={{ color: 'red' }}>{formik.errors.email}</div>
+                  <div style={{ color: 'red', margin: '10px 0', textAlign: 'left' }}>
+                    {formik.errors.email}
+                  </div>
                 )}
               </FormControl>
               <FormControl sx={{ width: '80%' }} variant="standard">
-                <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
+                <InputLabel color={'secondary'} htmlFor="standard-adornment-password">
+                  Password
+                </InputLabel>
                 <Input
                   id="standard-adornment-password"
-                  type={'password'}
+                  type={showPassword ? 'text' : 'password'}
+                  color={'secondary'}
                   error={formik.touched.password && !!formik.errors.password}
                   {...formik.getFieldProps('password')}
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton
                         aria-label="toggle password visibility"
-                        onClick={() => {}}
+                        onClick={handleShowPassword}
                         onMouseDown={() => {}}
                       >
-                        {<VisibilityOff />}
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
                       </IconButton>
                     </InputAdornment>
                   }
                 />
                 {formik.touched.password && formik.errors.password && (
-                  <div style={{ color: 'red' }}>{formik.errors.password}</div>
+                  <div style={{ color: 'red', margin: '10px 0', textAlign: 'left' }}>
+                    {formik.errors.password}
+                  </div>
                 )}
               </FormControl>
               <FormControl sx={{ width: '80%' }} variant="standard">
-                <InputLabel htmlFor="confirm-password">Confirm password</InputLabel>
+                <InputLabel color={'secondary'} htmlFor="confirm-password">
+                  Confirm password
+                </InputLabel>
                 <Input
                   id="confirm-password"
-                  type={'password'}
+                  type={showPassword ? 'text' : 'password'}
+                  color={'secondary'}
                   error={formik.touched.confirmPassword && !!formik.errors.confirmPassword}
                   {...formik.getFieldProps('confirmPassword')}
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton
                         aria-label="toggle password visibility"
-                        onClick={() => {}}
+                        onClick={handleShowPassword}
                         onMouseDown={() => {}}
                       >
-                        {<VisibilityOff />}
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
                       </IconButton>
                     </InputAdornment>
                   }
                 />
                 {formik.touched.confirmPassword && formik.errors.confirmPassword && (
-                  <div style={{ color: 'red' }}>{formik.errors.confirmPassword}</div>
+                  <div style={{ color: 'red', margin: '10px 0', textAlign: 'left' }}>
+                    {formik.errors.confirmPassword}
+                  </div>
                 )}
               </FormControl>
               <Button
