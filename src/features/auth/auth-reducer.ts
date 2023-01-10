@@ -61,6 +61,7 @@ export const signUpTC = (data: AuthType) => (dispatch: Dispatch<ActionsType>) =>
     .catch((err: AxiosError<{ error: string }>) => {
       const error = err.response ? err.response.data.error : err.message
 
-      console.log('error: ', error)
+      dispatch(setAppStatusAC('failed'))
+      dispatch(setAppErrorAC(error))
     })
 }
