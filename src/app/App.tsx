@@ -5,6 +5,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 import { Navigate, Route, Routes } from 'react-router-dom'
 
 import { Error404 } from '../common/error404/Error404'
+import { ErrorSnackbar } from '../common/ErrorSnackbar/ErrorSnackbar'
 import { Layout } from '../common/layout/Layout'
 import { PATH } from '../common/routes/routes'
 import { TestPage } from '../common/testPage/TestPage'
@@ -34,6 +35,7 @@ const App = () => {
 
   return (
     <div className="App">
+      <ErrorSnackbar />
       <Routes>
         <Route path={'/'} element={<Layout />}>
           <Route index element={<Profile />} />
