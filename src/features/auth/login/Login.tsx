@@ -57,7 +57,7 @@ export const Login = () => {
       }
       if (!values.password) {
         errors.password = 'Required'
-      } else if (values.password.length < 3) {
+      } else if (values.password.length < 7) {
         errors.password = 'Password length should be more 3 symbol'
       }
 
@@ -151,15 +151,15 @@ export const Login = () => {
               />
               <div
                 style={{
-                  color: '#000000',
                   alignSelf: 'flex-end',
                   marginRight: '30px',
-                  fontSize: '14px',
                   marginTop: '-25px',
                   marginBottom: '25px',
                 }}
               >
-                <a href={'#/passRecovery'}>Forgot Password?</a>
+                <a href={'#/passRecovery'} style={{ fontWeight: 'bold', fontSize: '14px' }}>
+                  Forgot Password?
+                </a>
               </div>
               <Button
                 type={'submit'}
@@ -186,6 +186,7 @@ export const Login = () => {
                   color: '#366eff',
                   fontSize: '16px',
                   marginBottom: '-20px',
+                  fontWeight: 'bold',
                 }}
               >
                 Sign Up
