@@ -10,6 +10,7 @@ import { Layout } from '../common/layout/Layout'
 import { PATH } from '../common/routes/routes'
 import { TestPage } from '../common/testPage/TestPage'
 import { Login } from '../features/auth/login/Login'
+import { PasswordRecovery } from '../features/auth/passwordRecovery/PasswordRecovery'
 import { SignUp } from '../features/auth/signUp/SignUp'
 import { Profile } from '../features/profile/Profile'
 
@@ -42,7 +43,7 @@ const App = () => {
           <Route path={PATH.LOGIN} element={<Login />} />
           <Route path={PATH.SIGN_UP} element={<SignUp />} />
           <Route path={PATH.PROFILE} element={<Profile />} />
-          <Route path={PATH.PASSWORD_RECOVERY} element={<h1>Password recovery</h1>} />
+          <Route path={PATH.PASSWORD_RECOVERY} element={<PasswordRecovery />} />
           <Route path={PATH.NEW_PASSWORD} element={<h1>New password</h1>} />
           <Route path={PATH.NOT_FOUND} element={<Error404 />} />
           <Route path={'*'} element={<Navigate to={PATH.NOT_FOUND} />} />
