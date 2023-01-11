@@ -21,6 +21,9 @@ export const authAPI = {
       password: data.password,
     })
   },
+  forgot(data: ForgotType) {
+    return instance.post('https://neko-back.herokuapp.com/2.0/auth/forgot', data)
+  },
 }
 
 export const cardsAPI = {}
@@ -47,4 +50,8 @@ export type ResponseType<D = {}> = {
   rememberMe: boolean
 
   error?: string
+}
+
+export type ForgotType = {
+  email: string
 }
