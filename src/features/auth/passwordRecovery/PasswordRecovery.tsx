@@ -1,6 +1,5 @@
 import React from 'react'
 
-import { Button, Input, InputLabel } from '@mui/material'
 import FormControl from '@mui/material/FormControl'
 import FormGroup from '@mui/material/FormGroup'
 import FormLabel from '@mui/material/FormLabel'
@@ -9,6 +8,8 @@ import { useFormik } from 'formik'
 
 import { useAppDispatch, useAppSelector } from '../../../app/store'
 import sendMessagePic from '../../../assets/images/sendMessage.png'
+import { SuperButton } from '../../../common/components/SuperButton'
+import { SuperEmailInput } from '../../../common/components/SuperInputs'
 import { checkEmailAC, passwordRecoveryTC, saveEmailAC } from '../auth-reducer'
 import styles from '../login/Login.module.scss'
 
@@ -52,6 +53,7 @@ export const PasswordRecovery = () => {
               justifyContent: 'space-evenly',
               marginTop: '30%',
               padding: '30px 0',
+              minHeight: '408px',
             }}
             className={styles.loginContainer}
           >
@@ -68,26 +70,14 @@ export const PasswordRecovery = () => {
             <div style={{ marginBottom: '20px' }}>
               We’ve sent an Email with instructions to {saveEmail}
             </div>
-            <Button
+            <SuperButton
+              href={'#/login'}
+              title={'Back to login'}
               onClick={() => {
                 dispatch(checkEmailAC(false))
                 dispatch(saveEmailAC(''))
               }}
-              href={'#/login'}
-              type={'submit'}
-              variant={'contained'}
-              color={'secondary'}
-              fullWidth
-              style={{
-                fontSize: '16px',
-                textTransform: 'capitalize',
-                borderRadius: '9999px',
-                width: '80%',
-                marginTop: '20px',
-              }}
-            >
-              Back to login
-            </Button>
+            />
           </div>
         </Grid>
       </Grid>
@@ -102,6 +92,7 @@ export const PasswordRecovery = () => {
             justifyContent: 'space-evenly',
             marginTop: '30%',
             padding: '30px 0',
+            minHeight: '456px',
           }}
           className={styles.loginContainer}
         >
@@ -116,38 +107,16 @@ export const PasswordRecovery = () => {
                 height: '300px',
               }}
             >
-              <FormControl sx={{ width: '80%' }} variant="standard">
-                <InputLabel color={'secondary'}>Email</InputLabel>
-                <Input
-                  id="standard-basic"
-                  type={'text'}
-                  color={'secondary'}
-                  {...formik.getFieldProps('email')}
-                />
-                {formik.touched.email && formik.errors.email && (
-                  <div style={{ color: 'red', margin: '10px 0', textAlign: 'left' }}>
-                    {formik.errors.email}
-                  </div>
-                )}
-              </FormControl>
+              <SuperEmailInput
+                formikTouched={formik.touched.email}
+                formikErrors={formik.errors.email}
+                formikGetFieldProps={{ ...formik.getFieldProps('email') }}
+              />
               <div style={{ margin: '-30px 10%', textAlign: 'left', lineHeight: '20px' }}>
                 Enter your email address and we will send you further instructions{' '}
               </div>
-              <Button
-                type={'submit'}
-                variant={'contained'}
-                color={'secondary'}
-                fullWidth
-                style={{
-                  fontSize: '16px',
-                  textTransform: 'capitalize',
-                  borderRadius: '9999px',
-                  width: '80%',
-                  marginTop: '20px',
-                }}
-              >
-                Send Instructions
-              </Button>
+              <SuperButton title={'Send Instructions'} />
+
               <div>Did you remember your password?</div>
 
               <a

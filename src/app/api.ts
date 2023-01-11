@@ -22,10 +22,10 @@ export const authAPI = {
     })
   },
   forgot(data: ForgotType) {
-    return instance.post('auth/forgot', data)
+    return instance.post('/auth/forgot', data)
   },
   setNewPassword(data: SetNewPasswordType) {
-    return instance.post('set-new-password', data)
+    return instance.post('/auth/set-new-password', data)
   },
 }
 
