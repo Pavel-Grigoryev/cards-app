@@ -1,21 +1,81 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 
 import { Grid } from '@mui/material'
+import Button from '@mui/material/Button'
 import { Navigate } from 'react-router-dom'
 
-import { useAppSelector } from '../../app/store'
+import { useAppDispatch, useAppSelector } from '../../app/store'
+import camera from '../../assets/images/camera.png'
+import logoutImg from '../../assets/images/logout.svg'
+import { EditableSpan } from '../../common/EditableSpan/EditableSpan'
+import { ReturnLink } from '../../common/ReturnLink/ReturnLink'
 import { PATH } from '../../common/routes/routes'
+import { logoutTC } from '../auth/auth-reducer'
+
+import { ProfileType, updateProfileTC } from './profile-reducer'
+import s from './Profile.module.scss'
 
 export const Profile = () => {
   const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
 
-  // if (!isLoggedIn) {
-  //   return <Navigate to={PATH.LOGIN} />
-  // }
+  const profile = useAppSelector<ProfileType | null>(state => state.userProfile.profile)
+
+  const dispatch = useAppDispatch()
+
+  const onChangeNameHandler = useCallback(
+    (name: string | undefined) => {
+      dispatch(updateProfileTC({ name }))
+    },
+    [dispatch]
+  )
+
+  const logoutHandler = () => {
+    dispatch(logoutTC())
+  }
+
+  if (!isLoggedIn) {
+    return <Navigate to={PATH.LOGIN} />
+  }
 
   return (
-    <Grid container justifyContent={'center'} alignItems={'center'}>
-      <Grid item justifyContent={'center'}></Grid>
-    </Grid>
+    <>
+      <ReturnLink path={'#'} title={'Back to Packs List'} />
+      <Grid container justifyContent={'center'} alignItems={'center'}>
+        <Grid item justifyContent={'center'} xs={12} sm={12}>
+          <div className={s.smContainer}>
+            <article className={s.profile}>
+              <h1 className={s.title}>Personal Information</h1>
+              <div className={s.imageBlock}>
+                <div className={s.profileImgWrap}>
+                  <img className={s.profileImg} src={profile?.avatar} alt="User image" />
+                </div>
+                <div className={s.butImgWrap}>
+                  <img className={s.profileImg} src={camera} alt="" />
+                </div>
+              </div>
+              <EditableSpan value={profile?.name} onChange={onChangeNameHandler} />
+              <p className={s.email}>{profile?.email}</p>
+              <div className={s.butCont}>
+                <Button
+                  variant="contained"
+                  fullWidth
+                  onClick={logoutHandler}
+                  style={{
+                    fontSize: '16px',
+                    textTransform: 'none',
+                    borderRadius: '9999px',
+                    padding: '4px 16px',
+                    boxShadow: '0px 2px 10px 0px rgba(109, 109, 109, 0.25)',
+                  }}
+                >
+                  <img className={s.logoutImg} src={logoutImg} alt="" />
+                  Log out
+                </Button>
+              </div>
+            </article>
+          </div>
+        </Grid>
+      </Grid>
+    </>
   )
 }

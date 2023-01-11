@@ -3,7 +3,8 @@ import { Dispatch } from 'redux'
 
 import { authAPI, AuthType, ForgotType, SetNewPasswordType } from '../../app/api'
 import { setAppErrorAC, setAppStatusAC } from '../../app/app-reducer'
-import { setProfileAC } from '../profile/profile-reducer'
+import { AppThunk } from '../../app/store'
+import { clearProfileDataAC, setProfileAC } from '../profile/profile-reducer'
 
 const initialState = {
   isLoggedIn: false,
@@ -108,6 +109,23 @@ export const setNewPasswordTC = (data: SetNewPasswordType) => (dispatch: Dispatc
     .then(res => {
       dispatch(setAppStatusAC('succeeded'))
       dispatch(setNewPasswordAC(true))
+    })
+    .catch((err: AxiosError<{ error: string }>) => {
+      const error = err.response ? err.response.data.error : err.message
+
+      dispatch(setAppStatusAC('failed'))
+      dispatch(setAppErrorAC(error))
+    })
+}
+
+export const logoutTC = (): AppThunk => dispatch => {
+  dispatch(setAppStatusAC('loading'))
+  authAPI
+    .logout()
+    .then(() => {
+      dispatch(setAppStatusAC('succeeded'))
+      dispatch(setLoginAC(false))
+      dispatch(clearProfileDataAC())
     })
     .catch((err: AxiosError<{ error: string }>) => {
       const error = err.response ? err.response.data.error : err.message
