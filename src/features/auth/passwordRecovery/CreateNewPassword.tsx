@@ -1,15 +1,7 @@
 import React, { useState } from 'react'
 
 import { Visibility, VisibilityOff } from '@mui/icons-material'
-import {
-  Button,
-  Checkbox,
-  FormControlLabel,
-  IconButton,
-  Input,
-  InputAdornment,
-  InputLabel,
-} from '@mui/material'
+import { Button, IconButton, Input, InputAdornment, InputLabel } from '@mui/material'
 import FormControl from '@mui/material/FormControl'
 import FormGroup from '@mui/material/FormGroup'
 import FormLabel from '@mui/material/FormLabel'
@@ -19,17 +11,14 @@ import { Navigate } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../../app/store'
 import { PATH } from '../../../common/routes/routes'
-import { signInTC } from '../auth-reducer'
-
-import styles from './Login.module.scss'
+import { setNewPasswordTC } from '../auth-reducer'
+import styles from '../login/Login.module.scss'
 
 type FormikErrorType = {
-  email?: string
   password?: string
-  rememberMe?: boolean
 }
 
-export const Login = () => {
+export const CreateNewPassword = () => {
   const [showPassword, setShowPassword] = useState(false)
 
   const handleClickShowPassword = () => setShowPassword(show => !show)
@@ -38,23 +27,19 @@ export const Login = () => {
     event.preventDefault()
   }
 
+  const setNewPassword = useAppSelector(state => state.auth.setNewPassword)
+  const url = window.location.href.split('/')
+
   const dispatch = useAppDispatch()
-  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
   const formik = useFormik({
     initialValues: {
-      email: '',
       password: '',
-      RememberMe: false,
+      resetPasswordToken: url[url.length - 1],
     },
 
     validate: values => {
       const errors: FormikErrorType = {}
 
-      if (!values.email) {
-        errors.email = 'Required'
-      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-        errors.email = 'Invalid email address'
-      }
       if (!values.password) {
         errors.password = 'Required'
       } else if (values.password.length < 7) {
@@ -65,13 +50,13 @@ export const Login = () => {
     },
 
     onSubmit: values => {
-      dispatch(signInTC(values))
+      dispatch(setNewPasswordTC(values))
       formik.resetForm()
     },
   })
 
-  if (isLoggedIn) {
-    return <Navigate to={PATH.PROFILE} />
+  if (setNewPassword) {
+    return <Navigate to={PATH.LOGIN} />
   }
 
   return (
@@ -86,34 +71,17 @@ export const Login = () => {
           className={styles.loginContainer}
         >
           <FormLabel>
-            <h1 style={{ color: '#000000' }}>Sign in</h1>
+            <h1 style={{ color: '#000000' }}>Create new password</h1>
           </FormLabel>
           <form onSubmit={formik.handleSubmit}>
             <FormGroup
               style={{
                 justifyContent: 'space-around',
                 alignItems: 'center',
-                height: '400px',
+                height: '300px',
               }}
             >
               <FormControl sx={{ width: '80%' }} variant="standard">
-                <InputLabel color={'secondary'}>Email</InputLabel>
-                <Input
-                  id="standard-basic"
-                  type={'text'}
-                  color={'secondary'}
-                  {...formik.getFieldProps('email')}
-                />
-                {formik.touched.email && formik.errors.email && (
-                  <div style={{ color: 'red', margin: '10px 0', textAlign: 'left' }}>
-                    {formik.errors.email}
-                  </div>
-                )}
-              </FormControl>
-              <FormControl
-                sx={{ width: '80%', marginBottom: '-30px', marginTop: '-30px' }}
-                variant="standard"
-              >
                 <InputLabel color={'secondary'}>Password</InputLabel>
                 <Input
                   id="standard-adornment-password"
@@ -138,28 +106,9 @@ export const Login = () => {
                   </div>
                 )}
               </FormControl>
-              <FormControlLabel
-                style={{ alignSelf: 'flex-start', marginLeft: '30px' }}
-                label={'Remember me'}
-                control={
-                  <Checkbox
-                    color={'secondary'}
-                    {...formik.getFieldProps('RememberMe')}
-                    checked={formik.values.RememberMe}
-                  />
-                }
-              />
-              <div
-                style={{
-                  alignSelf: 'flex-end',
-                  marginRight: '30px',
-                  marginTop: '-25px',
-                  marginBottom: '25px',
-                }}
-              >
-                <a href={'#/passRecovery'} style={{ fontWeight: 'bold', fontSize: '14px' }}>
-                  Forgot Password?
-                </a>
+
+              <div style={{ margin: '0 10%', textAlign: 'left', lineHeight: '20px' }}>
+                Create new password and we will send you further instructions to email
               </div>
               <Button
                 type={'submit'}
@@ -174,23 +123,8 @@ export const Login = () => {
                   width: '80%',
                 }}
               >
-                Sign in
+                Create new password
               </Button>
-              <div style={{ margin: '10px 0 -10px 0' }}>No account?</div>
-
-              <a
-                href={'#/signUp'}
-                color={'secondary'}
-                style={{
-                  textDecoration: 'underline',
-                  color: '#366eff',
-                  fontSize: '16px',
-                  marginBottom: '-20px',
-                  fontWeight: 'bold',
-                }}
-              >
-                Sign Up
-              </a>
             </FormGroup>
           </form>
         </FormControl>
