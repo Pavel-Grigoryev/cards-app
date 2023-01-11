@@ -13,7 +13,7 @@ export const authAPI = {
     return instance.post<ResponseType>('/auth/me')
   },
   logout() {
-    return instance.delete<ResponseType>('/auth/login')
+    return instance.delete<ResponseType>('/auth/me')
   },
   signup(data: AuthType) {
     return instance.post<AuthType, AxiosResponse<ResponseType>>('/auth/register', {
@@ -26,6 +26,9 @@ export const authAPI = {
   },
   setNewPassword(data: SetNewPasswordType) {
     return instance.post('/auth/set-new-password', data)
+  },
+  updateProfile(data: ProfilePayloadType) {
+    return instance.put<UpdatedUserTypeResponseType>('/auth/me', data)
   },
 }
 
@@ -62,4 +65,30 @@ export type ForgotType = {
 export type SetNewPasswordType = {
   password: string
   resetPasswordToken: string
+}
+
+export type ProfilePayloadType = {
+  name: string
+  avatar?: string
+}
+
+export type UpdatedUserTypeResponseType = {
+  updatedUser: UpdatedUserType
+  token: string
+  tokenDeathTime: number
+}
+export type UpdatedUserType = {
+  _id: string
+  email: string
+  rememberMe: boolean
+  isAdmin: boolean
+  name: string
+  verified: boolean
+  publicCardPacksCount: number
+  created: string
+  updated: string
+  __v: number
+  token: string
+  tokenDeathTime: number
+  avatar: string
 }

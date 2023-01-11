@@ -32,7 +32,7 @@ export const Header = () => {
             maxWidth: '1056px',
           }}
         >
-          <Toolbar className={s.toolbar}>
+          <Toolbar className={s.toolbar} style={{ padding: '0' }}>
             <img className={s.image} src={logo} alt="Logo image" />
 
             {isLoggedIn ? (

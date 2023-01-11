@@ -1,3 +1,5 @@
+import { AxiosError } from 'axios'
+
 import { setLoginAC } from '../features/auth/auth-reducer'
 import { setProfileAC } from '../features/profile/profile-reducer'
 
@@ -36,20 +38,26 @@ export const setAppInitializedAC = (isInit: boolean) =>
 
 //Thunk
 
-export const initializeAppTC = (): AppThunk => async dispatch => {
+export const initializeAppTC = (): AppThunk => dispatch => {
   dispatch(setAppStatusAC('loading'))
-  try {
-    const res = await authAPI.me()
 
-    dispatch(setLoginAC(true))
-    dispatch(setProfileAC(res.data))
-    dispatch(setAppStatusAC('succeeded'))
-  } catch (e) {
-    console.log(e)
-  } finally {
-    dispatch(setAppInitializedAC(true))
-    dispatch(setAppStatusAC('idle'))
-  }
+  authAPI
+    .me()
+    .then(res => {
+      dispatch(setLoginAC(true))
+      dispatch(setProfileAC(res.data))
+      dispatch(setAppStatusAC('succeeded'))
+    })
+    .catch((err: AxiosError<{ error: string }>) => {
+      const error = err.response ? err.response.data.error : err.message
+
+      dispatch(setAppStatusAC('failed'))
+      dispatch(setAppErrorAC(error))
+    })
+    .finally(() => {
+      dispatch(setAppInitializedAC(true))
+      dispatch(setAppStatusAC('idle'))
+    })
 }
 
 //Types
