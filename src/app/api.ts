@@ -22,7 +22,7 @@ export const authAPI = {
     })
   },
   forgot(data: ForgotType) {
-    return instance.post('https://neko-back.herokuapp.com/2.0/auth/forgot', data)
+    return instance.post('auth/forgot', data)
   },
 }
 
