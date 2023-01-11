@@ -24,6 +24,9 @@ export const authAPI = {
   forgot(data: ForgotType) {
     return instance.post('auth/forgot', data)
   },
+  setNewPassword(data: SetNewPasswordType) {
+    return instance.post('set-new-password', data)
+  },
 }
 
 export const cardsAPI = {}
@@ -54,4 +57,9 @@ export type ResponseType<D = {}> = {
 
 export type ForgotType = {
   email: string
+}
+
+export type SetNewPasswordType = {
+  password: string
+  resetPasswordToken: string
 }
