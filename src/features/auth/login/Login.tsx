@@ -12,16 +12,10 @@ import { useAppDispatch, useAppSelector } from '../../../app/store'
 import { SuperButton } from '../../../common/components/SuperButton'
 import { SuperEmailInput, SuperPasswordInput } from '../../../common/components/SuperInputs'
 import { PATH } from '../../../common/routes/routes'
-import { loginSchema, signupSchema } from '../../../common/utils/validationSchema'
+import { loginSchema } from '../../../common/utils/validationSchema'
 import { signInTC } from '../auth-reducer'
 
 import styles from './Login.module.scss'
-
-type FormikErrorType = {
-  email?: string
-  password?: string
-  rememberMe?: boolean
-}
 
 export const Login = () => {
   const dispatch = useAppDispatch()
@@ -30,7 +24,7 @@ export const Login = () => {
     initialValues: {
       email: '',
       password: '',
-      RememberMe: false,
+      rememberMe: false,
     },
 
     validationSchema: loginSchema,
@@ -82,8 +76,8 @@ export const Login = () => {
                 control={
                   <Checkbox
                     color={'secondary'}
-                    {...formik.getFieldProps('RememberMe')}
-                    checked={formik.values.RememberMe}
+                    {...formik.getFieldProps('rememberMe')}
+                    checked={formik.values.rememberMe}
                   />
                 }
               />
