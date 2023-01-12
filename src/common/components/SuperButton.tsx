@@ -2,8 +2,14 @@ import React from 'react'
 
 import { Button } from '@mui/material'
 
+type StyleSXPropsType = {
+  mt?: string
+  width?: string
+}
+
 type SuperButtonType = {
   title: string
+  styleSX?: StyleSXPropsType
   onClick?: () => void
   href?: string
 }
@@ -16,14 +22,12 @@ export const SuperButton = (props: SuperButtonType) => {
       type={'submit'}
       variant={'contained'}
       color={'secondary'}
-      fullWidth
-      style={{
+      sx={{
         fontSize: '16px',
         textTransform: 'capitalize',
         borderRadius: '9999px',
         padding: '4px 16px',
-        width: '80%',
-        marginTop: '30px',
+        ...props.styleSX,
       }}
     >
       {props.title}

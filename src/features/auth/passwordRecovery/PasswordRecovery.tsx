@@ -115,7 +115,12 @@ export const PasswordRecovery = () => {
               <div style={{ margin: '-30px 10%', textAlign: 'left', lineHeight: '20px' }}>
                 Enter your email address and we will send you further instructions{' '}
               </div>
-              <SuperButton title={'Send Instructions'} />
+              <SuperButton
+                title={'Send Instructions'}
+                styleSX={{
+                  mt: '30px',
+                }}
+              />
 
               <div>Did you remember your password?</div>
 

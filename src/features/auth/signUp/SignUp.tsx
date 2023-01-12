@@ -57,7 +57,7 @@ export const SignUp = () => {
           <FormLabel style={{ color: '#000000' }}>
             <h1>Sign Up</h1>
           </FormLabel>
-          <form onSubmit={formik.handleSubmit}>
+          <form onSubmit={formik.handleSubmit} className={styles.formContainer}>
             <FormGroup
               style={{
                 justifyContent: 'space-around',
@@ -80,7 +80,13 @@ export const SignUp = () => {
                 formikTouched={formik.touched.confirmPassword}
                 name={'Confirm password'}
               />
-              <SuperButton title={'Sign Up'} />
+              <SuperButton
+                title={'Sign Up'}
+                styleSX={{
+                  mt: '30px',
+                  width: '80%',
+                }}
+              />
             </FormGroup>
           </form>
           <p>Already have an account?</p>

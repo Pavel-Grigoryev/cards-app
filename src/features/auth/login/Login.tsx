@@ -97,7 +97,13 @@ export const Login = () => {
                   Forgot Password?
                 </a>
               </div>
-              <SuperButton title={'Sign in'} />
+              <SuperButton
+                title={'Sign in'}
+                styleSX={{
+                  mt: '30px',
+                  width: '80%',
+                }}
+              />
             </FormGroup>
           </form>
           <p>No account?</p>

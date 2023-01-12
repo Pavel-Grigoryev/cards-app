@@ -1,7 +1,6 @@
 import React from 'react'
 
 import AppBar from '@mui/material/AppBar'
-import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
 import LinearProgress from '@mui/material/LinearProgress'
 import Toolbar from '@mui/material/Toolbar'
@@ -11,6 +10,7 @@ import { RequestStatusType } from '../../app/app-reducer'
 import { useAppSelector } from '../../app/store'
 import logo from '../../assets/images/logo.png'
 import { ProfileType } from '../../features/profile/profile-reducer'
+import { SuperButton } from '../components/SuperButton'
 import { PATH } from '../routes/routes'
 
 import s from './Header.module.scss'
@@ -44,7 +44,13 @@ export const Header = () => {
               </div>
             ) : (
               <div className={s.butCont}>
-                <Button
+                <SuperButton
+                  title={'Sign in'}
+                  onClick={() => {
+                    navigate(PATH.LOGIN)
+                  }}
+                />
+                {/*<Button
                   color="secondary"
                   variant="contained"
                   fullWidth
@@ -59,7 +65,7 @@ export const Header = () => {
                   }}
                 >
                   Sign in
-                </Button>
+                </Button>*/}
               </div>
             )}
           </Toolbar>

@@ -83,7 +83,12 @@ export const CreateNewPassword = () => {
               <div style={{ margin: '0 10%', textAlign: 'left', lineHeight: '20px' }}>
                 Create new password and we will send you further instructions to email
               </div>
-              <SuperButton title={'Create new password'} />
+              <SuperButton
+                title={'Create new password'}
+                styleSX={{
+                  mt: '30px',
+                }}
+              />
             </FormGroup>
           </form>
         </FormControl>
