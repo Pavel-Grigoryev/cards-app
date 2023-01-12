@@ -13,7 +13,7 @@ export const Layout = () => {
         <Container
           style={{
             maxWidth: '1056px',
-            paddingTop: '60px',
+            paddingTop: '64px',
           }}
         >
           <Outlet />

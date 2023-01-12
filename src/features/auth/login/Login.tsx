@@ -1,25 +1,20 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-import { Visibility, VisibilityOff } from '@mui/icons-material'
-import {
-  Button,
-  Checkbox,
-  FormControlLabel,
-  IconButton,
-  Input,
-  InputAdornment,
-  InputLabel,
-} from '@mui/material'
+import { Checkbox, FormControlLabel } from '@mui/material'
 import FormControl from '@mui/material/FormControl'
 import FormGroup from '@mui/material/FormGroup'
 import FormLabel from '@mui/material/FormLabel'
 import Grid from '@mui/material/Grid'
 import { useFormik } from 'formik'
+import { Navigate } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../../app/store'
+import { SuperButton } from '../../../common/components/SuperButton'
+import { SuperEmailInput, SuperPasswordInput } from '../../../common/components/SuperInputs'
+import { PATH } from '../../../common/routes/routes'
 import { signInTC } from '../auth-reducer'
 
-import style from './Login.module.scss'
+import styles from './Login.module.scss'
 
 type FormikErrorType = {
   email?: string
@@ -28,14 +23,6 @@ type FormikErrorType = {
 }
 
 export const Login = () => {
-  const [showPassword, setShowPassword] = useState(false)
-
-  const handleClickShowPassword = () => setShowPassword(show => !show)
-
-  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
-  }
-
   const dispatch = useAppDispatch()
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
   const formik = useFormik({
@@ -55,8 +42,8 @@ export const Login = () => {
       }
       if (!values.password) {
         errors.password = 'Required'
-      } else if (values.password.length < 3) {
-        errors.password = 'Password length should be more 3 symbol'
+      } else if (values.password.length < 7) {
+        errors.password = 'Password length should be more 7 symbol'
       }
 
       return errors
@@ -68,83 +55,82 @@ export const Login = () => {
     },
   })
 
-  // if(isLoggedIn) {
-  //   return <Navigate to={'/'}/>
-  // }
+  if (isLoggedIn) {
+    return <Navigate to={PATH.PROFILE} />
+  }
 
   return (
-    <div>
-      <Grid container justifyContent={'center'}>
-        <Grid item justifyContent={'center'} className={style.loginContainer}>
+    <Grid container justifyContent={'center'} alignItems={'center'}>
+      <Grid item justifyContent={'center'}>
+        <FormControl
+          style={{
+            justifyContent: 'space-evenly',
+            marginTop: '30%',
+            padding: '30px 0',
+          }}
+          className={styles.loginContainer}
+        >
           <FormLabel>
             <h1 style={{ color: '#000000' }}>Sign in</h1>
           </FormLabel>
           <form onSubmit={formik.handleSubmit}>
-            <FormGroup>
-              <FormControl sx={{ m: 1, width: '40ch' }} variant="standard">
-                <InputLabel>Email</InputLabel>
-                <Input id="standard-basic" type={'text'} {...formik.getFieldProps('email')} />
-                {formik.touched.email && formik.errors.email && (
-                  <div style={{ color: 'red' }}>{formik.errors.email}</div>
-                )}
-              </FormControl>
-              <FormControl sx={{ m: 1, width: '40ch' }} variant="standard">
-                <InputLabel>Password</InputLabel>
-                <Input
-                  id="standard-adornment-password"
-                  type={showPassword ? 'text' : 'password'}
-                  {...formik.getFieldProps('password')}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                />
-                {formik.touched.password && formik.errors.password && (
-                  <div style={{ color: 'red' }}>{formik.errors.password}</div>
-                )}
-              </FormControl>
+            <FormGroup
+              style={{
+                justifyContent: 'space-around',
+                alignItems: 'center',
+                height: '400px',
+              }}
+            >
+              <SuperEmailInput
+                formikTouched={formik.touched.email}
+                formikErrors={formik.errors.email}
+                formikGetFieldProps={{ ...formik.getFieldProps('email') }}
+              />
+              <SuperPasswordInput
+                formikErrors={formik.errors.password}
+                formikGetFieldProps={{ ...formik.getFieldProps('password') }}
+                formikTouched={formik.touched.password}
+              />
               <FormControlLabel
+                style={{ alignSelf: 'flex-start', marginLeft: '30px' }}
                 label={'Remember me'}
                 control={
                   <Checkbox
+                    color={'secondary'}
                     {...formik.getFieldProps('RememberMe')}
                     checked={formik.values.RememberMe}
                   />
                 }
               />
-              <div style={{ margin: '25px' }}>
-                <a href={'#/passRecovery'}>Forgot Password?</a>
+              <div
+                style={{
+                  alignSelf: 'flex-end',
+                  marginRight: '30px',
+                }}
+              >
+                <a href={'#/passRecovery'} style={{ fontWeight: 'bold', fontSize: '14px' }}>
+                  Forgot Password?
+                </a>
               </div>
-              <div>
-                <Button
-                  type={'submit'}
-                  variant={'contained'}
-                  color={'secondary'}
-                  fullWidth
-                  style={{
-                    fontSize: '16px',
-                    textTransform: 'capitalize',
-                    borderRadius: '9999px',
-                    padding: '4px 16px',
-                    width: '80%',
-                  }}
-                >
-                  Sign in
-                </Button>
-              </div>
-              <div style={{ margin: '30px 0 10px 0' }}>Already have an account?</div>
-              <a href={'#/signUp'}>Sign Up</a>
+              <SuperButton title={'Sign in'} />
+              <div style={{ margin: '10px 0 -10px 0' }}>No account?</div>
+              <a
+                href={'#/signUp'}
+                color={'secondary'}
+                style={{
+                  textDecoration: 'underline',
+                  color: '#366eff',
+                  fontSize: '16px',
+                  marginBottom: '-20px',
+                  fontWeight: 'bold',
+                }}
+              >
+                Sign Up
+              </a>
             </FormGroup>
           </form>
-        </Grid>
+        </FormControl>
       </Grid>
-    </div>
+    </Grid>
   )
 }

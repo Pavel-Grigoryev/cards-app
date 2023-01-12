@@ -1,21 +1,13 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-import { Visibility, VisibilityOff } from '@mui/icons-material'
-import {
-  Button,
-  FormGroup,
-  FormLabel,
-  Grid,
-  IconButton,
-  Input,
-  InputAdornment,
-  InputLabel,
-} from '@mui/material'
+import { FormGroup, FormLabel, Grid } from '@mui/material'
 import FormControl from '@mui/material/FormControl'
 import { useFormik } from 'formik'
 import { NavLink } from 'react-router-dom'
 
 import { useAppDispatch } from '../../../app/store'
+import { SuperButton } from '../../../common/components/SuperButton'
+import { SuperEmailInput, SuperPasswordInput } from '../../../common/components/SuperInputs'
 import { PATH } from '../../../common/routes/routes'
 import { signUpTC } from '../auth-reducer'
 
@@ -28,9 +20,6 @@ type ErrorsType = {
 }
 
 export const SignUp = () => {
-  const [showPassword, setShowPassword] = useState(false)
-
-  const handleShowPassword = () => setShowPassword(show => !show)
   const dispatch = useAppDispatch()
 
   const formik = useFormik({
@@ -87,98 +76,37 @@ export const SignUp = () => {
                 height: '300px',
               }}
             >
-              <FormControl sx={{ width: '80%' }} variant="standard">
-                <InputLabel color={'secondary'} htmlFor="email-handle-input">
-                  Email
-                </InputLabel>
-                <Input
-                  id="email-handle-input"
-                  type={'text'}
-                  color={'secondary'}
-                  error={formik.touched.email && !!formik.errors.email}
-                  {...formik.getFieldProps('email')}
-                />
-                {formik.touched.email && formik.errors.email && (
-                  <div style={{ color: 'red', margin: '10px 0', textAlign: 'left' }}>
-                    {formik.errors.email}
-                  </div>
-                )}
-              </FormControl>
-              <FormControl sx={{ width: '80%' }} variant="standard">
-                <InputLabel color={'secondary'} htmlFor="standard-adornment-password">
-                  Password
-                </InputLabel>
-                <Input
-                  id="standard-adornment-password"
-                  type={showPassword ? 'text' : 'password'}
-                  color={'secondary'}
-                  error={formik.touched.password && !!formik.errors.password}
-                  {...formik.getFieldProps('password')}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleShowPassword}
-                        onMouseDown={() => {}}
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                />
-                {formik.touched.password && formik.errors.password && (
-                  <div style={{ color: 'red', margin: '10px 0', textAlign: 'left' }}>
-                    {formik.errors.password}
-                  </div>
-                )}
-              </FormControl>
-              <FormControl sx={{ width: '80%' }} variant="standard">
-                <InputLabel color={'secondary'} htmlFor="confirm-password">
-                  Confirm password
-                </InputLabel>
-                <Input
-                  id="confirm-password"
-                  type={showPassword ? 'text' : 'password'}
-                  color={'secondary'}
-                  error={formik.touched.confirmPassword && !!formik.errors.confirmPassword}
-                  {...formik.getFieldProps('confirmPassword')}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleShowPassword}
-                        onMouseDown={() => {}}
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                />
-                {formik.touched.confirmPassword && formik.errors.confirmPassword && (
-                  <div style={{ color: 'red', margin: '10px 0', textAlign: 'left' }}>
-                    {formik.errors.confirmPassword}
-                  </div>
-                )}
-              </FormControl>
-              <Button
-                type={'submit'}
-                color={'secondary'}
-                variant="contained"
-                style={{
-                  fontSize: '16px',
-                  textTransform: 'capitalize',
-                  borderRadius: '9999px',
-                  padding: '4px 16px',
-                  width: '80%',
-                }}
-              >
-                Sign Up
-              </Button>
+              <SuperEmailInput
+                formikTouched={formik.touched.email}
+                formikErrors={formik.errors.email}
+                formikGetFieldProps={{ ...formik.getFieldProps('email') }}
+              />
+              <SuperPasswordInput
+                formikErrors={formik.errors.password}
+                formikGetFieldProps={{ ...formik.getFieldProps('password') }}
+                formikTouched={formik.touched.password}
+              />
+              <SuperPasswordInput
+                formikErrors={formik.errors.confirmPassword}
+                formikGetFieldProps={{ ...formik.getFieldProps('confirmPassword') }}
+                formikTouched={formik.touched.confirmPassword}
+              />
+              <SuperButton title={'Sign Up'} />
             </FormGroup>
           </form>
           <p>Already have an account?</p>
           <span>
-            <NavLink to={`${PATH.LOGIN}`}>Sign In</NavLink>
+            <NavLink
+              to={`${PATH.LOGIN}`}
+              style={{
+                fontWeight: 'bold',
+                textDecoration: 'underline',
+                color: '#366eff',
+                fontSize: '16px',
+              }}
+            >
+              Sign In
+            </NavLink>
           </span>
         </FormControl>
       </Grid>
