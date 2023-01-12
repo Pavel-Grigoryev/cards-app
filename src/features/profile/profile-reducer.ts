@@ -1,9 +1,10 @@
 import { AxiosError } from 'axios'
 
 import { authAPI, ProfilePayloadType } from '../../app/api'
-import { setAppErrorAC, setAppStatusAC } from '../../app/app-reducer'
+import { setAppStatusAC } from '../../app/app-reducer'
 import { AppThunk } from '../../app/store'
 import avatar from '../../assets/images/avatar.jpg'
+import { handleServerNetworkError } from '../../common/utils/error-utils'
 
 const initialState = {
   profile: {} as ProfileType,
@@ -57,10 +58,7 @@ export const updateProfileTC =
           dispatch(setAppStatusAC('succeeded'))
         })
         .catch((err: AxiosError<{ error: string }>) => {
-          const error = err.response ? err.response.data.error : err.message
-
-          dispatch(setAppStatusAC('failed'))
-          dispatch(setAppErrorAC(error))
+          handleServerNetworkError(err, dispatch)
         })
     }
   }

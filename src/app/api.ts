@@ -25,7 +25,7 @@ export const authAPI = {
       password: data.password,
     })
   },
-  forgot(data: ForgotType) {
+  forgot(data: DataRecovType) {
     return instance.post('/auth/forgot', data)
   },
   setNewPassword(data: SetNewPasswordType) {
@@ -66,9 +66,13 @@ export type ForgotType = {
   email: string
 }
 
+export type DataRecovType = ForgotType & {
+  message: string
+}
+
 export type SetNewPasswordType = {
   password: string
-  resetPasswordToken: string
+  resetPasswordToken: string | undefined
 }
 
 export type ProfilePayloadType = {

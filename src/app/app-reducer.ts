@@ -1,5 +1,6 @@
 import { AxiosError } from 'axios'
 
+import { handleServerNetworkError } from '../common/utils/error-utils'
 import { setLoginAC } from '../features/auth/auth-reducer'
 import { setProfileAC } from '../features/profile/profile-reducer'
 
@@ -49,10 +50,7 @@ export const initializeAppTC = (): AppThunk => dispatch => {
       dispatch(setAppStatusAC('succeeded'))
     })
     .catch((err: AxiosError<{ error: string }>) => {
-      const error = err.response ? err.response.data.error : err.message
-
-      dispatch(setAppStatusAC('failed'))
-      dispatch(setAppErrorAC(error))
+      handleServerNetworkError(err, dispatch)
     })
     .finally(() => {
       dispatch(setAppInitializedAC(true))
