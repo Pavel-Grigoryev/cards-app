@@ -9,15 +9,16 @@ import { useAppDispatch, useAppSelector } from '../../../app/store'
 import { SuperButton } from '../../../common/components/SuperButton'
 import { SuperEmailInput, SuperPasswordInput } from '../../../common/components/SuperInputs'
 import { PATH } from '../../../common/routes/routes'
+import { signupSchema } from '../../../common/utils/validationSchema'
 import { signUpTC } from '../auth-reducer'
 
 import styles from './SignUp.module.scss'
 
-type ErrorsType = {
+/*type ErrorsType = {
   email?: string
   password?: string
   confirmPassword?: string
-}
+}*/
 
 export const SignUp = () => {
   const dispatch = useAppDispatch()
@@ -29,26 +30,9 @@ export const SignUp = () => {
       password: '',
       confirmPassword: '',
     },
-    validate: values => {
-      const errors: ErrorsType = {}
 
-      if (!values.email) {
-        errors.email = 'Required'
-      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-        errors.email = 'Invalid email address'
-      }
-      if (!values.password) {
-        errors.password = 'Required'
-      }
-      if (!values.confirmPassword) {
-        errors.confirmPassword = 'Required'
-      }
-      if (values.password !== values.confirmPassword) {
-        errors.confirmPassword = 'Passwords should match'
-      }
+    validationSchema: signupSchema,
 
-      return errors
-    },
     onSubmit: values => {
       dispatch(signUpTC(values))
       formik.resetForm()
@@ -94,6 +78,7 @@ export const SignUp = () => {
                 formikErrors={formik.errors.confirmPassword}
                 formikGetFieldProps={{ ...formik.getFieldProps('confirmPassword') }}
                 formikTouched={formik.touched.confirmPassword}
+                name={'Confirm password'}
               />
               <SuperButton title={'Sign Up'} />
             </FormGroup>

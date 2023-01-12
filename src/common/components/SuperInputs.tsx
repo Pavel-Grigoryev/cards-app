@@ -10,6 +10,7 @@ type SuperInputType = {
   formikTouched: boolean | undefined
   formikErrors: string | undefined
   formikGetFieldProps: any
+  name?: string
 }
 
 export const SuperEmailInput = (props: SuperInputType) => {
@@ -35,7 +36,7 @@ export const SuperPasswordInput = (props: SuperInputType) => {
 
   return (
     <FormControl sx={{ width: '80%' }} variant="standard" style={{ margin: '10px 0' }}>
-      <InputLabel color={'secondary'}>Password</InputLabel>
+      <InputLabel color={'secondary'}>{props.name ? props.name : 'Password'}</InputLabel>
       <Input
         type={showPassword ? 'text' : 'password'}
         color={'secondary'}
