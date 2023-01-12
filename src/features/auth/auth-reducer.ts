@@ -4,6 +4,7 @@ import { Dispatch } from 'redux'
 import { authAPI, AuthType, ForgotType, SetNewPasswordType } from '../../app/api'
 import { setAppErrorAC, setAppStatusAC } from '../../app/app-reducer'
 import { AppThunk } from '../../app/store'
+import { handleServerNetworkError } from '../../common/utils/error-utils'
 import { clearProfileDataAC, setProfileAC } from '../profile/profile-reducer'
 
 const initialState = {
@@ -68,10 +69,7 @@ export const signInTC = (data: AuthType) => (dispatch: Dispatch<ActionsType>) =>
       dispatch(setAppStatusAC('succeeded'))
     })
     .catch((err: AxiosError<{ error: string }>) => {
-      const error = err.response ? err.response.data.error : err.message
-
-      dispatch(setAppStatusAC('failed'))
-      dispatch(setAppErrorAC(error))
+      handleServerNetworkError(err, dispatch)
     })
 }
 
@@ -83,10 +81,7 @@ export const signUpTC = (data: AuthType) => (dispatch: Dispatch<ActionsType>) =>
       dispatch(setAppStatusAC('succeeded'))
     })
     .catch((err: AxiosError<{ error: string }>) => {
-      const error = err.response ? err.response.data.error : err.message
-
-      dispatch(setAppStatusAC('failed'))
-      dispatch(setAppErrorAC(error))
+      handleServerNetworkError(err, dispatch)
     })
 }
 
@@ -100,10 +95,7 @@ export const passwordRecoveryTC = (data: ForgotType) => (dispatch: Dispatch<Acti
       dispatch(checkEmailAC(true))
     })
     .catch((err: AxiosError<{ error: string }>) => {
-      const error = err.response ? err.response.data.error : err.message
-
-      dispatch(setAppStatusAC('failed'))
-      dispatch(setAppErrorAC(error))
+      handleServerNetworkError(err, dispatch)
     })
 }
 
@@ -116,10 +108,7 @@ export const setNewPasswordTC = (data: SetNewPasswordType) => (dispatch: Dispatc
       dispatch(setNewPasswordAC(true))
     })
     .catch((err: AxiosError<{ error: string }>) => {
-      const error = err.response ? err.response.data.error : err.message
-
-      dispatch(setAppStatusAC('failed'))
-      dispatch(setAppErrorAC(error))
+      handleServerNetworkError(err, dispatch)
     })
 }
 
@@ -133,9 +122,6 @@ export const logoutTC = (): AppThunk => dispatch => {
       dispatch(clearProfileDataAC())
     })
     .catch((err: AxiosError<{ error: string }>) => {
-      const error = err.response ? err.response.data.error : err.message
-
-      dispatch(setAppStatusAC('failed'))
-      dispatch(setAppErrorAC(error))
+      handleServerNetworkError(err, dispatch)
     })
 }
