@@ -4,6 +4,8 @@ import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { IconButton, Input, InputAdornment, InputLabel } from '@mui/material'
 import FormControl from '@mui/material/FormControl'
 
+import styles from '../styles/errors.module.scss'
+
 type SuperInputType = {
   formikTouched: boolean | undefined
   formikErrors: string | undefined
@@ -12,13 +14,11 @@ type SuperInputType = {
 
 export const SuperEmailInput = (props: SuperInputType) => {
   return (
-    <FormControl sx={{ width: '80%' }} variant="standard">
+    <FormControl sx={{ width: '80%' }} style={{ margin: '10px 0' }} variant="standard">
       <InputLabel color={'secondary'}>Email</InputLabel>
       <Input id="standard-basic" type={'text'} color={'secondary'} {...props.formikGetFieldProps} />
       {props.formikTouched && props.formikErrors && (
-        <div style={{ color: 'red', margin: '10px 0', textAlign: 'left' }}>
-          {props.formikErrors}
-        </div>
+        <div className={styles.errorText}>{props.formikErrors}</div>
       )}
     </FormControl>
   )
@@ -34,10 +34,9 @@ export const SuperPasswordInput = (props: SuperInputType) => {
   }
 
   return (
-    <FormControl sx={{ width: '80%' }} variant="standard">
+    <FormControl sx={{ width: '80%' }} variant="standard" style={{ margin: '10px 0' }}>
       <InputLabel color={'secondary'}>Password</InputLabel>
       <Input
-        id="standard-adornment-password"
         type={showPassword ? 'text' : 'password'}
         color={'secondary'}
         {...props.formikGetFieldProps}
@@ -54,9 +53,7 @@ export const SuperPasswordInput = (props: SuperInputType) => {
         }
       />
       {props.formikTouched && props.formikErrors && (
-        <div style={{ color: 'red', margin: '10px 0', textAlign: 'left' }}>
-          {props.formikErrors}
-        </div>
+        <div className={styles.errorText}>{props.formikErrors}</div>
       )}
     </FormControl>
   )

@@ -73,7 +73,6 @@ export const SignUp = () => {
               style={{
                 justifyContent: 'space-around',
                 alignItems: 'center',
-                height: '300px',
               }}
             >
               <SuperEmailInput
@@ -95,19 +94,17 @@ export const SignUp = () => {
             </FormGroup>
           </form>
           <p>Already have an account?</p>
-          <span>
-            <NavLink
-              to={`${PATH.LOGIN}`}
-              style={{
-                fontWeight: 'bold',
-                textDecoration: 'underline',
-                color: '#366eff',
-                fontSize: '16px',
-              }}
-            >
-              Sign In
-            </NavLink>
-          </span>
+          <NavLink
+            to={`${PATH.LOGIN}`}
+            style={{
+              fontWeight: 'bold',
+              textDecoration: 'underline',
+              color: '#366eff',
+              fontSize: '16px',
+            }}
+          >
+            Sign In
+          </NavLink>
         </FormControl>
       </Grid>
     </Grid>

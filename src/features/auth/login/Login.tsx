@@ -78,7 +78,6 @@ export const Login = () => {
               style={{
                 justifyContent: 'space-around',
                 alignItems: 'center',
-                height: '400px',
               }}
             >
               <SuperEmailInput
@@ -113,22 +112,21 @@ export const Login = () => {
                 </a>
               </div>
               <SuperButton title={'Sign in'} />
-              <div style={{ margin: '10px 0 -10px 0' }}>No account?</div>
-              <a
-                href={'#/signUp'}
-                color={'secondary'}
-                style={{
-                  textDecoration: 'underline',
-                  color: '#366eff',
-                  fontSize: '16px',
-                  marginBottom: '-20px',
-                  fontWeight: 'bold',
-                }}
-              >
-                Sign Up
-              </a>
             </FormGroup>
           </form>
+          <p>No account?</p>
+          <a
+            href={'#/signUp'}
+            color={'secondary'}
+            style={{
+              textDecoration: 'underline',
+              color: '#366eff',
+              fontSize: '16px',
+              fontWeight: 'bold',
+            }}
+          >
+            Sign Up
+          </a>
         </FormControl>
       </Grid>
     </Grid>
