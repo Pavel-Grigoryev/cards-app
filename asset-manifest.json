@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/cards-app/static/css/main.6de27740.css",
-    "main.js": "/cards-app/static/js/main.78396b44.js",
+    "main.js": "/cards-app/static/js/main.8f97f088.js",
     "static/js/787.3cdc8eeb.chunk.js": "/cards-app/static/js/787.3cdc8eeb.chunk.js",
     "static/media/sendMessage.png": "/cards-app/static/media/sendMessage.1f5609ea22ca7498488a.png",
     "static/media/avatar.jpg": "/cards-app/static/media/avatar.73d18715c70ac4f7fd5e.jpg",
@@ -10,11 +10,11 @@
     "static/media/logout.svg": "/cards-app/static/media/logout.4631dbd136b384a8118857f16dae43d5.svg",
     "static/media/backArrow.svg": "/cards-app/static/media/backArrow.19c7bd8ee7d32ca8451f1de3f6803354.svg",
     "main.6de27740.css.map": "/cards-app/static/css/main.6de27740.css.map",
-    "main.78396b44.js.map": "/cards-app/static/js/main.78396b44.js.map",
+    "main.8f97f088.js.map": "/cards-app/static/js/main.8f97f088.js.map",
     "787.3cdc8eeb.chunk.js.map": "/cards-app/static/js/787.3cdc8eeb.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.6de27740.css",
-    "static/js/main.78396b44.js"
+    "static/js/main.8f97f088.js"
   ]
 }
