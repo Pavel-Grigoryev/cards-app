@@ -58,7 +58,7 @@ export const Header = () => {
                     padding: '4px 16px',
                   }}
                 >
-                  Sing in
+                  Sign in
                 </Button>
               </div>
             )}
