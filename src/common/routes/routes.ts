@@ -4,6 +4,6 @@ export const PATH = {
   PROFILE: '/profile',
   NOT_FOUND: '/404',
   PASSWORD_RECOVERY: '/passRecovery',
-  SET_NEW_PASSWORD: '/set-new-password/*',
+  SET_NEW_PASSWORD: '/set-new-password/:token',
   TEST_PAGE: '/testPage',
 }

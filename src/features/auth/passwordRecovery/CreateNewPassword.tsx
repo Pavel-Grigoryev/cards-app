@@ -5,7 +5,7 @@ import FormGroup from '@mui/material/FormGroup'
 import FormLabel from '@mui/material/FormLabel'
 import Grid from '@mui/material/Grid'
 import { useFormik } from 'formik'
-import { Navigate } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../../app/store'
 import { SuperButton } from '../../../common/components/SuperButton'
@@ -20,13 +20,14 @@ type FormikErrorType = {
 
 export const CreateNewPassword = () => {
   const setNewPassword = useAppSelector(state => state.auth.setNewPassword)
-  const url = window.location.href.split('/')
+
+  const { token } = useParams()
 
   const dispatch = useAppDispatch()
   const formik = useFormik({
     initialValues: {
       password: '',
-      resetPasswordToken: url[url.length - 1],
+      resetPasswordToken: token,
     },
 
     validate: values => {

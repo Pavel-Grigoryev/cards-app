@@ -68,7 +68,7 @@ export type ForgotType = {
 
 export type SetNewPasswordType = {
   password: string
-  resetPasswordToken: string
+  resetPasswordToken: string | undefined
 }
 
 export type ProfilePayloadType = {
