@@ -8,6 +8,7 @@ import { clearProfileDataAC, setProfileAC } from '../profile/profile-reducer'
 
 const initialState = {
   isLoggedIn: false,
+  isSignedUp: false,
   isInitialized: false,
   checkEmail: false,
   saveEmail: '',
@@ -24,6 +25,7 @@ type ActionsType =
   | ReturnType<typeof checkEmailAC>
   | ReturnType<typeof saveEmailAC>
   | ReturnType<typeof setNewPasswordAC>
+  | ReturnType<typeof setSignUpAC>
 
 export const authReducer = (
   state: InitialStateType = initialState,
@@ -32,6 +34,8 @@ export const authReducer = (
   switch (action.type) {
     case 'LOGIN':
       return { ...state, isLoggedIn: action.value }
+    case 'SIGN-UP':
+      return { ...state, isSignedUp: action.value }
     case 'CHECK-EMAIL':
       return { ...state, checkEmail: action.value }
     case 'SAVE-EMAIL':
@@ -44,6 +48,8 @@ export const authReducer = (
 }
 // actions
 export const setLoginAC = (value: boolean) => ({ type: 'LOGIN', value } as const)
+
+export const setSignUpAC = (value: boolean) => ({ type: 'SIGN-UP', value } as const)
 
 export const checkEmailAC = (value: boolean) => ({ type: 'CHECK-EMAIL', value } as const)
 
@@ -73,9 +79,8 @@ export const signUpTC = (data: AuthType) => (dispatch: Dispatch<ActionsType>) =>
   authAPI
     .signup(data)
     .then(res => {
-      console.log(res)
-      //setLoginAC(true)
-      //редирект на логин??
+      dispatch(setSignUpAC(true))
+      dispatch(setAppStatusAC('succeeded'))
     })
     .catch((err: AxiosError<{ error: string }>) => {
       const error = err.response ? err.response.data.error : err.message

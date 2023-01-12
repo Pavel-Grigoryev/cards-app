@@ -3,9 +3,9 @@ import React from 'react'
 import { FormGroup, FormLabel, Grid } from '@mui/material'
 import FormControl from '@mui/material/FormControl'
 import { useFormik } from 'formik'
-import { NavLink } from 'react-router-dom'
+import { Navigate, NavLink } from 'react-router-dom'
 
-import { useAppDispatch } from '../../../app/store'
+import { useAppDispatch, useAppSelector } from '../../../app/store'
 import { SuperButton } from '../../../common/components/SuperButton'
 import { SuperEmailInput, SuperPasswordInput } from '../../../common/components/SuperInputs'
 import { PATH } from '../../../common/routes/routes'
@@ -21,6 +21,7 @@ type ErrorsType = {
 
 export const SignUp = () => {
   const dispatch = useAppDispatch()
+  const isSignedUp = useAppSelector(state => state.auth.isSignedUp)
 
   const formik = useFormik({
     initialValues: {
@@ -53,6 +54,10 @@ export const SignUp = () => {
       formik.resetForm()
     },
   })
+
+  if (isSignedUp) {
+    return <Navigate to={PATH.LOGIN} />
+  }
 
   return (
     <Grid container justifyContent={'center'} alignItems={'center'}>

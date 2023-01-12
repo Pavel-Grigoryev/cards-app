@@ -23,7 +23,7 @@ export const SuperButton = (props: SuperButtonType) => {
         borderRadius: '9999px',
         padding: '4px 16px',
         width: '80%',
-        margin: '30px 0',
+        marginTop: '30px',
       }}
     >
       {props.title}
