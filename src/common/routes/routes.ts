@@ -6,4 +6,4 @@ export const PATH = {
   PASSWORD_RECOVERY: '/passRecovery',
   SET_NEW_PASSWORD: '/set-new-password/:token',
   TEST_PAGE: '/testPage',
-}
+} as const
