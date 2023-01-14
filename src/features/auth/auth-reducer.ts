@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios'
 import { Dispatch } from 'redux'
 
-import { authAPI, AuthType, ForgotType, SetNewPasswordType } from '../../app/api'
+import { authAPI, AuthType, DataRecovType, ForgotType, SetNewPasswordType } from '../../app/api'
 import { setAppErrorAC, setAppStatusAC } from '../../app/app-reducer'
 import { AppThunk } from '../../app/store'
 import { clearProfileDataAC, setProfileAC } from '../Profile/profile-reducer'
@@ -63,7 +63,7 @@ export const signInTC = (data: AuthType) => (dispatch: Dispatch<ActionsType>) =>
   authAPI
     .login(data)
     .then(res => {
-      dispatch(setProfileAC(res.data))
+      dispatch(setProfileAC({ profile: res.data }))
       dispatch(setLoginAC(true))
       dispatch(setAppStatusAC('succeeded'))
     })
@@ -93,8 +93,22 @@ export const signUpTC = (data: AuthType) => (dispatch: Dispatch<ActionsType>) =>
 export const passwordRecoveryTC = (data: ForgotType) => (dispatch: Dispatch<ActionsType>) => {
   dispatch(setAppStatusAC('loading'))
   dispatch(saveEmailAC(data.email))
+  const path =
+    process.env.NODE_ENV === 'development'
+      ? 'http://localhost:3000'
+      : 'https://pavel-grigoryev.github.io/cards-app'
+
+  const dataRec: DataRecovType = {
+    email: data.email,
+    message: `<div style="background-color: lime; padding: 15px">
+password recovery link: 
+<a href='${path}/#/set-new-password/$token$'>
+link</a>
+</div>`,
+  }
+
   authAPI
-    .forgot(data)
+    .forgot(dataRec)
     .then(res => {
       dispatch(setAppStatusAC('succeeded'))
       dispatch(checkEmailAC(true))

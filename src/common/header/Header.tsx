@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import { RequestStatusType } from '../../app/app-reducer'
 import { useAppSelector } from '../../app/store'
 import logo from '../../assets/images/logo.png'
-import { ProfileType } from '../../features/profile/profile-reducer'
+import { ProfileType } from '../../features/Profile/profile-reducer'
 import { SuperButton } from '../components/SuperButton'
 import { PATH } from '../routes/routes'
 
