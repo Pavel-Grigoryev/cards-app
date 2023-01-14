@@ -1,11 +1,10 @@
 import { AxiosError } from 'axios'
 import { Dispatch } from 'redux'
 
-import { authAPI, AuthType, DataRecovType, ForgotType, SetNewPasswordType } from '../../app/api'
+import { authAPI, AuthType, ForgotType, SetNewPasswordType } from '../../app/api'
 import { setAppErrorAC, setAppStatusAC } from '../../app/app-reducer'
 import { AppThunk } from '../../app/store'
-import { handleServerNetworkError } from '../../common/utils/error-utils'
-import { clearProfileDataAC, setProfileAC } from '../profile/profile-reducer'
+import { clearProfileDataAC, setProfileAC } from '../Profile/profile-reducer'
 
 const initialState = {
   isLoggedIn: false,
@@ -69,7 +68,10 @@ export const signInTC = (data: AuthType) => (dispatch: Dispatch<ActionsType>) =>
       dispatch(setAppStatusAC('succeeded'))
     })
     .catch((err: AxiosError<{ error: string }>) => {
-      handleServerNetworkError(err, dispatch)
+      const error = err.response ? err.response.data.error : err.message
+
+      dispatch(setAppStatusAC('failed'))
+      dispatch(setAppErrorAC(error))
     })
 }
 
@@ -81,35 +83,27 @@ export const signUpTC = (data: AuthType) => (dispatch: Dispatch<ActionsType>) =>
       dispatch(setAppStatusAC('succeeded'))
     })
     .catch((err: AxiosError<{ error: string }>) => {
-      handleServerNetworkError(err, dispatch)
+      const error = err.response ? err.response.data.error : err.message
+
+      dispatch(setAppStatusAC('failed'))
+      dispatch(setAppErrorAC(error))
     })
 }
 
 export const passwordRecoveryTC = (data: ForgotType) => (dispatch: Dispatch<ActionsType>) => {
   dispatch(setAppStatusAC('loading'))
   dispatch(saveEmailAC(data.email))
-  const path =
-    process.env.NODE_ENV === 'development'
-      ? 'http://localhost:3000'
-      : 'https://pavel-grigoryev.github.io/cards-app'
-
-  const dataRec: DataRecovType = {
-    email: data.email,
-    message: `<div style="background-color: lime; padding: 15px">
-password recovery link: 
-<a href='${path}/#/set-new-password/$token$'>
-link</a>
-</div>`,
-  }
-
   authAPI
-    .forgot(dataRec)
+    .forgot(data)
     .then(res => {
       dispatch(setAppStatusAC('succeeded'))
       dispatch(checkEmailAC(true))
     })
     .catch((err: AxiosError<{ error: string }>) => {
-      handleServerNetworkError(err, dispatch)
+      const error = err.response ? err.response.data.error : err.message
+
+      dispatch(setAppStatusAC('failed'))
+      dispatch(setAppErrorAC(error))
     })
 }
 
@@ -122,7 +116,10 @@ export const setNewPasswordTC = (data: SetNewPasswordType) => (dispatch: Dispatc
       dispatch(setNewPasswordAC(true))
     })
     .catch((err: AxiosError<{ error: string }>) => {
-      handleServerNetworkError(err, dispatch)
+      const error = err.response ? err.response.data.error : err.message
+
+      dispatch(setAppStatusAC('failed'))
+      dispatch(setAppErrorAC(error))
     })
 }
 
@@ -136,6 +133,9 @@ export const logoutTC = (): AppThunk => dispatch => {
       dispatch(clearProfileDataAC())
     })
     .catch((err: AxiosError<{ error: string }>) => {
-      handleServerNetworkError(err, dispatch)
+      const error = err.response ? err.response.data.error : err.message
+
+      dispatch(setAppStatusAC('failed'))
+      dispatch(setAppErrorAC(error))
     })
 }

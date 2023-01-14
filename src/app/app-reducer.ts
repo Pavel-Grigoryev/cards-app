@@ -2,7 +2,7 @@ import { AxiosError } from 'axios'
 
 import { handleServerNetworkError } from '../common/utils/error-utils'
 import { setLoginAC } from '../features/auth/auth-reducer'
-import { setProfileAC } from '../features/profile/profile-reducer'
+import { setProfileAC } from '../features/Profile/profile-reducer'
 
 import { authAPI } from './api'
 import { AppThunk } from './store'
@@ -46,7 +46,7 @@ export const initializeAppTC = (): AppThunk => dispatch => {
     .me()
     .then(res => {
       dispatch(setLoginAC(true))
-      dispatch(setProfileAC(res.data))
+      dispatch(setProfileAC({ profile: res.data }))
       dispatch(setAppStatusAC('succeeded'))
     })
     .catch((err: AxiosError<{ error: string }>) => {

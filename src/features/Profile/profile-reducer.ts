@@ -1,3 +1,4 @@
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 
 import { authAPI, ProfilePayloadType } from '../../app/api'
@@ -10,28 +11,27 @@ const initialState = {
   profile: {} as ProfileType,
 }
 
-export const profileReducer = (state = initialState, action: ActionsType): InitialStateType => {
-  switch (action.type) {
-    case 'PROFILE/SET-PROFILE':
-      return { ...state, profile: { ...action.profile, avatar: avatar } }
-    case 'PROFILE/UPDATE-PROFILE':
-      return { ...state, profile: { ...state.profile, ...action.profileUpd } }
-    case 'PROFILE/CLEAR-DATA':
-      return { ...state, profile: {} as ProfileType }
-    default:
-      return state
-  }
-}
+const slice = createSlice({
+  name: 'app',
+  initialState,
+  reducers: {
+    setProfileAC(state, action: PayloadAction<{ profile: ProfileType }>) {
+      state.profile = { ...action.payload.profile, avatar: avatar }
+    },
+    updateProfileAC(state, action: PayloadAction<{ profileUpd: ProfileUpdateType }>) {
+      state.profile = { ...state.profile, ...action.payload.profileUpd }
+    },
+    clearProfileDataAC(state) {
+      state.profile = {} as ProfileType
+    },
+  },
+})
+
+export const profileReducer = slice.reducer
 
 //Actions
 
-export const setProfileAC = (profile: ProfileType) =>
-  ({ type: 'PROFILE/SET-PROFILE', profile } as const)
-
-export const updateProfileAC = (profileUpd: ProfileUpdateType) =>
-  ({ type: 'PROFILE/UPDATE-PROFILE', profileUpd } as const)
-
-export const clearProfileDataAC = () => ({ type: 'PROFILE/CLEAR-DATA' } as const)
+export const { setProfileAC, updateProfileAC, clearProfileDataAC } = slice.actions
 
 //Thunks
 
@@ -53,7 +53,7 @@ export const updateProfileTC =
       authAPI
         .updateProfile(newProfileModel)
         .then(res => {
-          dispatch(updateProfileAC(newProfileModel))
+          dispatch(updateProfileAC({ profileUpd: newProfileModel }))
 
           dispatch(setAppStatusAC('succeeded'))
         })
@@ -85,9 +85,3 @@ export type ProfileUpdateType = {
 }
 
 export type InitialStateType = typeof initialState
-
-type SetProfileAT = ReturnType<typeof setProfileAC>
-type UpdateProfileAT = ReturnType<typeof updateProfileAC>
-type ClearProfileDataAT = ReturnType<typeof clearProfileDataAC>
-
-export type ActionsType = SetProfileAT | UpdateProfileAT | ClearProfileDataAT

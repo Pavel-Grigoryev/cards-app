@@ -13,7 +13,7 @@ import { Login } from '../features/auth/login/Login'
 import { CreateNewPassword } from '../features/auth/passwordRecovery/CreateNewPassword'
 import { PasswordRecovery } from '../features/auth/passwordRecovery/PasswordRecovery'
 import { SignUp } from '../features/auth/signUp/SignUp'
-import { Profile } from '../features/profile/Profile'
+import { Profile } from '../features/Profile/Profile'
 
 import { initializeAppTC } from './app-reducer'
 import { useAppDispatch, useAppSelector } from './store'
