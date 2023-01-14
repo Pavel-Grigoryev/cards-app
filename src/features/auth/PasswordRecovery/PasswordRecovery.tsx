@@ -8,10 +8,10 @@ import { useFormik } from 'formik'
 
 import { useAppDispatch, useAppSelector } from '../../../app/store'
 import sendMessagePic from '../../../assets/images/sendMessage.png'
-import { SuperButton } from '../../../common/components/SuperButton'
-import { SuperEmailInput } from '../../../common/components/SuperInputs'
+import { SuperButton } from '../../../common/components/SuperButton/SuperButton'
+import { SuperEmailInput } from '../../../common/components/SuperInputs/SuperInputs'
 import { checkEmailAC, passwordRecoveryTC, saveEmailAC } from '../auth-reducer'
-import styles from '../login/Login.module.scss'
+import styles from '../Login/Login.module.scss'
 
 type FormikErrorType = {
   email?: string
@@ -71,8 +71,8 @@ export const PasswordRecovery = () => {
               We’ve sent an Email with instructions to {saveEmail}
             </div>
             <SuperButton
-              href={'#/login'}
-              title={'Back to login'}
+              href={'#/Login'}
+              title={'Back to Login'}
               onClick={() => {
                 dispatch(checkEmailAC(false))
                 dispatch(saveEmailAC(''))
@@ -125,7 +125,7 @@ export const PasswordRecovery = () => {
               <div>Did you remember your password?</div>
 
               <a
-                href={'#/login'}
+                href={'#/Login'}
                 color={'secondary'}
                 style={{
                   textDecoration: 'underline',

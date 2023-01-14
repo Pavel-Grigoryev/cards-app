@@ -9,8 +9,11 @@ import { useFormik } from 'formik'
 import { Navigate } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../../app/store'
-import { SuperButton } from '../../../common/components/SuperButton'
-import { SuperEmailInput, SuperPasswordInput } from '../../../common/components/SuperInputs'
+import { SuperButton } from '../../../common/components/SuperButton/SuperButton'
+import {
+  SuperEmailInput,
+  SuperPasswordInput,
+} from '../../../common/components/SuperInputs/SuperInputs'
 import { PATH } from '../../../common/routes/routes'
 import { loginSchema } from '../../../common/utils/validationSchema'
 import { signInTC } from '../auth-reducer'
@@ -102,7 +105,7 @@ export const Login = () => {
           </form>
           <p>No account?</p>
           <a
-            href={'#/signUp'}
+            href={'#/SignUp'}
             color={'secondary'}
             style={{
               textDecoration: 'underline',

@@ -8,11 +8,11 @@ import { useFormik } from 'formik'
 import { Navigate, useParams } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../../app/store'
-import { SuperButton } from '../../../common/components/SuperButton'
-import { SuperPasswordInput } from '../../../common/components/SuperInputs'
+import { SuperButton } from '../../../common/components/SuperButton/SuperButton'
+import { SuperPasswordInput } from '../../../common/components/SuperInputs/SuperInputs'
 import { PATH } from '../../../common/routes/routes'
 import { setNewPasswordTC } from '../auth-reducer'
-import styles from '../login/Login.module.scss'
+import styles from '../Login/Login.module.scss'
 
 type FormikErrorType = {
   password?: string

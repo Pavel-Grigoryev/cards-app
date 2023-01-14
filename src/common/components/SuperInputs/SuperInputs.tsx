@@ -4,7 +4,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { IconButton, Input, InputAdornment, InputLabel } from '@mui/material'
 import FormControl from '@mui/material/FormControl'
 
-import styles from '../styles/errors.module.scss'
+import styles from '../../styles/errors.module.scss'
 
 type SuperInputType = {
   formikTouched: boolean | undefined
