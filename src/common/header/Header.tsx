@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom'
 import { RequestStatusType } from '../../app/app-reducer'
 import { useAppSelector } from '../../app/store'
 import logo from '../../assets/images/logo.png'
-import { ProfileType } from '../../features/profile/profile-reducer'
+import { ProfileType } from '../../features/Profile/profile-reducer'
 import { PATH } from '../routes/routes'
 
 import s from './Header.module.scss'

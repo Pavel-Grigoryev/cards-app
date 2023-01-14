@@ -4,7 +4,7 @@ import { Dispatch } from 'redux'
 import { authAPI, AuthType, ForgotType, SetNewPasswordType } from '../../app/api'
 import { setAppErrorAC, setAppStatusAC } from '../../app/app-reducer'
 import { AppThunk } from '../../app/store'
-import { clearProfileDataAC, setProfileAC } from '../profile/profile-reducer'
+import { clearProfileDataAC, setProfileAC } from '../Profile/profile-reducer'
 
 const initialState = {
   isLoggedIn: false,
@@ -63,7 +63,7 @@ export const signInTC = (data: AuthType) => (dispatch: Dispatch<ActionsType>) =>
   authAPI
     .login(data)
     .then(res => {
-      dispatch(setProfileAC(res.data))
+      dispatch(setProfileAC({ profile: res.data }))
       dispatch(setLoginAC(true))
       dispatch(setAppStatusAC('succeeded'))
     })
