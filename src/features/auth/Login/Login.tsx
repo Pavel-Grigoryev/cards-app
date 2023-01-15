@@ -1,7 +1,8 @@
 import React from 'react'
 
-import { Checkbox, FormControlLabel } from '@mui/material'
+import Checkbox from '@mui/material/Checkbox'
 import FormControl from '@mui/material/FormControl'
+import FormControlLabel from '@mui/material/FormControlLabel'
 import FormGroup from '@mui/material/FormGroup'
 import FormLabel from '@mui/material/FormLabel'
 import Grid from '@mui/material/Grid'

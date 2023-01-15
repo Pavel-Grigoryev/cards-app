@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from '../../../app/store'
 import { SuperButton } from '../../../common/components/SuperButton/SuperButton'
 import { SuperPasswordInput } from '../../../common/components/SuperInputs/SuperInputs'
 import { PATH } from '../../../common/routes/routes'
+import { createNewPasswordSchema } from '../../../common/utils/validationSchema'
 import {
   ContainerSX,
   FormLabelSX,
@@ -20,10 +21,6 @@ import {
 import { loginSchema, passwordSchema } from '../../../common/utils/validationSchema'
 import { setNewPasswordTC } from '../auth-reducer'
 import styles from '../PasswordRecovery/PasswordRecovery.module.scss'
-
-type FormikErrorType = {
-  password?: string
-}
 
 export const CreateNewPassword = () => {
   const setNewPassword = useAppSelector(state => state.auth.setNewPassword)
@@ -37,7 +34,7 @@ export const CreateNewPassword = () => {
       resetPasswordToken: token,
     },
 
-    validationSchema: passwordSchema,
+    validationSchema: createNewPasswordSchema,
 
     onSubmit: values => {
       dispatch(setNewPasswordTC(values))

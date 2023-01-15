@@ -8,9 +8,11 @@ import { useFormik } from 'formik'
 import { NavLink } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../../app/store'
-import sendMessagePic from '../../../assets/images/sendMessage.png'
 import { SuperButton } from '../../../common/components/SuperButton/SuperButton'
 import { SuperEmailInput } from '../../../common/components/SuperInputs/SuperInputs'
+import { passwordRecoverySchema } from '../../../common/utils/validationSchema'
+import { passwordRecoveryTC } from '../auth-reducer'
+import styles from '../Login/Login.module.scss'
 import { PATH } from '../../../common/routes/routes'
 import {
   ContainerSX,
@@ -22,18 +24,19 @@ import { emailSchema, loginSchema } from '../../../common/utils/validationSchema
 import { checkEmailAC, passwordRecoveryTC, saveEmailAC } from '../auth-reducer'
 import styles from '../Auth.module.scss'
 
+import { CheckEmail } from './CheckEmail'
 import stylePR from './PasswordRecovery.module.scss'
 
 export const PasswordRecovery = () => {
   const dispatch = useAppDispatch()
   const checkEmail = useAppSelector(state => state.auth.checkEmail)
-  const saveEmail = useAppSelector(state => state.auth.saveEmail)
+
   const formik = useFormik({
     initialValues: {
       email: '',
     },
 
-    validationSchema: emailSchema,
+    validationSchema: passwordRecoverySchema,
 
     onSubmit: values => {
       dispatch(passwordRecoveryTC(values))
