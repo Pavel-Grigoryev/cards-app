@@ -11,12 +11,9 @@ import { useAppDispatch, useAppSelector } from '../../../app/store'
 import { SuperButton } from '../../../common/components/SuperButton/SuperButton'
 import { SuperPasswordInput } from '../../../common/components/SuperInputs/SuperInputs'
 import { PATH } from '../../../common/routes/routes'
+import { createNewPasswordSchema } from '../../../common/utils/validationSchema'
 import { setNewPasswordTC } from '../auth-reducer'
 import styles from '../Login/Login.module.scss'
-
-type FormikErrorType = {
-  password?: string
-}
 
 export const CreateNewPassword = () => {
   const setNewPassword = useAppSelector(state => state.auth.setNewPassword)
@@ -30,17 +27,7 @@ export const CreateNewPassword = () => {
       resetPasswordToken: token,
     },
 
-    validate: values => {
-      const errors: FormikErrorType = {}
-
-      if (!values.password) {
-        errors.password = 'Required'
-      } else if (values.password.length < 7) {
-        errors.password = 'Password length should be more 7 symbol'
-      }
-
-      return errors
-    },
+    validationSchema: createNewPasswordSchema,
 
     onSubmit: values => {
       dispatch(setNewPasswordTC(values))

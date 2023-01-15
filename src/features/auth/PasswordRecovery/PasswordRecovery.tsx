@@ -7,36 +7,24 @@ import Grid from '@mui/material/Grid'
 import { useFormik } from 'formik'
 
 import { useAppDispatch, useAppSelector } from '../../../app/store'
-import sendMessagePic from '../../../assets/images/sendMessage.png'
 import { SuperButton } from '../../../common/components/SuperButton/SuperButton'
 import { SuperEmailInput } from '../../../common/components/SuperInputs/SuperInputs'
-import { checkEmailAC, passwordRecoveryTC, saveEmailAC } from '../auth-reducer'
+import { passwordRecoverySchema } from '../../../common/utils/validationSchema'
+import { passwordRecoveryTC } from '../auth-reducer'
 import styles from '../Login/Login.module.scss'
 
-type FormikErrorType = {
-  email?: string
-}
+import { CheckEmail } from './CheckEmail'
 
 export const PasswordRecovery = () => {
   const dispatch = useAppDispatch()
   const checkEmail = useAppSelector(state => state.auth.checkEmail)
-  const saveEmail = useAppSelector(state => state.auth.saveEmail)
+
   const formik = useFormik({
     initialValues: {
       email: '',
     },
 
-    validate: values => {
-      const errors: FormikErrorType = {}
-
-      if (!values.email) {
-        errors.email = 'Required'
-      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-        errors.email = 'Invalid email address'
-      }
-
-      return errors
-    },
+    validationSchema: passwordRecoverySchema,
 
     onSubmit: values => {
       dispatch(passwordRecoveryTC(values))
@@ -45,43 +33,7 @@ export const PasswordRecovery = () => {
   })
 
   if (checkEmail) {
-    return (
-      <Grid container justifyContent={'center'} alignItems={'center'}>
-        <Grid item justifyContent={'center'}>
-          <div
-            style={{
-              justifyContent: 'space-evenly',
-              marginTop: '30%',
-              padding: '30px 0',
-              minHeight: '408px',
-            }}
-            className={styles.loginContainer}
-          >
-            <FormLabel>
-              <h1 style={{ color: '#000000', marginBottom: '20px' }}>Check Email</h1>
-            </FormLabel>
-
-            <img
-              style={{ width: '150px', height: '150px', marginBottom: '20px' }}
-              src={sendMessagePic}
-              alt={'Send message pic'}
-            />
-
-            <div style={{ marginBottom: '20px' }}>
-              We’ve sent an Email with instructions to {saveEmail}
-            </div>
-            <SuperButton
-              href={'#/Login'}
-              title={'Back to Login'}
-              onClick={() => {
-                dispatch(checkEmailAC(false))
-                dispatch(saveEmailAC(''))
-              }}
-            />
-          </div>
-        </Grid>
-      </Grid>
-    )
+    return <CheckEmail />
   }
 
   return (
@@ -112,7 +64,14 @@ export const PasswordRecovery = () => {
                 formikErrors={formik.errors.email}
                 formikGetFieldProps={{ ...formik.getFieldProps('email') }}
               />
-              <div style={{ margin: '-30px 10%', textAlign: 'left', lineHeight: '20px' }}>
+              <div
+                style={{
+                  margin: '-30px 10%',
+                  textAlign: 'left',
+                  lineHeight: '20px',
+                  paddingTop: '20px',
+                }}
+              >
                 Enter your email address and we will send you further instructions{' '}
               </div>
               <SuperButton
