@@ -45,7 +45,7 @@ export const initializeAppTC = (): AppThunk => dispatch => {
   authAPI
     .me()
     .then(res => {
-      dispatch(setLoginAC(true))
+      dispatch(setLoginAC({ isLoggedIn: true }))
       dispatch(setProfileAC({ profile: res.data }))
       dispatch(setAppStatusAC('succeeded'))
     })
