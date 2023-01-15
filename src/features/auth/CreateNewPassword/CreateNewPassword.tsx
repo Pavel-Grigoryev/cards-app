@@ -11,14 +11,13 @@ import { useAppDispatch, useAppSelector } from '../../../app/store'
 import { SuperButton } from '../../../common/components/SuperButton/SuperButton'
 import { SuperPasswordInput } from '../../../common/components/SuperInputs/SuperInputs'
 import { PATH } from '../../../common/routes/routes'
-import { createNewPasswordSchema } from '../../../common/utils/validationSchema'
 import {
   ContainerSX,
   FormLabelSX,
   PassRecoveryFormControlSX,
   PassRecoveryFormGroupSX,
 } from '../../../common/styles/sx/sx_styles'
-import { loginSchema, passwordSchema } from '../../../common/utils/validationSchema'
+import { createNewPasswordSchema } from '../../../common/utils/validationSchema'
 import { setNewPasswordTC } from '../auth-reducer'
 import styles from '../PasswordRecovery/PasswordRecovery.module.scss'
 

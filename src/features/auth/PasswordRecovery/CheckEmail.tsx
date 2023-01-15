@@ -1,13 +1,15 @@
 import React from 'react'
 
-import FormLabel from '@mui/material/FormLabel'
 import Grid from '@mui/material/Grid'
 
 import { useAppDispatch, useAppSelector } from '../../../app/store'
 import sendMessagePic from '../../../assets/images/sendMessage.png'
 import { SuperButton } from '../../../common/components/SuperButton/SuperButton'
+import { PATH } from '../../../common/routes/routes'
+import { ContainerSX } from '../../../common/styles/sx/sx_styles'
 import { checkEmailAC, saveEmailAC } from '../auth-reducer'
-import styles from '../Login/Login.module.scss'
+
+import stylePR from './PasswordRecovery.module.scss'
 
 export const CheckEmail = () => {
   const dispatch = useAppDispatch()
@@ -15,36 +17,20 @@ export const CheckEmail = () => {
   const saveEmail = useAppSelector(state => state.auth.saveEmail)
 
   return (
-    <Grid container justifyContent={'center'} alignItems={'center'}>
-      <Grid item justifyContent={'center'}>
-        <div
-          style={{
-            justifyContent: 'space-evenly',
-            marginTop: '30%',
-            padding: '30px 0',
-            minHeight: '408px',
-          }}
-          className={styles.loginContainer}
-        >
-          <FormLabel>
-            <h1 style={{ color: '#000000', marginBottom: '20px' }}>Check Email</h1>
-          </FormLabel>
+    <Grid container sx={{ ...ContainerSX }}>
+      <Grid item sx={{ ...ContainerSX }}>
+        <div className={stylePR.wrapper}>
+          <h1 className={stylePR.title}>Check Email</h1>
 
-          <img
-            style={{ width: '150px', height: '150px', marginBottom: '20px' }}
-            src={sendMessagePic}
-            alt={'Send message pic'}
-          />
+          <img className={stylePR.img} src={sendMessagePic} alt={'Send message pic'} />
 
-          <div style={{ marginBottom: '20px' }}>
-            We’ve sent an Email with instructions to {saveEmail}
-          </div>
+          <div className={stylePR.text}>We’ve sent an Email with instructions to {saveEmail}</div>
           <SuperButton
-            href={'#/Login'}
+            href={`${PATH.LOGIN}`}
             title={'Back to Login'}
             onClick={() => {
               dispatch(checkEmailAC({ checkEmail: false }))
-              dispatch(saveEmailAC({ saveEmail: '' }))
+              dispatch(saveEmailAC({ saveEmail: ' ' }))
             }}
           />
         </div>

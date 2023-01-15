@@ -10,9 +10,6 @@ import { NavLink } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../../app/store'
 import { SuperButton } from '../../../common/components/SuperButton/SuperButton'
 import { SuperEmailInput } from '../../../common/components/SuperInputs/SuperInputs'
-import { passwordRecoverySchema } from '../../../common/utils/validationSchema'
-import { passwordRecoveryTC } from '../auth-reducer'
-import styles from '../Login/Login.module.scss'
 import { PATH } from '../../../common/routes/routes'
 import {
   ContainerSX,
@@ -20,8 +17,8 @@ import {
   PassRecoveryFormControlSX,
   PassRecoveryFormGroupSX,
 } from '../../../common/styles/sx/sx_styles'
-import { emailSchema, loginSchema } from '../../../common/utils/validationSchema'
-import { checkEmailAC, passwordRecoveryTC, saveEmailAC } from '../auth-reducer'
+import { passwordRecoverySchema } from '../../../common/utils/validationSchema'
+import { passwordRecoveryTC } from '../auth-reducer'
 import styles from '../Auth.module.scss'
 
 import { CheckEmail } from './CheckEmail'
@@ -44,27 +41,7 @@ export const PasswordRecovery = () => {
   })
 
   if (checkEmail) {
-    return (
-      <Grid container sx={{ ...ContainerSX }}>
-        <Grid item sx={{ ...ContainerSX }}>
-          <div className={stylePR.wrapper}>
-            <h1 className={stylePR.title}>Check Email</h1>
-
-            <img className={stylePR.img} src={sendMessagePic} alt={'Send message pic'} />
-
-            <div className={stylePR.text}>We’ve sent an Email with instructions to {saveEmail}</div>
-            <SuperButton
-              href={`${PATH.LOGIN}`}
-              title={'Back to Login'}
-              onClick={() => {
-                dispatch(checkEmailAC(false))
-                dispatch(saveEmailAC(''))
-              }}
-            />
-          </div>
-        </Grid>
-      </Grid>
-    )
+    return <CheckEmail />
   }
 
   return (
