@@ -43,8 +43,8 @@ export const CheckEmail = () => {
             href={'#/Login'}
             title={'Back to Login'}
             onClick={() => {
-              dispatch(checkEmailAC(false))
-              dispatch(saveEmailAC(''))
+              dispatch(checkEmailAC({ checkEmail: false }))
+              dispatch(saveEmailAC({ saveEmail: '' }))
             }}
           />
         </div>
