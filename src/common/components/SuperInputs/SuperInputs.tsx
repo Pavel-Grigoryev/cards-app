@@ -35,7 +35,7 @@ export const SuperPasswordInput = (props: SuperInputType) => {
   }
 
   return (
-    <FormControl sx={{ width: '80%' }} variant="standard" style={{ margin: '10px 0' }}>
+    <FormControl sx={{ width: '80%', margin: '10px 0' }} variant="standard">
       <InputLabel color={'secondary'}>{props.name ? props.name : 'Password'}</InputLabel>
       <Input
         type={showPassword ? 'text' : 'password'}

@@ -5,17 +5,24 @@ import FormGroup from '@mui/material/FormGroup'
 import FormLabel from '@mui/material/FormLabel'
 import Grid from '@mui/material/Grid'
 import { useFormik } from 'formik'
+import { NavLink } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../../app/store'
 import sendMessagePic from '../../../assets/images/sendMessage.png'
 import { SuperButton } from '../../../common/components/SuperButton/SuperButton'
 import { SuperEmailInput } from '../../../common/components/SuperInputs/SuperInputs'
+import { PATH } from '../../../common/routes/routes'
+import {
+  ContainerSX,
+  FormLabelSX,
+  PassRecoveryFormControlSX,
+  PassRecoveryFormGroupSX,
+} from '../../../common/styles/sx/sx_styles'
+import { emailSchema, loginSchema } from '../../../common/utils/validationSchema'
 import { checkEmailAC, passwordRecoveryTC, saveEmailAC } from '../auth-reducer'
-import styles from '../Login/Login.module.scss'
+import styles from '../Auth.module.scss'
 
-type FormikErrorType = {
-  email?: string
-}
+import stylePR from './PasswordRecovery.module.scss'
 
 export const PasswordRecovery = () => {
   const dispatch = useAppDispatch()
@@ -26,52 +33,25 @@ export const PasswordRecovery = () => {
       email: '',
     },
 
-    validate: values => {
-      const errors: FormikErrorType = {}
-
-      if (!values.email) {
-        errors.email = 'Required'
-      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-        errors.email = 'Invalid email address'
-      }
-
-      return errors
-    },
+    validationSchema: emailSchema,
 
     onSubmit: values => {
       dispatch(passwordRecoveryTC(values))
-      formik.resetForm()
     },
   })
 
   if (checkEmail) {
     return (
-      <Grid container justifyContent={'center'} alignItems={'center'}>
-        <Grid item justifyContent={'center'}>
-          <div
-            style={{
-              justifyContent: 'space-evenly',
-              marginTop: '30%',
-              padding: '30px 0',
-              minHeight: '408px',
-            }}
-            className={styles.loginContainer}
-          >
-            <FormLabel>
-              <h1 style={{ color: '#000000', marginBottom: '20px' }}>Check Email</h1>
-            </FormLabel>
+      <Grid container sx={{ ...ContainerSX }}>
+        <Grid item sx={{ ...ContainerSX }}>
+          <div className={stylePR.wrapper}>
+            <h1 className={stylePR.title}>Check Email</h1>
 
-            <img
-              style={{ width: '150px', height: '150px', marginBottom: '20px' }}
-              src={sendMessagePic}
-              alt={'Send message pic'}
-            />
+            <img className={stylePR.img} src={sendMessagePic} alt={'Send message pic'} />
 
-            <div style={{ marginBottom: '20px' }}>
-              We’ve sent an Email with instructions to {saveEmail}
-            </div>
+            <div className={stylePR.text}>We’ve sent an Email with instructions to {saveEmail}</div>
             <SuperButton
-              href={'#/Login'}
+              href={`${PATH.LOGIN}`}
               title={'Back to Login'}
               onClick={() => {
                 dispatch(checkEmailAC(false))
@@ -85,34 +65,20 @@ export const PasswordRecovery = () => {
   }
 
   return (
-    <Grid container justifyContent={'center'} alignItems={'center'}>
-      <Grid item justifyContent={'center'}>
-        <FormControl
-          style={{
-            justifyContent: 'space-evenly',
-            marginTop: '30%',
-            padding: '30px 0',
-            minHeight: '456px',
-          }}
-          className={styles.loginContainer}
-        >
-          <FormLabel>
-            <h1 style={{ color: '#000000' }}>Forgot your password?</h1>
+    <Grid container sx={{ ...ContainerSX }}>
+      <Grid item sx={{ ...ContainerSX }}>
+        <FormControl sx={{ ...PassRecoveryFormControlSX }}>
+          <FormLabel sx={{ ...FormLabelSX }}>
+            <h1>Forgot your password?</h1>
           </FormLabel>
           <form onSubmit={formik.handleSubmit}>
-            <FormGroup
-              style={{
-                justifyContent: 'space-around',
-                alignItems: 'center',
-                height: '300px',
-              }}
-            >
+            <FormGroup sx={{ ...PassRecoveryFormGroupSX }}>
               <SuperEmailInput
                 formikTouched={formik.touched.email}
                 formikErrors={formik.errors.email}
                 formikGetFieldProps={{ ...formik.getFieldProps('email') }}
               />
-              <div style={{ margin: '-30px 10%', textAlign: 'left', lineHeight: '20px' }}>
+              <div className={stylePR.passRecoveryEmailText}>
                 Enter your email address and we will send you further instructions{' '}
               </div>
               <SuperButton
@@ -124,18 +90,9 @@ export const PasswordRecovery = () => {
 
               <div>Did you remember your password?</div>
 
-              <a
-                href={'#/Login'}
-                color={'secondary'}
-                style={{
-                  textDecoration: 'underline',
-                  color: '#366eff',
-                  fontSize: '16px',
-                  fontWeight: 'bold',
-                }}
-              >
+              <NavLink to={`${PATH.LOGIN}`} className={styles.redirectLink}>
                 Try logging in
-              </a>
+              </NavLink>
             </FormGroup>
           </form>
         </FormControl>
