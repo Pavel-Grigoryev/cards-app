@@ -23,7 +23,3 @@ export const passwordRecoverySchema = Yup.object().shape({
 export const createNewPasswordSchema = Yup.object().shape({
   password: validate.password,
 })
-
-export const passwordSchema = Yup.object().shape({
-  password: Yup.string().min(7, 'Too Short!').max(50, 'Too Long!').required('Required'),
-})
