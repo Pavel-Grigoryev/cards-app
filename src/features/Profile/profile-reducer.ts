@@ -12,7 +12,7 @@ const initialState = {
 }
 
 const slice = createSlice({
-  name: 'app',
+  name: 'profile',
   initialState,
   reducers: {
     setProfileAC(state, action: PayloadAction<{ profile: ProfileType }>) {
@@ -38,7 +38,7 @@ export const { setProfileAC, updateProfileAC, clearProfileDataAC } = slice.actio
 export const updateProfileTC =
   (profileUpd: ProfileUpdateType): AppThunk =>
   (dispatch, getState) => {
-    dispatch(setAppStatusAC('loading'))
+    dispatch(setAppStatusAC({ status: 'loading' }))
 
     const profile = getState().userProfile.profile
 
@@ -55,7 +55,7 @@ export const updateProfileTC =
         .then(res => {
           dispatch(updateProfileAC({ profileUpd: newProfileModel }))
 
-          dispatch(setAppStatusAC('succeeded'))
+          dispatch(setAppStatusAC({ status: 'succeeded' }))
         })
         .catch((err: AxiosError<{ error: string }>) => {
           handleServerNetworkError(err, dispatch)

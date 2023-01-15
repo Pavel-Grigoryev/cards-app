@@ -59,19 +59,19 @@ export const setNewPasswordAC = (value: boolean) => ({ type: 'SET-NEW-PASSWORD',
 
 //thunks
 export const signInTC = (data: AuthType) => (dispatch: Dispatch<ActionsType>) => {
-  dispatch(setAppStatusAC('loading'))
+  dispatch(setAppStatusAC({ status: 'loading' }))
   authAPI
     .login(data)
     .then(res => {
       dispatch(setProfileAC({ profile: res.data }))
       dispatch(setLoginAC(true))
-      dispatch(setAppStatusAC('succeeded'))
+      dispatch(setAppStatusAC({ status: 'succeeded' }))
     })
     .catch((err: AxiosError<{ error: string }>) => {
       const error = err.response ? err.response.data.error : err.message
 
-      dispatch(setAppStatusAC('failed'))
-      dispatch(setAppErrorAC(error))
+      dispatch(setAppStatusAC({ status: 'failed' }))
+      dispatch(setAppErrorAC({ error }))
     })
 }
 
@@ -80,18 +80,18 @@ export const signUpTC = (data: AuthType) => (dispatch: Dispatch<ActionsType>) =>
     .signup(data)
     .then(res => {
       dispatch(setSignUpAC(true))
-      dispatch(setAppStatusAC('succeeded'))
+      dispatch(setAppStatusAC({ status: 'succeeded' }))
     })
     .catch((err: AxiosError<{ error: string }>) => {
       const error = err.response ? err.response.data.error : err.message
 
-      dispatch(setAppStatusAC('failed'))
-      dispatch(setAppErrorAC(error))
+      dispatch(setAppStatusAC({ status: 'failed' }))
+      dispatch(setAppErrorAC({ error }))
     })
 }
 
 export const passwordRecoveryTC = (data: ForgotType) => (dispatch: Dispatch<ActionsType>) => {
-  dispatch(setAppStatusAC('loading'))
+  dispatch(setAppStatusAC({ status: 'loading' }))
   dispatch(saveEmailAC(data.email))
   const path =
     process.env.NODE_ENV === 'development'
@@ -110,46 +110,46 @@ link</a>
   authAPI
     .forgot(dataRec)
     .then(res => {
-      dispatch(setAppStatusAC('succeeded'))
+      dispatch(setAppStatusAC({ status: 'succeeded' }))
       dispatch(checkEmailAC(true))
     })
     .catch((err: AxiosError<{ error: string }>) => {
       const error = err.response ? err.response.data.error : err.message
 
-      dispatch(setAppStatusAC('failed'))
-      dispatch(setAppErrorAC(error))
+      dispatch(setAppStatusAC({ status: 'failed' }))
+      dispatch(setAppErrorAC({ error }))
     })
 }
 
 export const setNewPasswordTC = (data: SetNewPasswordType) => (dispatch: Dispatch<ActionsType>) => {
-  dispatch(setAppStatusAC('loading'))
+  dispatch(setAppStatusAC({ status: 'loading' }))
   authAPI
     .setNewPassword(data)
     .then(res => {
-      dispatch(setAppStatusAC('succeeded'))
+      dispatch(setAppStatusAC({ status: 'succeeded' }))
       dispatch(setNewPasswordAC(true))
     })
     .catch((err: AxiosError<{ error: string }>) => {
       const error = err.response ? err.response.data.error : err.message
 
-      dispatch(setAppStatusAC('failed'))
-      dispatch(setAppErrorAC(error))
+      dispatch(setAppStatusAC({ status: 'failed' }))
+      dispatch(setAppErrorAC({ error }))
     })
 }
 
 export const logoutTC = (): AppThunk => dispatch => {
-  dispatch(setAppStatusAC('loading'))
+  dispatch(setAppStatusAC({ status: 'loading' }))
   authAPI
     .logout()
     .then(() => {
-      dispatch(setAppStatusAC('succeeded'))
+      dispatch(setAppStatusAC({ status: 'succeeded' }))
       dispatch(setLoginAC(false))
       dispatch(clearProfileDataAC())
     })
     .catch((err: AxiosError<{ error: string }>) => {
       const error = err.response ? err.response.data.error : err.message
 
-      dispatch(setAppStatusAC('failed'))
-      dispatch(setAppErrorAC(error))
+      dispatch(setAppStatusAC({ status: 'failed' }))
+      dispatch(setAppErrorAC({ error }))
     })
 }
