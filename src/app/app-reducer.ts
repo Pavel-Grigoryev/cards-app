@@ -1,6 +1,6 @@
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 
-import { handleServerNetworkError } from '../common/utils/error-utils'
 import { setLoginAC } from '../features/auth/auth-reducer'
 import { setProfileAC } from '../features/Profile/profile-reducer'
 
@@ -13,58 +13,49 @@ const initialState = {
   isInit: false,
 }
 
-export const appReducer = (
-  state: InitialAppStateType = initialState,
-  action: ActionsType
-): InitialAppStateType => {
-  switch (action.type) {
-    case 'APP/SET-STATUS':
-      return { ...state, status: action.status }
-    case 'APP/SET-ERROR':
-      return { ...state, error: action.error }
-    case 'APP/SET-INITIALIZED':
-      return { ...state, isInit: action.isInit }
-    default:
-      return state
-  }
-}
+const slice = createSlice({
+  name: 'app',
+  initialState,
+  reducers: {
+    setAppErrorAC(state, action: PayloadAction<{ error: null | string }>) {
+      state.error = action.payload.error
+    },
+    setAppStatusAC(state, action: PayloadAction<{ status: RequestStatusType }>) {
+      state.status = action.payload.status
+    },
+    setAppInitializedAC(state, action: PayloadAction<{ isInit: boolean }>) {
+      state.isInit = action.payload.isInit
+    },
+  },
+})
+
+export const appReducer = slice.reducer
 
 //Actions
 
-export const setAppErrorAC = (error: string | null) => ({ type: 'APP/SET-ERROR', error } as const)
-export const setAppStatusAC = (status: RequestStatusType) =>
-  ({ type: 'APP/SET-STATUS', status } as const)
-export const setAppInitializedAC = (isInit: boolean) =>
-  ({ type: 'APP/SET-INITIALIZED', isInit } as const)
+export const { setAppErrorAC, setAppStatusAC, setAppInitializedAC } = slice.actions
 
 //Thunk
 
 export const initializeAppTC = (): AppThunk => dispatch => {
-  dispatch(setAppStatusAC('loading'))
+  dispatch(setAppStatusAC({ status: 'loading' }))
 
   authAPI
     .me()
     .then(res => {
       dispatch(setLoginAC(true))
       dispatch(setProfileAC({ profile: res.data }))
-      dispatch(setAppStatusAC('succeeded'))
+      dispatch(setAppStatusAC({ status: 'succeeded' }))
     })
     .catch((err: AxiosError<{ error: string }>) => {
-      handleServerNetworkError(err, dispatch)
+      console.log(err)
+      // handleServerNetworkError(err, dispatch)
     })
     .finally(() => {
-      dispatch(setAppInitializedAC(true))
-      dispatch(setAppStatusAC('idle'))
+      dispatch(setAppInitializedAC({ isInit: true }))
+      dispatch(setAppStatusAC({ status: 'idle' }))
     })
 }
 
 //Types
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
-
-export type InitialAppStateType = typeof initialState
-
-type SetAppInitializedAT = ReturnType<typeof setAppInitializedAC>
-type SetAppStatusAT = ReturnType<typeof setAppStatusAC>
-type SetAppErrorAT = ReturnType<typeof setAppErrorAC>
-
-export type ActionsType = SetAppStatusAT | SetAppErrorAT | SetAppInitializedAT
