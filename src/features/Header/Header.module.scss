@@ -1,4 +1,4 @@
-@import '../styles/varaibles';
+@import '../../common/styles/varaibles';
 
 .header {
   height: 64px;
@@ -26,7 +26,6 @@
     margin: 5px 0;
     width: 170px;
   }
-
 }
 
 .butCont {
@@ -70,5 +69,4 @@
   object-fit: cover;
   top: 0;
   left: 0;
-
 }

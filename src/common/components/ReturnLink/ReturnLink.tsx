@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Link } from 'react-router-dom'
 
-import backArrow from '../../assets/images/backArrow.svg'
+import backArrow from '../../../assets/images/backArrow.svg'
 
 import s from './ReturnLink.module.scss'
 

@@ -3,7 +3,7 @@ import React from 'react'
 import Container from '@mui/material/Container'
 import { Outlet } from 'react-router-dom'
 
-import { Header } from '../header/Header'
+import { Header } from '../Header/Header'
 
 export const Layout = () => {
   return (

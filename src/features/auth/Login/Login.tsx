@@ -1,21 +1,33 @@
 import React from 'react'
 
-import { Checkbox, FormControlLabel } from '@mui/material'
+import Checkbox from '@mui/material/Checkbox'
 import FormControl from '@mui/material/FormControl'
+import FormControlLabel from '@mui/material/FormControlLabel'
 import FormGroup from '@mui/material/FormGroup'
 import FormLabel from '@mui/material/FormLabel'
 import Grid from '@mui/material/Grid'
 import { useFormik } from 'formik'
-import { Navigate } from 'react-router-dom'
+import { Navigate, NavLink } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../../app/store'
-import { SuperButton } from '../../../common/components/SuperButton'
-import { SuperEmailInput, SuperPasswordInput } from '../../../common/components/SuperInputs'
+import { SuperButton } from '../../../common/components/SuperButton/SuperButton'
+import {
+  SuperEmailInput,
+  SuperPasswordInput,
+} from '../../../common/components/SuperInputs/SuperInputs'
 import { PATH } from '../../../common/routes/routes'
+import {
+  ContainerSX,
+  FormControlLabelSX,
+  FormControlSX,
+  FormGroupSX,
+  FormLabelSX,
+} from '../../../common/styles/sx/sx_styles'
 import { loginSchema } from '../../../common/utils/validationSchema'
 import { signInTC } from '../auth-reducer'
+import styles from '../Auth.module.scss'
 
-import styles from './Login.module.scss'
+import stylesLogin from './Login.module.scss'
 
 export const Login = () => {
   const dispatch = useAppDispatch()
@@ -31,7 +43,6 @@ export const Login = () => {
 
     onSubmit: values => {
       dispatch(signInTC(values))
-      formik.resetForm()
     },
   })
 
@@ -40,26 +51,14 @@ export const Login = () => {
   }
 
   return (
-    <Grid container justifyContent={'center'} alignItems={'center'}>
-      <Grid item justifyContent={'center'}>
-        <FormControl
-          style={{
-            justifyContent: 'space-evenly',
-            marginTop: '30%',
-            padding: '30px 0',
-          }}
-          className={styles.loginContainer}
-        >
-          <FormLabel>
-            <h1 style={{ color: '#000000' }}>Sign in</h1>
+    <Grid container sx={{ ...ContainerSX }}>
+      <Grid item sx={{ ...ContainerSX }}>
+        <FormControl sx={{ ...FormControlSX }}>
+          <FormLabel sx={{ ...FormLabelSX }}>
+            <h1>Sign in</h1>
           </FormLabel>
           <form onSubmit={formik.handleSubmit}>
-            <FormGroup
-              style={{
-                justifyContent: 'space-around',
-                alignItems: 'center',
-              }}
-            >
+            <FormGroup sx={{ ...FormGroupSX }}>
               <SuperEmailInput
                 formikTouched={formik.touched.email}
                 formikErrors={formik.errors.email}
@@ -71,7 +70,7 @@ export const Login = () => {
                 formikTouched={formik.touched.password}
               />
               <FormControlLabel
-                style={{ alignSelf: 'flex-start', marginLeft: '30px' }}
+                sx={{ ...FormControlLabelSX }}
                 label={'Remember me'}
                 control={
                   <Checkbox
@@ -81,15 +80,10 @@ export const Login = () => {
                   />
                 }
               />
-              <div
-                style={{
-                  alignSelf: 'flex-end',
-                  marginRight: '30px',
-                }}
-              >
-                <a href={'#/passRecovery'} style={{ fontWeight: 'bold', fontSize: '14px' }}>
+              <div className={stylesLogin.rememberMe}>
+                <NavLink to={`${PATH.PASSWORD_RECOVERY}`} className={stylesLogin.passRecoveryLink}>
                   Forgot Password?
-                </a>
+                </NavLink>
               </div>
               <SuperButton
                 title={'Sign in'}
@@ -101,18 +95,9 @@ export const Login = () => {
             </FormGroup>
           </form>
           <p>No account?</p>
-          <a
-            href={'#/signUp'}
-            color={'secondary'}
-            style={{
-              textDecoration: 'underline',
-              color: '#366eff',
-              fontSize: '16px',
-              fontWeight: 'bold',
-            }}
-          >
+          <NavLink to={`${PATH.SIGN_UP}`} className={styles.redirectLink}>
             Sign Up
-          </a>
+          </NavLink>
         </FormControl>
       </Grid>
     </Grid>

@@ -1,4 +1,4 @@
-@import '../styles/varaibles';
+@import '../../styles/varaibles';
 
 .returnLink {
   position: absolute;
@@ -12,7 +12,6 @@
   .title {
     margin-left: 5px;
     font-size: 16px;
-    color: $textColor ;
+    color: $textColor;
   }
-
 }
