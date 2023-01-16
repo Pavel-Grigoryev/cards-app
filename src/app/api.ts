@@ -36,9 +36,38 @@ export const authAPI = {
   },
 }
 
-export const cardsAPI = {}
+export const cardsAPI = {
+  ///////////////////////////Packs
+  getPacks(data: GetPacksType) {
+    return instance.get<GetPacksResponseType>('/cards/pack', { data })
+  },
+  createNewPack(data: CreateNewPackType) {
+    return instance.post('/cards/pack', data)
+  },
+  deletePack(data: string) {
+    return instance.post('/cards/pack', data)
+  },
+  updatePack(data: UpdatePackType) {
+    return instance.post('/cards/pack', data)
+  },
+  ///////////////////////////Cards
+  getCards(data: GetCardsType) {
+    return instance.get<GetCardsResponseType>('/cards/card', { data })
+  },
+  createNewCard(data: CreateNewCardType) {
+    return instance.post('/cards/card', data)
+  },
+  deleteCard(data: string) {
+    return instance.delete('/cards/card', { data })
+  },
+  updateCard(data: UpdateCardType) {
+    return instance.delete('/cards/card', { data })
+  },
+}
 
-// types
+///////////////////////////Types
+
+///////////////////////////authAPI Types
 export type AuthType = {
   email: string
   password: string
@@ -99,4 +128,106 @@ export type UpdatedUserType = {
   token: string
   tokenDeathTime: number
   avatar: string
+}
+
+///////////////////////////cardsAPI Types
+
+///////////////////////////Packs
+export type GetPacksType = {
+  packName?: string
+  min?: number
+  max?: number
+  sortPacks?: string
+  page?: number
+  pageCount?: number
+  user_id?: string
+  block?: boolean
+}
+
+export type GetPacksResponseType = {
+  cardPacks: [
+    {
+      _id: string
+      user_id: string
+      name: string
+      cardsCount: number
+      created: string
+      updated: string
+    }
+  ]
+  cardPacksTotalCount: number
+  maxCardsCount: number
+  minCardsCount: number
+  page: number
+  pageCount: number
+}
+
+export type CreateNewPackType = {
+  cardsPack: {
+    name?: string
+    deckCover?: string
+    private?: boolean
+  }
+}
+
+export type UpdatePackType = {
+  cardsPack: {
+    _id: string
+    name?: string
+  }
+}
+
+///////////////////////////Cards
+export type GetCardsType = {
+  cardAnswer?: string
+  cardQuestion?: string
+  cardsPack_id: string
+  min?: number
+  max?: number
+  sortCards?: string
+  page?: number
+  pageCount?: number
+}
+
+export type GetCardsResponseType = {
+  cards: [
+    {
+      answer: string
+      question: string
+      cardsPack_id: string
+      grade: number
+      shots: number
+      user_id: string
+      created: string
+      updated: string
+      _id: string
+    }
+  ]
+  cardsTotalCount: number
+  maxGrade: number
+  minGrade: number
+  page: number
+  pageCount: number
+  packUserId: string
+}
+
+export type CreateNewCardType = {
+  card: {
+    cardsPack_id: string
+    question?: string
+    answer?: string
+    grade?: number
+    shots?: number
+    answerImg?: string
+    questionImg?: string
+    questionVideo?: string
+    answerVideo?: string
+  }
+}
+
+export type UpdateCardType = {
+  card: {
+    _id: string
+    question?: string
+  }
 }

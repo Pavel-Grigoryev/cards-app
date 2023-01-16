@@ -4,6 +4,8 @@ import { AnyAction, combineReducers } from 'redux'
 import thunkMiddleware, { ThunkAction, ThunkDispatch } from 'redux-thunk'
 
 import { authReducers } from '../features/auth/auth-reducer'
+import { packPageReducer } from '../features/PackPage/packPage-reducer'
+import { packListReducer } from '../features/PacksList/packsList-reducer'
 import { profileReducer } from '../features/Profile/profile-reducer'
 
 import { appReducer } from './app-reducer'
@@ -12,6 +14,8 @@ const rootReducer = combineReducers({
   app: appReducer,
   auth: authReducers,
   userProfile: profileReducer,
+  packPage: packPageReducer,
+  packList: packListReducer,
 })
 
 export const store = configureStore({
