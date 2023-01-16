@@ -13,8 +13,8 @@ import { PasswordRecovery } from '../features/auth/PasswordRecovery/PasswordReco
 import { SignUp } from '../features/auth/SignUp/SignUp'
 import { Error404 } from '../features/Error404/Error404'
 import { Layout } from '../features/Layout/Layout'
-import { PacksList } from '../features/PackList/PacksList'
 import { PackPage } from '../features/PackPage/PackPage'
+import { PacksList } from '../features/PacksList/PacksList'
 import { Profile } from '../features/Profile/Profile'
 
 import { initializeAppTC } from './app-reducer'
