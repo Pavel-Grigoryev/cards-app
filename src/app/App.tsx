@@ -6,6 +6,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import { ErrorSnackbar } from '../common/components/ErrorSnackbar/ErrorSnackbar'
 import { Preloader } from '../common/components/Preloader/Preloader'
 import { PATH } from '../common/routes/routes'
+import { isInitializedSelector } from '../common/selectors/app-selector'
 import { TestPage } from '../common/testPage/TestPage'
 import { CreateNewPassword } from '../features/auth/CreateNewPassword/CreateNewPassword'
 import { Login } from '../features/auth/Login/Login'
@@ -23,7 +24,7 @@ import { useAppDispatch, useAppSelector } from './store'
 const App = () => {
   const dispatch = useAppDispatch()
 
-  const isInitialized = useAppSelector<boolean>(state => state.app.isInit)
+  const isInitialized = useAppSelector<boolean>(isInitializedSelector)
 
   useEffect(() => {
     dispatch(initializeAppTC())
