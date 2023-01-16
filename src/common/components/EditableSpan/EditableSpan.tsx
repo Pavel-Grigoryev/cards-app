@@ -45,6 +45,7 @@ export const EditableSpan = memo((props: EditableSpanPropsType) => {
           color="secondary"
           variant="contained"
           fullWidth
+          disabled={!title}
           onClick={activateViewMode}
           style={{
             fontSize: '12px',

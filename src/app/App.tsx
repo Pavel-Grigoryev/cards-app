@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 
 import './App.css'
-import CircularProgress from '@mui/material/CircularProgress'
 import { Navigate, Route, Routes } from 'react-router-dom'
 
 import { ErrorSnackbar } from '../common/components/ErrorSnackbar/ErrorSnackbar'
+import { Preloader } from '../common/components/Preloader/Preloader'
 import { PATH } from '../common/routes/routes'
 import { TestPage } from '../common/testPage/TestPage'
 import { CreateNewPassword } from '../features/auth/CreateNewPassword/CreateNewPassword'
@@ -30,11 +30,7 @@ const App = () => {
   }, [])
 
   if (!isInitialized) {
-    return (
-      <div style={{ position: 'fixed', top: '30%', textAlign: 'center', width: '100%' }}>
-        <CircularProgress style={{ width: '80px', height: '80px' }} color="secondary" />
-      </div>
-    )
+    return <Preloader circStyle={{ width: '80px', height: '80px' }} />
   }
 
   return (

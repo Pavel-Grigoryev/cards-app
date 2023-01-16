@@ -50,22 +50,6 @@ export const Header = () => {
                     navigate(PATH.LOGIN)
                   }}
                 />
-                {/*<Button
-                  color="secondary"
-                  variant="contained"
-                  fullWidth
-                  onClick={() => {
-                    navigate(PATH.LOGIN)
-                  }}
-                  style={{
-                    fontSize: '16px',
-                    textTransform: 'capitalize',
-                    borderRadius: '9999px',
-                    padding: '4px 16px',
-                  }}
-                >
-                  Sign in
-                </Button>*/}
               </div>
             )}
           </Toolbar>
