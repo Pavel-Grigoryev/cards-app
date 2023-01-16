@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import axios, { AxiosError } from 'axios'
+import { AxiosError } from 'axios'
 
 import { authAPI, ProfilePayloadType } from '../../app/api'
 import { setAppStatusAC } from '../../app/app-reducer'
@@ -12,7 +12,7 @@ const initialState = {
 }
 
 const slice = createSlice({
-  name: 'app',
+  name: 'profile',
   initialState,
   reducers: {
     setProfileAC(state, action: PayloadAction<{ profile: ProfileType }>) {
@@ -37,27 +37,29 @@ export const { setProfileAC, updateProfileAC, clearProfileDataAC } = slice.actio
 
 export const updateProfileTC =
   (profileUpd: ProfileUpdateType): AppThunk =>
-  async (dispatch, getState) => {
-    dispatch(setAppStatusAC('loading'))
-    try {
-      const profile = getState().userProfile.profile
+  (dispatch, getState) => {
+    dispatch(setAppStatusAC({ status: 'loading' }))
 
-      if (!profile) {
-        console.warn('User not found')
-      } else {
-        const newProfileModel: ProfilePayloadType = {
-          name: profile.name,
-          ...profileUpd,
-        }
-        const res = await authAPI.updateProfile(newProfileModel)
+    const profile = getState().userProfile.profile
 
-        dispatch(updateProfileAC({ profileUpd: newProfileModel }))
-        dispatch(setAppStatusAC('succeeded'))
+    if (!profile) {
+      console.warn('User not found')
+    } else {
+      const newProfileModel: ProfilePayloadType = {
+        name: profile.name,
+        ...profileUpd,
       }
-    } catch (e) {
-      if (axios.isAxiosError<AxiosError<{ message: string }>>(e)) {
-        handleServerNetworkError(e, dispatch)
-      }
+
+      authAPI
+        .updateProfile(newProfileModel)
+        .then(res => {
+          dispatch(updateProfileAC({ profileUpd: newProfileModel }))
+
+          dispatch(setAppStatusAC({ status: 'succeeded' }))
+        })
+        .catch((err: AxiosError<{ error: string }>) => {
+          handleServerNetworkError(err, dispatch)
+        })
     }
   }
 

@@ -1,5 +1,5 @@
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
-import { Dispatch } from 'redux'
 
 import { authAPI, AuthType, DataRecovType, ForgotType, SetNewPasswordType } from '../../app/api'
 import { setAppErrorAC, setAppStatusAC } from '../../app/app-reducer'
@@ -15,141 +15,138 @@ const initialState = {
   setNewPassword: false,
 }
 
-type InitialStateType = typeof initialState
+const slice = createSlice({
+  name: 'auth',
+  initialState,
+  reducers: {
+    setLoginAC(state, action: PayloadAction<{ isLoggedIn: boolean }>) {
+      state.isLoggedIn = action.payload.isLoggedIn
+    },
+    setSignUpAC(state, action: PayloadAction<{ isSignedUp: boolean }>) {
+      state.isSignedUp = action.payload.isSignedUp
+    },
+    checkEmailAC(state, action: PayloadAction<{ checkEmail: boolean }>) {
+      state.checkEmail = action.payload.checkEmail
+    },
+    saveEmailAC(state, action: PayloadAction<{ saveEmail: string }>) {
+      state.saveEmail = action.payload.saveEmail
+    },
+    setNewPasswordAC(state, action: PayloadAction<{ setNewPassword: boolean }>) {
+      state.setNewPassword = action.payload.setNewPassword
+    },
+  },
+})
 
-type ActionsType =
-  | ReturnType<typeof setLoginAC>
-  | ReturnType<typeof setProfileAC>
-  | ReturnType<typeof setAppStatusAC>
-  | ReturnType<typeof setAppErrorAC>
-  | ReturnType<typeof checkEmailAC>
-  | ReturnType<typeof saveEmailAC>
-  | ReturnType<typeof setNewPasswordAC>
-  | ReturnType<typeof setSignUpAC>
+export const authReducers = slice.reducer
 
-export const authReducer = (
-  state: InitialStateType = initialState,
-  action: ActionsType
-): InitialStateType => {
-  switch (action.type) {
-    case 'LOGIN':
-      return { ...state, isLoggedIn: action.value }
-    case 'SIGN-UP':
-      return { ...state, isSignedUp: action.value }
-    case 'CHECK-EMAIL':
-      return { ...state, checkEmail: action.value }
-    case 'SAVE-EMAIL':
-      return { ...state, saveEmail: action.value }
-    case 'SET-NEW-PASSWORD':
-      return { ...state, setNewPassword: action.value }
-    default:
-      return state
-  }
-}
-// actions
-export const setLoginAC = (value: boolean) => ({ type: 'LOGIN', value } as const)
+//Actions
 
-export const setSignUpAC = (value: boolean) => ({ type: 'SIGN-UP', value } as const)
-
-export const checkEmailAC = (value: boolean) => ({ type: 'CHECK-EMAIL', value } as const)
-
-export const saveEmailAC = (value: string) => ({ type: 'SAVE-EMAIL', value } as const)
-
-export const setNewPasswordAC = (value: boolean) => ({ type: 'SET-NEW-PASSWORD', value } as const)
+export const { setLoginAC, setSignUpAC, checkEmailAC, saveEmailAC, setNewPasswordAC } =
+  slice.actions
 
 //thunks
-export const signInTC = (data: AuthType) => (dispatch: Dispatch<ActionsType>) => {
-  dispatch(setAppStatusAC('loading'))
-  authAPI
-    .login(data)
-    .then(res => {
-      dispatch(setProfileAC({ profile: res.data }))
-      dispatch(setLoginAC(true))
-      dispatch(setAppStatusAC('succeeded'))
-    })
-    .catch((err: AxiosError<{ error: string }>) => {
-      const error = err.response ? err.response.data.error : err.message
+export const signInTC =
+  (data: AuthType): AppThunk =>
+  dispatch => {
+    dispatch(setAppStatusAC({ status: 'loading' }))
+    authAPI
+      .login(data)
+      .then(res => {
+        dispatch(setProfileAC({ profile: res.data }))
+        dispatch(setLoginAC({ isLoggedIn: true }))
+        dispatch(setAppStatusAC({ status: 'succeeded' }))
+      })
+      .catch((err: AxiosError<{ error: string }>) => {
+        const error = err.response ? err.response.data.error : err.message
 
-      dispatch(setAppStatusAC('failed'))
-      dispatch(setAppErrorAC(error))
-    })
-}
+        dispatch(setAppStatusAC({ status: 'failed' }))
+        dispatch(setAppErrorAC({ error }))
+      })
+  }
 
-export const signUpTC = (data: AuthType) => (dispatch: Dispatch<ActionsType>) => {
-  authAPI
-    .signup(data)
-    .then(res => {
-      dispatch(setSignUpAC(true))
-      dispatch(setAppStatusAC('succeeded'))
-    })
-    .catch((err: AxiosError<{ error: string }>) => {
-      const error = err.response ? err.response.data.error : err.message
+export const signUpTC =
+  (data: AuthType): AppThunk =>
+  dispatch => {
+    authAPI
+      .signup(data)
+      .then(res => {
+        dispatch(setSignUpAC({ isSignedUp: true }))
+        dispatch(setAppStatusAC({ status: 'succeeded' }))
+      })
+      .catch((err: AxiosError<{ error: string }>) => {
+        const error = err.response ? err.response.data.error : err.message
 
-      dispatch(setAppStatusAC('failed'))
-      dispatch(setAppErrorAC(error))
-    })
-}
+        dispatch(setAppStatusAC({ status: 'failed' }))
+        dispatch(setAppErrorAC({ error }))
+      })
+  }
 
-export const passwordRecoveryTC = (data: ForgotType) => (dispatch: Dispatch<ActionsType>) => {
-  dispatch(setAppStatusAC('loading'))
-  dispatch(saveEmailAC(data.email))
-  const path =
-    process.env.NODE_ENV === 'development'
-      ? 'http://localhost:3000'
-      : 'https://pavel-grigoryev.github.io/cards-app'
+export const passwordRecoveryTC =
+  (data: ForgotType): AppThunk =>
+  dispatch => {
+    dispatch(setAppStatusAC({ status: 'loading' }))
+    dispatch(saveEmailAC({ saveEmail: data.email }))
+    const path =
+      process.env.NODE_ENV === 'development'
+        ? 'http://localhost:3000'
+        : 'https://pavel-grigoryev.github.io/cards-app'
 
-  const dataRec: DataRecovType = {
-    email: data.email,
-    message: `<div style="background-color: lime; padding: 15px">
+    const dataRec: DataRecovType = {
+      email: data.email,
+      message: `<div style="background-color: lime; padding: 15px">
 password recovery link: 
 <a href='${path}/#/set-new-password/$token$'>
 link</a>
 </div>`,
+    }
+
+    authAPI
+      .forgot(dataRec)
+      .then(res => {
+        dispatch(setAppStatusAC({ status: 'succeeded' }))
+        dispatch(checkEmailAC({ checkEmail: true }))
+      })
+      .catch((err: AxiosError<{ error: string }>) => {
+        const error = err.response ? err.response.data.error : err.message
+
+        dispatch(setAppStatusAC({ status: 'failed' }))
+        dispatch(setAppErrorAC({ error }))
+      })
   }
 
-  authAPI
-    .forgot(dataRec)
-    .then(res => {
-      dispatch(setAppStatusAC('succeeded'))
-      dispatch(checkEmailAC(true))
-    })
-    .catch((err: AxiosError<{ error: string }>) => {
-      const error = err.response ? err.response.data.error : err.message
+export const setNewPasswordTC =
+  (data: SetNewPasswordType): AppThunk =>
+  dispatch => {
+    dispatch(setAppStatusAC({ status: 'loading' }))
+    authAPI
+      .setNewPassword(data)
+      .then(res => {
+        dispatch(setAppStatusAC({ status: 'succeeded' }))
+        dispatch(setNewPasswordAC({ setNewPassword: true }))
+      })
+      .catch((err: AxiosError<{ error: string }>) => {
+        const error = err.response ? err.response.data.error : err.message
 
-      dispatch(setAppStatusAC('failed'))
-      dispatch(setAppErrorAC(error))
-    })
-}
-
-export const setNewPasswordTC = (data: SetNewPasswordType) => (dispatch: Dispatch<ActionsType>) => {
-  dispatch(setAppStatusAC('loading'))
-  authAPI
-    .setNewPassword(data)
-    .then(res => {
-      dispatch(setAppStatusAC('succeeded'))
-      dispatch(setNewPasswordAC(true))
-    })
-    .catch((err: AxiosError<{ error: string }>) => {
-      const error = err.response ? err.response.data.error : err.message
-
-      dispatch(setAppStatusAC('failed'))
-      dispatch(setAppErrorAC(error))
-    })
-}
+        dispatch(setAppStatusAC({ status: 'failed' }))
+        dispatch(setAppErrorAC({ error }))
+      })
+  }
 
 export const logoutTC = (): AppThunk => dispatch => {
-  dispatch(setAppStatusAC('loading'))
+  dispatch(setAppStatusAC({ status: 'loading' }))
   authAPI
     .logout()
     .then(() => {
-      dispatch(setAppStatusAC('succeeded'))
-      dispatch(setLoginAC(false))
+      dispatch(setAppStatusAC({ status: 'succeeded' }))
+      dispatch(setLoginAC({ isLoggedIn: false }))
       dispatch(clearProfileDataAC())
     })
     .catch((err: AxiosError<{ error: string }>) => {
       const error = err.response ? err.response.data.error : err.message
 
-      dispatch(setAppStatusAC('failed'))
-      dispatch(setAppErrorAC(error))
+      dispatch(setAppStatusAC({ status: 'failed' }))
+      dispatch(setAppErrorAC({ error }))
     })
 }
+
+// Types

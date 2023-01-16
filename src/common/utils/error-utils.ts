@@ -9,6 +9,6 @@ export const handleServerNetworkError = (
 ) => {
   const error = err.response?.data ? err.response.data.message : err.message
 
-  dispatch(setAppErrorAC(error))
-  dispatch(setAppStatusAC('failed'))
+  dispatch(setAppErrorAC({ error }))
+  dispatch(setAppStatusAC({ status: 'failed' }))
 }

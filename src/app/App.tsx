@@ -13,6 +13,8 @@ import { PasswordRecovery } from '../features/auth/PasswordRecovery/PasswordReco
 import { SignUp } from '../features/auth/SignUp/SignUp'
 import { Error404 } from '../features/Error404/Error404'
 import { Layout } from '../features/Layout/Layout'
+import { PackPage } from '../features/PackPage/PackPage'
+import { PacksList } from '../features/PacksList/PacksList'
 import { Profile } from '../features/Profile/Profile'
 
 import { initializeAppTC } from './app-reducer'
@@ -46,6 +48,8 @@ const App = () => {
           <Route path={PATH.PROFILE} element={<Profile />} />
           <Route path={PATH.PASSWORD_RECOVERY} element={<PasswordRecovery />} />
           <Route path={PATH.SET_NEW_PASSWORD} element={<CreateNewPassword />} />
+          <Route path={PATH.PACKS_LIST} element={<PacksList />} />
+          <Route path={PATH.PACK_PAGE} element={<PackPage />} />
           <Route path={PATH.NOT_FOUND} element={<Error404 />} />
           <Route path={'*'} element={<Navigate to={PATH.NOT_FOUND} />} />
           <Route path={PATH.TEST_PAGE} element={<TestPage />} />

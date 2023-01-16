@@ -12,16 +12,15 @@ import {
   SuperPasswordInput,
 } from '../../../common/components/SuperInputs/SuperInputs'
 import { PATH } from '../../../common/routes/routes'
+import {
+  ContainerSX,
+  FormControlSX,
+  FormGroupSX,
+  FormLabelSX,
+} from '../../../common/styles/sx/sx_styles'
 import { signupSchema } from '../../../common/utils/validationSchema'
 import { signUpTC } from '../auth-reducer'
-
-import styles from './SignUp.module.scss'
-
-/*type ErrorsType = {
-  email?: string
-  password?: string
-  confirmPassword?: string
-}*/
+import styles from '../Auth.module.scss'
 
 export const SignUp = () => {
   const dispatch = useAppDispatch()
@@ -38,7 +37,6 @@ export const SignUp = () => {
 
     onSubmit: values => {
       dispatch(signUpTC(values))
-      formik.resetForm()
     },
   })
 
@@ -47,26 +45,14 @@ export const SignUp = () => {
   }
 
   return (
-    <Grid container justifyContent={'center'} alignItems={'center'}>
-      <Grid item justifyContent={'center'}>
-        <FormControl
-          style={{
-            justifyContent: 'space-evenly',
-            marginTop: '30%',
-            padding: '30px 0',
-          }}
-          className={styles.item}
-        >
-          <FormLabel style={{ color: '#000000' }}>
+    <Grid container sx={{ ...ContainerSX }}>
+      <Grid item sx={{ ...ContainerSX }}>
+        <FormControl sx={{ ...FormControlSX }}>
+          <FormLabel sx={{ ...FormLabelSX }}>
             <h1>Sign Up</h1>
           </FormLabel>
-          <form onSubmit={formik.handleSubmit} className={styles.formContainer}>
-            <FormGroup
-              style={{
-                justifyContent: 'space-around',
-                alignItems: 'center',
-              }}
-            >
+          <form onSubmit={formik.handleSubmit}>
+            <FormGroup sx={{ ...FormGroupSX }}>
               <SuperEmailInput
                 formikTouched={formik.touched.email}
                 formikErrors={formik.errors.email}
@@ -93,15 +79,7 @@ export const SignUp = () => {
             </FormGroup>
           </form>
           <p>Already have an account?</p>
-          <NavLink
-            to={`${PATH.LOGIN}`}
-            style={{
-              fontWeight: 'bold',
-              textDecoration: 'underline',
-              color: '#366eff',
-              fontSize: '16px',
-            }}
-          >
+          <NavLink to={`${PATH.LOGIN}`} className={styles.redirectLink}>
             Sign In
           </NavLink>
         </FormControl>

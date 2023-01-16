@@ -1,8 +1,12 @@
 import React, { useState } from 'react'
 
-import { Visibility, VisibilityOff } from '@mui/icons-material'
-import { IconButton, Input, InputAdornment, InputLabel } from '@mui/material'
+import Visibility from '@mui/icons-material/Visibility'
+import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import FormControl from '@mui/material/FormControl'
+import IconButton from '@mui/material/IconButton'
+import Input from '@mui/material/Input'
+import InputAdornment from '@mui/material/InputAdornment'
+import InputLabel from '@mui/material/InputLabel'
 
 import styles from '../../styles/errors.module.scss'
 
@@ -35,7 +39,7 @@ export const SuperPasswordInput = (props: SuperInputType) => {
   }
 
   return (
-    <FormControl sx={{ width: '80%' }} variant="standard" style={{ margin: '10px 0' }}>
+    <FormControl sx={{ width: '80%', margin: '10px 0' }} variant="standard">
       <InputLabel color={'secondary'}>{props.name ? props.name : 'Password'}</InputLabel>
       <Input
         type={showPassword ? 'text' : 'password'}

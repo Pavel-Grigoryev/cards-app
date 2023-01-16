@@ -10,6 +10,7 @@ import logoutImg from '../../assets/images/logout.svg'
 import { EditableSpan } from '../../common/components/EditableSpan/EditableSpan'
 import { ReturnLink } from '../../common/components/ReturnLink/ReturnLink'
 import { PATH } from '../../common/routes/routes'
+import { ContainerSX } from '../../common/styles/sx/sx_styles'
 import { logoutTC } from '../auth/auth-reducer'
 
 import { ProfileType, updateProfileTC } from './profile-reducer'
@@ -40,7 +41,7 @@ export const Profile = () => {
   return (
     <>
       <ReturnLink path={'#'} title={'Back to Packs List'} />
-      <Grid container justifyContent={'center'} alignItems={'center'}>
+      <Grid container sx={{ ...ContainerSX }}>
         <Grid item justifyContent={'center'} xs={12} sm={12}>
           <div className={s.smContainer}>
             <article className={s.profile}>
