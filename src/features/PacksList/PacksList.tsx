@@ -2,6 +2,7 @@ import React from 'react'
 
 import { useAppDispatch } from '../../app/store'
 import { SuperButton } from '../../common/components/SuperButton/SuperButton'
+import { SuperPagination } from '../../common/components/SuperPagination/SuperPagination'
 
 import { createNewPackTC, getPacksTC } from './packsList-reducer'
 
@@ -37,7 +38,7 @@ export const PacksList = () => {
         {/*  Компонента для всех параментров поиска */}
         {/*  Компонента для таблицы */}
       </div>
-      {/*  Пагинация */}
+      <SuperPagination page={1} itemsCountForPage={4} totalCount={500} onChange={() => {}} />
     </>
   )
 }

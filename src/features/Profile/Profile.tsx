@@ -46,7 +46,7 @@ export const Profile = () => {
 
   return (
     <>
-      <ReturnLink path={'#'} title={'Back to Packs List'} />
+      <ReturnLink path={PATH.PACKS_LIST} title={'Back to Packs List'} />
       <Grid container sx={{ ...ContainerSX }}>
         <Grid item justifyContent={'center'} xs={12} sm={12}>
           <div className={s.smContainer}>
