@@ -39,7 +39,7 @@ export const authAPI = {
 export const cardsAPI = {
   ///////////////////////////Packs
   getPacks(data: GetPacksType) {
-    return instance.get<GetPacksResponseType>('/cards/pack', { data })
+    return instance.get<GetPacksResponseType>(`/cards/pack?pageCount=${data.pageCount}`, { data })
   },
   createNewPack(data: CreateNewPackType) {
     return instance.post('/cards/pack', data)
@@ -52,7 +52,9 @@ export const cardsAPI = {
   },
   ///////////////////////////Cards
   getCards(data: GetCardsType) {
-    return instance.get<GetCardsResponseType>('/cards/card', { data })
+    return instance.get<GetCardsResponseType>(`/cards/card?cardsPack_id=${data.cardsPack_id}`, {
+      data,
+    })
   },
   createNewCard(data: CreateNewCardType) {
     return instance.post('/cards/card', data)
@@ -144,17 +146,17 @@ export type GetPacksType = {
   block?: boolean
 }
 
+export type PackType = {
+  _id: string
+  user_id: string
+  name: string
+  cardsCount: number
+  created: string
+  updated: string
+}
+
 export type GetPacksResponseType = {
-  cardPacks: [
-    {
-      _id: string
-      user_id: string
-      name: string
-      cardsCount: number
-      created: string
-      updated: string
-    }
-  ]
+  cardPacks: PackType[]
   cardPacksTotalCount: number
   maxCardsCount: number
   minCardsCount: number
@@ -189,20 +191,20 @@ export type GetCardsType = {
   pageCount?: number
 }
 
+export type CardType = {
+  answer: string
+  question: string
+  cardsPack_id: string
+  grade: number
+  shots: number
+  user_id: string
+  created: string
+  updated: string
+  _id: string
+}
+
 export type GetCardsResponseType = {
-  cards: [
-    {
-      answer: string
-      question: string
-      cardsPack_id: string
-      grade: number
-      shots: number
-      user_id: string
-      created: string
-      updated: string
-      _id: string
-    }
-  ]
+  cards: CardType[]
   cardsTotalCount: number
   maxGrade: number
   minGrade: number

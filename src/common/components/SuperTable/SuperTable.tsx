@@ -8,52 +8,12 @@ import TableContainer from '@mui/material/TableContainer'
 import { SuperTableBody } from './SuperTableBody/SuperTableBody'
 import { SuperTableHead } from './SuperTableHead/SuperTableHead'
 
-const tableHeader = ['Name', 'Cards', 'Last Updated', 'Created by', 'Actions']
-
-const rows = [
-  {
-    name: 'Pack Name',
-    numOfCards: 4,
-    lastUpdated: '18.03.2021',
-    createdBy: 'Ivan',
-    actions: ['study', 'ModeEditOutlineOutlinedIcon', 'delete'],
-  },
-  {
-    name: 'Pack Name',
-    numOfCards: 4,
-    lastUpdated: '18.03.2021',
-    createdBy: 'Ivan',
-    actions: ['study', 'edit', 'delete'],
-  },
-  {
-    name: 'Pack Name',
-    numOfCards: 4,
-    lastUpdated: '18.03.2021',
-    createdBy: 'Ivan',
-    actions: ['study', 'edit', 'delete'],
-  },
-  {
-    name: 'Pack Name',
-    numOfCards: 4,
-    lastUpdated: '18.03.2021',
-    createdBy: 'Ivan',
-    actions: ['study', 'edit', 'delete'],
-  },
-  {
-    name: 'Pack Name',
-    numOfCards: 4,
-    lastUpdated: '18.03.2021',
-    createdBy: 'Ivan',
-    actions: ['study', 'edit', 'delete'],
-  },
-]
-
-export const SuperTable = () => {
+export const SuperTable = (props: any) => {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <SuperTableHead data={tableHeader} />
-        <SuperTableBody data={rows} />
+        <SuperTableHead data={props.headerNames} />
+        <SuperTableBody data={props.bodyData} />
       </Table>
     </TableContainer>
   )

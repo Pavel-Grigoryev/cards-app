@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
-import { useAppDispatch } from '../../app/store'
+import { useAppDispatch, useAppSelector } from '../../app/store'
 import { SuperButton } from '../../common/components/SuperButton/SuperButton'
 import { SuperTable } from '../../common/components/SuperTable/SuperTable'
 
 import { createNewPackTC, getPacksTC } from './packsList-reducer'
 
+const packsListTableNames = ['Name', 'Cards', 'Last Updated', 'Created by', 'Actions']
+
 export const PacksList = () => {
   const dispatch = useAppDispatch()
+  const packsData = useAppSelector(state => state.packs.packList)
 
   const createNewPackHandler = () => {
     const cardsPack = {
@@ -21,9 +24,9 @@ export const PacksList = () => {
     dispatch(createNewPackTC(cardsPack))
   }
 
-  const getPacksHandler = () => {
-    dispatch(getPacksTC({}))
-  }
+  useEffect(() => {
+    dispatch(getPacksTC({ pageCount: 8 }))
+  }, [])
 
   return (
     <>
@@ -31,13 +34,13 @@ export const PacksList = () => {
         <h1>Packs list</h1>
         <SuperButton title={'Add new pack'} onClick={createNewPackHandler} />
         <div></div>
-        <SuperButton title={'get packs'} onClick={getPacksHandler} />
+        {/*<SuperButton title={'get packs'} onClick={getPacksHandler} />*/}
         {/*  Кнопка добавления нового пака */}
       </div>
       <div>
         {/*  Компонента для всех параментров поиска */}
         {/*  Компонента для таблицы */}
-        <SuperTable />
+        <SuperTable headerNames={packsListTableNames} bodyData={packsData} />
       </div>
       {/*  Пагинация */}
     </>
