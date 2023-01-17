@@ -39,7 +39,11 @@ export const authAPI = {
 export const cardsAPI = {
   ///////////////////////////Packs
   getPacks(data: GetPacksType) {
-    return instance.get<GetPacksResponseType>(`/cards/pack?pageCount=${data.pageCount}`, { data })
+    return instance.get<GetPacksResponseType>(`/cards/pack`, {
+      params: {
+        pageCount: data.pageCount,
+      },
+    })
   },
   createNewPack(data: CreateNewPackType) {
     return instance.post('/cards/pack', data)
@@ -52,8 +56,10 @@ export const cardsAPI = {
   },
   ///////////////////////////Cards
   getCards(data: GetCardsType) {
-    return instance.get<GetCardsResponseType>(`/cards/card?cardsPack_id=${data.cardsPack_id}`, {
-      data,
+    return instance.get<GetCardsResponseType>(`/cards/card`, {
+      params: {
+        cardsPack_id: data.cardsPack_id,
+      },
     })
   },
   createNewCard(data: CreateNewCardType) {
