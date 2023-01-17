@@ -1,7 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 
-import { cardsAPI, CreateNewPackType, GetPacksResponseType, PackType } from '../../app/api'
+import {
+  cardsAPI,
+  CreateNewPackType,
+  GetPacksResponseType,
+  GetPacksType,
+  PackType,
+} from '../../app/api'
 import { setAppErrorAC, setAppStatusAC } from '../../app/app-reducer'
 import { AppThunk } from '../../app/store'
 
@@ -10,8 +16,8 @@ const initialState = {
   cardPacksTotalCount: 0,
   maxCardsCount: 0,
   minCardsCount: 0,
-  page: 1,
-  pageCount: 8,
+  page: 0,
+  pageCount: 0,
 }
 
 const slice = createSlice({
@@ -37,24 +43,26 @@ export const { getPacks, updatePacksPagination } = slice.actions
 
 //Thunks
 
-export const getPacksTC = (): AppThunk => async (dispatch, getState) => {
-  dispatch(setAppStatusAC({ status: 'loading' }))
-  const { page, pageCount } = getState().packs
+export const getPacksTC =
+  (paramS: GetPacksType): AppThunk =>
+  async dispatch => {
+    dispatch(setAppStatusAC({ status: 'loading' }))
+    // const { page, pageCount } = getState().packs
 
-  try {
-    const res = await cardsAPI.getPacks({ page, pageCount })
+    try {
+      const res = await cardsAPI.getPacks(paramS)
 
-    console.log(res)
+      console.log(res)
 
-    dispatch(getPacks({ data: res.data }))
-    dispatch(setAppStatusAC({ status: 'succeeded' }))
-  } catch (err: AxiosError<{ error: string }> | any) {
-    const error = err.response ? err.response.data.error : err.message
+      dispatch(getPacks({ data: res.data }))
+      dispatch(setAppStatusAC({ status: 'succeeded' }))
+    } catch (err: AxiosError<{ error: string }> | any) {
+      const error = err.response ? err.response.data.error : err.message
 
-    dispatch(setAppStatusAC({ status: 'failed' }))
-    dispatch(setAppErrorAC({ error }))
+      dispatch(setAppStatusAC({ status: 'failed' }))
+      dispatch(setAppErrorAC({ error }))
+    }
   }
-}
 
 export const createNewPackTC =
   (data: CreateNewPackType): AppThunk =>

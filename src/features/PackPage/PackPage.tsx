@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 
 import { CardType } from '../../app/api'
 import { useAppDispatch, useAppSelector } from '../../app/store'
+import { SuperPagination } from '../../common/components/SuperPagination/SuperPagination'
 import { SuperTable } from '../../common/components/SuperTable/SuperTable'
 import { cardsData } from '../../common/selectors/cards-selector'
 
@@ -30,7 +31,7 @@ export const PackPage = () => {
         {/*  Компонента для таблицы */}
         <SuperTable headerNames={packPageTableNames} bodyData={cards} />
       </div>
-      {/*  Пагинация */}
+      <SuperPagination page={1} itemsCountForPage={8} totalCount={32} onChange={() => {}} />
     </>
   )
 }

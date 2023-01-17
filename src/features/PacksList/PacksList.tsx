@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 
-import { PackType } from '../../app/api'
+import { useSearchParams } from 'react-router-dom'
+
+import { GetPacksType, PackType } from '../../app/api'
 import { useAppDispatch, useAppSelector } from '../../app/store'
 import { SuperButton } from '../../common/components/SuperButton/SuperButton'
 import { SuperPagination } from '../../common/components/SuperPagination/SuperPagination'
@@ -22,6 +24,7 @@ export const PacksList = () => {
   const page = useAppSelector<number>(pageData)
   const pageCount = useAppSelector<number>(pageCountData)
   const cardPacksTotalCount = useAppSelector<number>(cardPacksTotalCountData)
+  const [searchParams, setSearchParams] = useSearchParams()
 
   const createNewPackHandler = () => {
     const cardsPack = {
@@ -37,10 +40,17 @@ export const PacksList = () => {
 
   const changePaginationHandler = (page: number, pageCount: number) => {
     dispatch(updatePacksPagination({ page, pageCount }))
+    setSearchParams({ page: String(page), pageCount: String(pageCount) })
   }
 
   useEffect(() => {
-    dispatch(getPacksTC())
+    const queryParams = Object.fromEntries(searchParams)
+    const paramS: GetPacksType = {
+      page: +queryParams.page || 1,
+      pageCount: +queryParams.pageCount || 8,
+    }
+
+    dispatch(getPacksTC(paramS))
   }, [page, pageCount])
 
   return (
