@@ -1,10 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios/index'
 
-import { cardsAPI, CardType, CreateNewCardType, GetCardsType, PackType } from '../../app/api'
+import { cardsAPI, CardType, CreateNewCardType, GetCardsType } from '../../app/api'
 import { setAppErrorAC, setAppStatusAC } from '../../app/app-reducer'
 import { AppThunk } from '../../app/store'
-import { getPacks } from '../PacksList/packsList-reducer'
 
 const initialState = {
   cardList: [] as CardType[],
