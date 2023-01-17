@@ -3,13 +3,16 @@ import React from 'react'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import SchoolIcon from '@mui/icons-material/School'
-import { IconButton } from '@mui/material'
+import IconButton from '@mui/material/IconButton'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 
+import { useAppSelector } from '../../../../app/store'
+import { userIdData } from '../../../selectors/profile-selector'
+
 export const SuperTableBody = (props: any) => {
-  console.log(props)
+  const userId = useAppSelector(userIdData)
 
   return (
     <TableBody>
@@ -28,17 +31,22 @@ export const SuperTableBody = (props: any) => {
           </TableCell>
           <TableCell align="left">{row.updated}</TableCell>
           <TableCell align="left">{row.user_name || row.grade}</TableCell>
+
           {props.data[0].type === 'card' ? null : (
             <TableCell align="left">
               <IconButton>
                 <SchoolIcon fontSize={'small'} />
               </IconButton>
-              <IconButton>
-                <EditIcon fontSize={'small'} />
-              </IconButton>
-              <IconButton>
-                <DeleteIcon fontSize={'small'} />
-              </IconButton>
+              {row.user_id === userId && (
+                <span>
+                  <IconButton onClick={() => props.updateHandler(row._id)}>
+                    <EditIcon fontSize={'small'} />
+                  </IconButton>
+                  <IconButton onClick={() => props.deleteHandler(row._id)}>
+                    <DeleteIcon fontSize={'small'} />
+                  </IconButton>
+                </span>
+              )}
             </TableCell>
           )}
         </TableRow>

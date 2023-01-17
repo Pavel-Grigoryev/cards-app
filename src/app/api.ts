@@ -47,10 +47,10 @@ export const cardsAPI = {
     return instance.post('/cards/pack', data)
   },
   deletePack(data: string) {
-    return instance.post('/cards/pack', data)
+    return instance.delete(`/cards/pack?id=${data}`)
   },
   updatePack(data: UpdatePackType) {
-    return instance.post('/cards/pack', data)
+    return instance.put('/cards/pack', data)
   },
   ///////////////////////////Cards
   getCards(data: GetCardsType) {
@@ -64,10 +64,10 @@ export const cardsAPI = {
     return instance.post('/cards/card', data)
   },
   deleteCard(data: string) {
-    return instance.delete('/cards/card', { data })
+    return instance.delete(`/cards/card?id=${data}`)
   },
   updateCard(data: UpdateCardType) {
-    return instance.delete('/cards/card', { data })
+    return instance.put('/cards/card', data)
   },
 }
 
