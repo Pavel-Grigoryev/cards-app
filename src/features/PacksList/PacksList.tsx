@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router-dom'
 
 import { PackType } from '../../app/api'
 import { useAppDispatch, useAppSelector } from '../../app/store'
+import { Filters } from '../../common/components/Filters/Filters'
 import { SuperButton } from '../../common/components/SuperButton/SuperButton'
 import { SuperPagination } from '../../common/components/SuperPagination/SuperPagination'
 import { SuperTable } from '../../common/components/SuperTable/SuperTable'
@@ -75,7 +76,7 @@ export const PacksList = () => {
         {/*  Кнопка добавления нового пака */}
       </div>
       <div>
-        {/*  Компонента для всех параментров поиска */}
+        <Filters />
         {/*  Компонента для таблицы */}
         <SuperTable
           headerNames={packsListTableNames}
