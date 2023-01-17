@@ -1,13 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { AxiosError } from 'axios'
+import axios, { AxiosError } from 'axios'
 
 import {
   cardsAPI,
   CreateNewPackType,
   GetPacksResponseType,
-  GetPacksType,
   PackType,
-  UpdatePackType
+  UpdatePackType,
 } from '../../app/api'
 import { setAppErrorAC, setAppStatusAC } from '../../app/app-reducer'
 import { AppThunk } from '../../app/store'
@@ -45,26 +44,23 @@ export const { getPacks, updatePacksPagination } = slice.actions
 
 //Thunks
 
-export const getPacksTC =
-  (paramS: GetPacksType): AppThunk =>
-  async dispatch => {
-    dispatch(setAppStatusAC({ status: 'loading' }))
-    // const { page, pageCount } = getState().packs
+export const getPacksTC = (): AppThunk => async (dispatch, getState) => {
+  dispatch(setAppStatusAC({ status: 'loading' }))
+  const { page, pageCount } = getState().packs
 
-    try {
-      const res = await cardsAPI.getPacks(paramS)
+  try {
+    const res = await cardsAPI.getPacks({ page, pageCount })
 
-      console.log(res)
+    console.log(res)
 
-      dispatch(getPacks({ data: res.data }))
-      dispatch(setAppStatusAC({ status: 'succeeded' }))
-    } catch (e) {
-      if (axios.isAxiosError(e)) {
-        handleServerNetworkError(e, dispatch)
-      }
-    }
+    dispatch(getPacks({ data: res.data }))
+    dispatch(setAppStatusAC({ status: 'succeeded' }))
+  } catch (e) {
+    if (axios.isAxiosError(e)) {
+      handleServerNetworkError(e, dispatch)
     }
   }
+}
 
 export const createNewPackTC =
   (data: CreateNewPackType): AppThunk =>

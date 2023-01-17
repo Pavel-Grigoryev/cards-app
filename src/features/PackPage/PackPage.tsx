@@ -2,8 +2,8 @@ import React, { useEffect } from 'react'
 
 import { CardType } from '../../app/api'
 import { useAppDispatch, useAppSelector } from '../../app/store'
-import { SuperPagination } from '../../common/components/SuperPagination/SuperPagination'
 import { SuperButton } from '../../common/components/SuperButton/SuperButton'
+import { SuperPagination } from '../../common/components/SuperPagination/SuperPagination'
 import { SuperTable } from '../../common/components/SuperTable/SuperTable'
 import { cardsData } from '../../common/selectors/cards-selector'
 
