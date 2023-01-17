@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react'
 
 import './App.css'
-import CircularProgress from '@mui/material/CircularProgress'
 import { Navigate, Route, Routes } from 'react-router-dom'
 
 import { ErrorSnackbar } from '../common/components/ErrorSnackbar/ErrorSnackbar'
+import { Preloader } from '../common/components/Preloader/Preloader'
 import { PATH } from '../common/routes/routes'
+import { isInitializedSelector } from '../common/selectors/app-selector'
 import { TestPage } from '../common/testPage/TestPage'
 import { CreateNewPassword } from '../features/auth/CreateNewPassword/CreateNewPassword'
 import { Login } from '../features/auth/Login/Login'
@@ -23,18 +24,14 @@ import { useAppDispatch, useAppSelector } from './store'
 const App = () => {
   const dispatch = useAppDispatch()
 
-  const isInitialized = useAppSelector<boolean>(state => state.app.isInit)
+  const isInitialized = useAppSelector<boolean>(isInitializedSelector)
 
   useEffect(() => {
     dispatch(initializeAppTC())
   }, [])
 
   if (!isInitialized) {
-    return (
-      <div style={{ position: 'fixed', top: '30%', textAlign: 'center', width: '100%' }}>
-        <CircularProgress style={{ width: '80px', height: '80px' }} color="secondary" />
-      </div>
-    )
+    return <Preloader circStyle={{ width: '80px', height: '80px' }} />
   }
 
   return (

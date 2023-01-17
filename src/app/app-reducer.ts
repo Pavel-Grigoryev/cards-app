@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { AxiosError } from 'axios'
+import axios from 'axios'
 
 import { setLoginAC } from '../features/auth/auth-reducer'
 import { setProfileAC } from '../features/Profile/profile-reducer'
@@ -37,24 +37,22 @@ export const { setAppErrorAC, setAppStatusAC, setAppInitializedAC } = slice.acti
 
 //Thunk
 
-export const initializeAppTC = (): AppThunk => dispatch => {
+export const initializeAppTC = (): AppThunk => async dispatch => {
   dispatch(setAppStatusAC({ status: 'loading' }))
+  try {
+    const res = await authAPI.me()
 
-  authAPI
-    .me()
-    .then(res => {
-      dispatch(setLoginAC({ isLoggedIn: true }))
-      dispatch(setProfileAC({ profile: res.data }))
-      dispatch(setAppStatusAC({ status: 'succeeded' }))
-    })
-    .catch((err: AxiosError<{ error: string }>) => {
-      console.log(err)
-      // handleServerNetworkError(err, dispatch)
-    })
-    .finally(() => {
-      dispatch(setAppInitializedAC({ isInit: true }))
-      dispatch(setAppStatusAC({ status: 'idle' }))
-    })
+    dispatch(setLoginAC({ isLoggedIn: true }))
+    dispatch(setProfileAC({ profile: res.data }))
+    dispatch(setAppStatusAC({ status: 'succeeded' }))
+  } catch (e) {
+    if (axios.isAxiosError(e)) {
+      return
+    }
+  } finally {
+    dispatch(setAppInitializedAC({ isInit: true }))
+    dispatch(setAppStatusAC({ status: 'idle' }))
+  }
 }
 
 //Types
