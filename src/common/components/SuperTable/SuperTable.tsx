@@ -12,7 +12,11 @@ export const SuperTable = (props: any) => {
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <SuperTableHead data={props.headerNames} />
-        <SuperTableBody data={props.bodyData} />
+        <SuperTableBody
+          data={props.bodyData}
+          deleteHandler={props.deleteHandler}
+          updateHandler={props.updateHandler}
+        />
       </Table>
     </TableContainer>
   )
