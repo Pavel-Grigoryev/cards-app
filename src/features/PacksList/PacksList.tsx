@@ -2,10 +2,9 @@ import React from 'react'
 
 import { useAppDispatch } from '../../app/store'
 import { SuperButton } from '../../common/components/SuperButton/SuperButton'
+import { SuperTable } from '../../common/components/SuperTable/SuperTable'
 
 import { createNewPackTC, getPacksTC } from './packsList-reducer'
-
-import { SuperTable } from '../../common/components/SuperTable/SuperTable'
 
 export const PacksList = () => {
   const dispatch = useAppDispatch()
