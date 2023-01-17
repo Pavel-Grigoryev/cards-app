@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { SuperTable } from '../../common/components/SuperTable/SuperTable'
+
 export const PacksList = () => {
   return (
     <>
@@ -10,6 +12,7 @@ export const PacksList = () => {
       <div>
         {/*  Компонента для всех параментров поиска */}
         {/*  Компонента для таблицы */}
+        <SuperTable />
       </div>
       {/*  Пагинация */}
     </>
