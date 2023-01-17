@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react'
 
+import { PackType } from '../../app/api'
 import { useAppDispatch, useAppSelector } from '../../app/store'
 import { SuperButton } from '../../common/components/SuperButton/SuperButton'
 import { SuperTable } from '../../common/components/SuperTable/SuperTable'
+import { packsData } from '../../common/selectors/packs-selector'
 
 import { createNewPackTC, getPacksTC } from './packsList-reducer'
 
@@ -10,7 +12,7 @@ const packsListTableNames = ['Name', 'Cards', 'Last Updated', 'Created by', 'Act
 
 export const PacksList = () => {
   const dispatch = useAppDispatch()
-  const packsData = useAppSelector(state => state.packs.packList)
+  const packs = useAppSelector<PackType[]>(packsData)
 
   const createNewPackHandler = () => {
     const cardsPack = {
@@ -40,7 +42,7 @@ export const PacksList = () => {
       <div>
         {/*  Компонента для всех параментров поиска */}
         {/*  Компонента для таблицы */}
-        <SuperTable headerNames={packsListTableNames} bodyData={packsData} />
+        <SuperTable headerNames={packsListTableNames} bodyData={packs} />
       </div>
       {/*  Пагинация */}
     </>
