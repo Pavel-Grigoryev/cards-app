@@ -13,7 +13,7 @@ import { Preloader } from '../../common/components/Preloader/Preloader'
 import { ReturnLink } from '../../common/components/ReturnLink/ReturnLink'
 import { PATH } from '../../common/routes/routes'
 import { isLoggedInSelector } from '../../common/selectors/auth-selector'
-import { entityStatusSelector, profileSelector } from '../../common/selectors/profile-selector'
+import { entityStatusData, profileData } from '../../common/selectors/profile-selector'
 import { ContainerSX } from '../../common/styles/sx/sx_styles'
 import { logoutTC } from '../auth/auth-reducer'
 
@@ -23,9 +23,9 @@ import s from './Profile.module.scss'
 export const Profile = () => {
   const isLoggedIn = useAppSelector<boolean>(isLoggedInSelector)
 
-  const profile = useAppSelector<ProfileType | null>(profileSelector)
+  const profile = useAppSelector<ProfileType | null>(profileData)
 
-  const entityStatus = useAppSelector<RequestStatusType>(entityStatusSelector)
+  const entityStatus = useAppSelector<RequestStatusType>(entityStatusData)
 
   const dispatch = useAppDispatch()
 

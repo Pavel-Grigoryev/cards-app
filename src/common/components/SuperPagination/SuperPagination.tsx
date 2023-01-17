@@ -4,7 +4,7 @@ import Pagination from '@mui/material/Pagination'
 
 import SuperSelect from '../SuperSelect/SuperSelect'
 
-import s from './SuperPagination.module.css'
+import s from './SuperPagination.module.scss'
 
 export type SuperPaginationPropsType = {
   id?: string
@@ -45,11 +45,9 @@ export const SuperPagination: React.FC<SuperPaginationPropsType> = ({
         onChange={onChangeCallback}
         color="secondary"
         shape="rounded"
-        hideNextButton
-        hidePrevButton
       />
 
-      <span className={s.text1}>Показать</span>
+      <span className={s.text1}>Show</span>
 
       <SuperSelect
         id={id + '-pagination-select'}
@@ -57,15 +55,13 @@ export const SuperPagination: React.FC<SuperPaginationPropsType> = ({
         value={itemsCountForPage}
         options={[
           { id: 4, value: 4 },
-          { id: 7, value: 7 },
+          { id: 8, value: 8 },
           { id: 10, value: 10 },
         ]}
         onChange={onChangeSelect}
       />
 
-      <span className={s.text2}>
-        {itemsCountForPage === 4 ? 'строки в таблице' : 'строк в таблице'}
-      </span>
+      <span className={s.text2}>Cards per page</span>
     </div>
   )
 }

@@ -40,9 +40,7 @@ export const cardsAPI = {
   ///////////////////////////Packs
   getPacks(data: GetPacksType) {
     return instance.get<GetPacksResponseType>(`/cards/pack`, {
-      params: {
-        pageCount: data.pageCount,
-      },
+      params: { ...data },
     })
   },
   createNewPack(data: CreateNewPackType) {

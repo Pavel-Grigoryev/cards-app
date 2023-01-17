@@ -1,5 +1,5 @@
 import { AppRootStateType } from '../../app/store'
 
-export const entityStatusSelector = (state: AppRootStateType) => state.userProfile.entityStatus
+export const entityStatusData = (state: AppRootStateType) => state.userProfile.entityStatus
 
-export const profileSelector = (state: AppRootStateType) => state.userProfile.profile
+export const profileData = (state: AppRootStateType) => state.userProfile.profile
