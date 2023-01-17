@@ -19,7 +19,7 @@ import {
   deletePackTC,
   updatePackTC,
 } from './packsList-reducer'
-
+import s from './PacksList.module.scss'
 const packsListTableNames = ['Name', 'Cards', 'Last Updated', 'Created by', 'Actions']
 
 export const PacksList = () => {
@@ -66,10 +66,9 @@ export const PacksList = () => {
 
   return (
     <>
-      <div>
+      <div className={s.head}>
         <h1>Packs list</h1>
         <SuperButton title={'Add new pack'} onClick={createNewPackHandler} />
-        {/*  Кнопка добавления нового пака */}
       </div>
       <div>
         {/*  Компонента для всех параментров поиска */}
