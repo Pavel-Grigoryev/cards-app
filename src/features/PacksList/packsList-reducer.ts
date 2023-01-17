@@ -1,7 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 
-import { cardsAPI, CreateNewPackType,GetPacksResponseType, GetPacksType, PackType, UpdatePackType } from '../../app/api'
+import {
+  cardsAPI,
+  CreateNewPackType,
+  GetPacksResponseType,
+  PackType,
+  UpdatePackType,
+} from '../../app/api'
 import { setAppStatusAC } from '../../app/app-reducer'
 import { AppThunk } from '../../app/store'
 import { handleServerNetworkError } from '../../common/utils/error-utils'
@@ -63,7 +69,7 @@ export const createNewPackTC =
     try {
       const res = await cardsAPI.createNewPack(data)
 
-      dispatch(getPacksTC({}))
+      dispatch(getPacksTC())
       dispatch(setAppStatusAC({ status: 'succeeded' }))
     } catch (e) {
       if (axios.isAxiosError(e)) {
@@ -79,7 +85,7 @@ export const deletePackTC =
     try {
       const res = await cardsAPI.deletePack(data)
 
-      dispatch(getPacksTC({}))
+      dispatch(getPacksTC())
       dispatch(setAppStatusAC({ status: 'succeeded' }))
     } catch (e) {
       if (axios.isAxiosError(e)) {
@@ -95,7 +101,7 @@ export const updatePackTC =
     try {
       const res = await cardsAPI.updatePack(data)
 
-      dispatch(getPacksTC({}))
+      dispatch(getPacksTC())
       dispatch(setAppStatusAC({ status: 'succeeded' }))
     } catch (e) {
       if (axios.isAxiosError(e)) {

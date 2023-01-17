@@ -12,7 +12,13 @@ import {
   pageData,
 } from '../../common/selectors/packs-selector'
 
-import { createNewPackTC, getPacksTC, updatePacksPagination,deletePackTC, updatePackTC } from './packsList-reducer'
+import {
+  createNewPackTC,
+  getPacksTC,
+  updatePacksPagination,
+  deletePackTC,
+  updatePackTC,
+} from './packsList-reducer'
 
 const packsListTableNames = ['Name', 'Cards', 'Last Updated', 'Created by', 'Actions']
 
@@ -70,7 +76,7 @@ export const PacksList = () => {
         {/*  Компонента для таблицы */}
         <SuperTable
           headerNames={packsListTableNames}
-          bodyData={packsData}
+          bodyData={packs}
           deleteHandler={deletePackHandler}
           updateHandler={updatePackHandler}
         />

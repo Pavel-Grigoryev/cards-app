@@ -9,10 +9,10 @@ import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 
 import { useAppSelector } from '../../../../app/store'
-import { userIdSelector } from '../../../selectors/profile-selector'
+import { userIdData } from '../../../selectors/profile-selector'
 
 export const SuperTableBody = (props: any) => {
-  const userId = useAppSelector(userIdSelector)
+  const userId = useAppSelector(userIdData)
 
   return (
     <TableBody>
