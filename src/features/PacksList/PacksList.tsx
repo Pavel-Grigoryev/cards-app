@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 
-import { useSearchParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
 import { PackType } from '../../app/api'
 import { useAppDispatch, useAppSelector } from '../../app/store'
@@ -8,6 +8,7 @@ import { Filters } from '../../common/components/Filters/Filters'
 import { SuperButton } from '../../common/components/SuperButton/SuperButton'
 import { SuperPagination } from '../../common/components/SuperPagination/SuperPagination'
 import { SuperTable } from '../../common/components/SuperTable/SuperTable'
+import { PATH } from '../../common/routes/routes'
 import {
   cardPacksTotalCountData,
   packsData,
@@ -31,6 +32,7 @@ export const PacksList = () => {
   const page = useAppSelector<number>(pageData)
   const pageCount = useAppSelector<number>(pageCountData)
   const cardPacksTotalCount = useAppSelector<number>(cardPacksTotalCountData)
+  const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
 
   const createNewPackHandler = () => {
@@ -47,6 +49,10 @@ export const PacksList = () => {
 
   const deletePackHandler = (packId: string) => {
     dispatch(deletePackTC(packId))
+  }
+
+  const studyPackHandler = (packId: string) => {
+    navigate(PATH.PACK_PAGE, { state: { packId } })
   }
 
   const updatePackHandler = (packId: string) => {
@@ -76,12 +82,12 @@ export const PacksList = () => {
       </div>
       <div>
         <Filters />
-        {/*  Компонента для таблицы */}
         <SuperTable
           headerNames={packsListTableNames}
           bodyData={packs}
           deleteHandler={deletePackHandler}
           updateHandler={updatePackHandler}
+          studyHandler={studyPackHandler}
         />
       </div>
       <SuperPagination
