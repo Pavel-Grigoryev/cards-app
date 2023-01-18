@@ -14,6 +14,7 @@ export const SuperTable = (props: any) => {
         <SuperTableHead data={props.headerNames} />
         <SuperTableBody
           data={props.bodyData}
+          studyHandler={props.studyHandler}
           deleteHandler={props.deleteHandler}
           updateHandler={props.updateHandler}
         />
