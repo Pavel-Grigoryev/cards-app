@@ -13,6 +13,7 @@ import {
   packsData,
   pageCountData,
   pageData,
+  searchData,
 } from '../../common/selectors/packs-selector'
 
 import {
@@ -31,6 +32,8 @@ export const PacksList = () => {
   const page = useAppSelector<number>(pageData)
   const pageCount = useAppSelector<number>(pageCountData)
   const cardPacksTotalCount = useAppSelector<number>(cardPacksTotalCountData)
+  const search = useAppSelector<string>(searchData)
+
   const [searchParams, setSearchParams] = useSearchParams()
 
   const createNewPackHandler = () => {
@@ -75,7 +78,12 @@ export const PacksList = () => {
         <SuperButton title={'Add new pack'} onClick={createNewPackHandler} />
       </div>
       <div>
-        <Filters />
+        <Filters
+          value={search}
+          onChange={newValue => {
+            console.log(newValue)
+          }}
+        />
         {/*  Компонента для таблицы */}
         <SuperTable
           headerNames={packsListTableNames}
