@@ -23,6 +23,7 @@ import {
   updatePacksPagination,
   deletePackTC,
   updatePackTC,
+  updateSearch,
 } from './packsList-reducer'
 import s from './PacksList.module.scss'
 const packsListTableNames = ['Name', 'Cards', 'Last Updated', 'Created by', 'Actions']
@@ -33,7 +34,7 @@ export const PacksList = () => {
   const page = useAppSelector<number>(pageData)
   const pageCount = useAppSelector<number>(pageCountData)
   const cardPacksTotalCount = useAppSelector<number>(cardPacksTotalCountData)
-  const search = useAppSelector<string>(searchData)
+  const search = useAppSelector<string | undefined>(searchData)
 
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
@@ -73,6 +74,10 @@ export const PacksList = () => {
     dispatch(updatePacksPagination({ page, pageCount }))
   }
 
+  const changeSearchHandler = (newValue: string | undefined) => {
+    dispatch(updateSearch({ newValue }))
+  }
+
   useEffect(() => {
     dispatch(getPacksTC())
   }, [page, pageCount])
@@ -84,12 +89,7 @@ export const PacksList = () => {
         <SuperButton title={'Add new pack'} onClick={createNewPackHandler} />
       </div>
       <div>
-        <Filters
-          value={search}
-          onChange={newValue => {
-            console.log(newValue)
-          }}
-        />
+        <Filters value={search} onChange={changeSearchHandler} />
         {/*  Компонента для таблицы */}
         <SuperTable
           headerNames={packsListTableNames}
