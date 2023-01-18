@@ -2,7 +2,6 @@ import React, { useCallback } from 'react'
 
 import { Grid } from '@mui/material'
 import Button from '@mui/material/Button'
-import { Navigate } from 'react-router-dom'
 
 import { RequestStatusType } from '../../app/app-reducer'
 import { useAppDispatch, useAppSelector } from '../../app/store'
@@ -12,7 +11,6 @@ import { EditableSpan } from '../../common/components/EditableSpan/EditableSpan'
 import { Preloader } from '../../common/components/Preloader/Preloader'
 import { ReturnLink } from '../../common/components/ReturnLink/ReturnLink'
 import { PATH } from '../../common/routes/routes'
-import { isLoggedInSelector } from '../../common/selectors/auth-selector'
 import { entityStatusData, profileData } from '../../common/selectors/profile-selector'
 import { ContainerSX } from '../../common/styles/sx/sx_styles'
 import { logoutTC } from '../auth/auth-reducer'
@@ -21,8 +19,6 @@ import { ProfileType, updateProfileTC } from './profile-reducer'
 import s from './Profile.module.scss'
 
 export const Profile = () => {
-  const isLoggedIn = useAppSelector<boolean>(isLoggedInSelector)
-
   const profile = useAppSelector<ProfileType | null>(profileData)
 
   const entityStatus = useAppSelector<RequestStatusType>(entityStatusData)
@@ -38,10 +34,6 @@ export const Profile = () => {
 
   const logoutHandler = () => {
     dispatch(logoutTC())
-  }
-
-  if (!isLoggedIn) {
-    return <Navigate to={PATH.LOGIN} />
   }
 
   return (

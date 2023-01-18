@@ -17,6 +17,7 @@ export const PackPage = () => {
   const dispatch = useAppDispatch()
   const cards = useAppSelector<CardType[]>(cardsData)
   const location = useLocation()
+  const [searchParams, setSearchParams] = useSearchParams()
 
   console.log(location.state)
   const createNewCardHandler = () => {
@@ -38,11 +39,9 @@ export const PackPage = () => {
     )
   }
 
-  //F - 63c6d54804a18423fc50138e
-  //
-  //M - 63c416a4025403b6ce37c1d1
   useEffect(() => {
     dispatch(getCardsTC({ cardsPack_id: location.state.packId }))
+    setSearchParams({ packId: location.state.packId, userId: location.state.userId })
   }, [])
   // console.log(cards)
 
