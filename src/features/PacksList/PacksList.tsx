@@ -74,7 +74,7 @@ export const PacksList = () => {
 
   useEffect(() => {
     dispatch(getPacksTC())
-  }, [page, pageCount])
+  }, [page, pageCount, search])
 
   return (
     <>
