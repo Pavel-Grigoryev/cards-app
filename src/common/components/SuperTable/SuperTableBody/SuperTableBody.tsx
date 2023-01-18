@@ -34,7 +34,7 @@ export const SuperTableBody = (props: any) => {
 
           {props.data[0].type === 'card' ? null : (
             <TableCell align="left">
-              <IconButton>
+              <IconButton onClick={() => props.studyHandler(row._id, row.user_id)}>
                 <SchoolIcon fontSize={'small'} />
               </IconButton>
               {row.user_id === userId && (

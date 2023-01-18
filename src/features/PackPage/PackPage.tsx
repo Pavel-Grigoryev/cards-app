@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
 
+import { useLocation, useParams, useSearchParams } from 'react-router-dom'
+
 import { CardType } from '../../app/api'
 import { useAppDispatch, useAppSelector } from '../../app/store'
 import { SuperButton } from '../../common/components/SuperButton/SuperButton'
@@ -14,9 +16,12 @@ const packPageTableNames = ['Question', 'Answer', 'Last Updated', 'Grade']
 export const PackPage = () => {
   const dispatch = useAppDispatch()
   const cards = useAppSelector<CardType[]>(cardsData)
+  const location = useLocation()
+  const [searchParams, setSearchParams] = useSearchParams()
 
+  console.log(location.state)
   const createNewCardHandler = () => {
-    dispatch(createCardTC({ card: { cardsPack_id: '63c6d54804a18423fc50138e' } }))
+    dispatch(createCardTC({ card: { cardsPack_id: location.state.packId } }))
   }
 
   const deleteCardHandler = (cardId: string) => {
@@ -34,13 +39,11 @@ export const PackPage = () => {
     )
   }
 
-  //F - 63c6d54804a18423fc50138e
-  //
-  //M - 63c416a4025403b6ce37c1d1
   useEffect(() => {
-    dispatch(getCardsTC({ cardsPack_id: '63c6d54804a18423fc50138e' }))
+    dispatch(getCardsTC({ cardsPack_id: location.state.packId }))
+    setSearchParams({ packId: location.state.packId, userId: location.state.userId })
   }, [])
-  console.log(cards)
+  // console.log(cards)
 
   return (
     <>
