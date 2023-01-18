@@ -17,9 +17,9 @@ const initialState = {
   cardPacksTotalCount: 0,
   maxCardsCount: 0,
   minCardsCount: 0,
-  page: 0,
-  pageCount: 0,
-  search: '',
+  page: 1,
+  pageCount: 8,
+  search: '' as string | undefined,
 }
 
 const slice = createSlice({
@@ -27,12 +27,15 @@ const slice = createSlice({
   initialState,
   reducers: {
     getPacks(state, action: PayloadAction<{ data: GetPacksResponseType }>) {
-      state = { ...action.payload.data, search: '' }
+      return { ...action.payload.data, search: '' }
     },
 
     updatePacksPagination(state, action: PayloadAction<{ page: number; pageCount: number }>) {
       state.page = action.payload.page
       state.pageCount = action.payload.pageCount
+    },
+    updateSearch(state, action: PayloadAction<{ newValue: string | undefined }>) {
+      state.search = action.payload.newValue
     },
   },
 })
@@ -41,7 +44,7 @@ export const packListReducer = slice.reducer
 
 // Actions
 
-export const { getPacks, updatePacksPagination } = slice.actions
+export const { getPacks, updatePacksPagination, updateSearch } = slice.actions
 
 //Thunks
 
