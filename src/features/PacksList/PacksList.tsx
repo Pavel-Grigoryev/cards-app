@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react'
 
+import { useSearchParams } from 'react-router-dom'
+
 import { PackType } from '../../app/api'
 import { useAppDispatch, useAppSelector } from '../../app/store'
+import { Filters } from '../../common/components/Filters/Filters'
 import { SuperButton } from '../../common/components/SuperButton/SuperButton'
 import { SuperPagination } from '../../common/components/SuperPagination/SuperPagination'
 import { SuperTable } from '../../common/components/SuperTable/SuperTable'
@@ -28,6 +31,7 @@ export const PacksList = () => {
   const page = useAppSelector<number>(pageData)
   const pageCount = useAppSelector<number>(pageCountData)
   const cardPacksTotalCount = useAppSelector<number>(cardPacksTotalCountData)
+  const [searchParams, setSearchParams] = useSearchParams()
 
   const createNewPackHandler = () => {
     const cardsPack = {
@@ -71,7 +75,7 @@ export const PacksList = () => {
         <SuperButton title={'Add new pack'} onClick={createNewPackHandler} />
       </div>
       <div>
-        {/*  Компонента для всех параментров поиска */}
+        <Filters />
         {/*  Компонента для таблицы */}
         <SuperTable
           headerNames={packsListTableNames}

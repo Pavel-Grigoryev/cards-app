@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 
 import {
   cardsAPI,
@@ -8,7 +8,7 @@ import {
   PackType,
   UpdatePackType,
 } from '../../app/api'
-import { setAppStatusAC } from '../../app/app-reducer'
+import { setAppErrorAC, setAppStatusAC } from '../../app/app-reducer'
 import { AppThunk } from '../../app/store'
 import { handleServerNetworkError } from '../../common/utils/error-utils'
 
@@ -17,8 +17,8 @@ const initialState = {
   cardPacksTotalCount: 0,
   maxCardsCount: 0,
   minCardsCount: 0,
-  page: 1,
-  pageCount: 8,
+  page: 0,
+  pageCount: 0,
 }
 
 const slice = createSlice({
@@ -103,9 +103,10 @@ export const updatePackTC =
 
       dispatch(getPacksTC())
       dispatch(setAppStatusAC({ status: 'succeeded' }))
-    } catch (e) {
-      if (axios.isAxiosError(e)) {
-        handleServerNetworkError(e, dispatch)
-      }
+    } catch (err: AxiosError<{ error: string }> | any) {
+      const error = err.response ? err.response.data.error : err.message
+
+      dispatch(setAppStatusAC({ status: 'failed' }))
+      dispatch(setAppErrorAC({ error }))
     }
   }
