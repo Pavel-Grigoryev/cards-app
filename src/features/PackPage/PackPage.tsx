@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 
 import { CardType } from '../../app/api'
 import { useAppDispatch, useAppSelector } from '../../app/store'
+import { NotFound } from '../../common/components/NotFound/NotFound'
 import { Search } from '../../common/components/Search/Search'
 import { SuperButton } from '../../common/components/SuperButton/SuperButton'
 import { SuperPagination } from '../../common/components/SuperPagination/SuperPagination'
@@ -102,19 +103,28 @@ export const PackPage = () => {
             paperStyle={{ ...SearchPaperSX, width: '100%' }}
           />
         </div>
-        <SuperTable
-          headerNames={packPageTableNames}
-          bodyData={cards}
-          deleteHandler={deleteCardHandler}
-          updateHandler={updateCardHandler}
-        />
+
+        {cardsTotalCount ? (
+          <div>
+            <SuperTable
+              headerNames={packPageTableNames}
+              bodyData={cards}
+              deleteHandler={deleteCardHandler}
+              updateHandler={updateCardHandler}
+            />
+            <SuperPagination
+              page={page}
+              itemsCountForPage={pageCount}
+              totalCount={cardsTotalCount}
+              onChange={changePaginationHandler}
+            />
+          </div>
+        ) : (
+          <NotFound
+            message={'Cards not found. Add a card to this pack or change your search options.'}
+          />
+        )}
       </div>
-      <SuperPagination
-        page={page}
-        itemsCountForPage={pageCount}
-        totalCount={cardsTotalCount}
-        onChange={changePaginationHandler}
-      />
     </>
   )
 }
