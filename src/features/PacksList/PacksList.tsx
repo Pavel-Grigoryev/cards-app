@@ -118,7 +118,7 @@ export const PacksList = () => {
             />
           </div>
         ) : (
-          <NotFound message={'Desks not found. Change your search options.'} />
+          <NotFound message={'Packs not found. Change your search options.'} />
         )}
       </div>
     </>
