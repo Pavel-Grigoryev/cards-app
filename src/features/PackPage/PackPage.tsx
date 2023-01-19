@@ -11,7 +11,15 @@ import { cardsData } from '../../common/selectors/cards-selector'
 
 import { createCardTC, deleteCardTC, getCardsTC, updateCardTC } from './packPage-reducer'
 
-const packPageTableNames = ['Question', 'Answer', 'Last Updated', 'Grade']
+// const packPageTableNames = ['Question', 'Answer', 'Last Updated', 'Grade']
+
+const packPageTableNames = [
+  { name: 'Question', sortName: 'question' },
+  { name: 'Answer', sortName: 'answer' },
+  { name: 'Last Updated', sortName: 'updated' },
+  { name: 'Grade', sortName: 'grade' },
+  { name: 'Actions', sortDirection: '' },
+]
 
 export const PackPage = () => {
   const dispatch = useAppDispatch()
@@ -19,7 +27,6 @@ export const PackPage = () => {
   const location = useLocation()
   const [searchParams, setSearchParams] = useSearchParams()
 
-  console.log(location.state)
   const createNewCardHandler = () => {
     dispatch(createCardTC({ card: { cardsPack_id: location.state.packId } }))
   }

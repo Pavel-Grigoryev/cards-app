@@ -19,6 +19,7 @@ const initialState = {
   minCardsCount: 0,
   page: 0,
   pageCount: 0,
+  sortPacks: '',
 }
 
 const slice = createSlice({
@@ -33,6 +34,10 @@ const slice = createSlice({
       state.page = action.payload.page
       state.pageCount = action.payload.pageCount
     },
+
+    setSort(state, action: PayloadAction<{ sortPacks: string }>) {
+      state.sortPacks = action.payload.sortPacks
+    },
   },
 })
 
@@ -40,20 +45,18 @@ export const packListReducer = slice.reducer
 
 // Actions
 
-export const { getPacks, updatePacksPagination } = slice.actions
+export const { getPacks, updatePacksPagination, setSort } = slice.actions
 
 //Thunks
 
 export const getPacksTC = (): AppThunk => async (dispatch, getState) => {
   dispatch(setAppStatusAC({ status: 'loading' }))
-  const { page, pageCount } = getState().packs
+  const { page, pageCount, sortPacks } = getState().packs
 
   try {
-    const res = await cardsAPI.getPacks({ page, pageCount })
+    const res = await cardsAPI.getPacks({ page, pageCount, sortPacks })
 
-    console.log(res)
-
-    dispatch(getPacks({ data: res.data }))
+    dispatch(getPacks({ data: { ...res.data, sortPacks } }))
     dispatch(setAppStatusAC({ status: 'succeeded' }))
   } catch (e) {
     if (axios.isAxiosError(e)) {
