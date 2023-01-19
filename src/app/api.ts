@@ -213,6 +213,7 @@ export type GetCardsResponseType = {
   page: number
   pageCount: number
   packUserId: string
+  packName: string
 }
 
 export type CreateNewCardType = {
