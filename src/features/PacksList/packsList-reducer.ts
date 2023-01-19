@@ -10,6 +10,7 @@ import {
 } from '../../app/api'
 import { setAppErrorAC, setAppStatusAC } from '../../app/app-reducer'
 import { AppThunk } from '../../app/store'
+import { defaultFilterValues } from '../../common/components/Filters/Filters'
 import { handleServerNetworkError } from '../../common/utils/error-utils'
 
 const initialState = {
@@ -42,6 +43,16 @@ const slice = createSlice({
     setSort(state, action: PayloadAction<{ sortPacks: string }>) {
       state.sortPacks = action.payload.sortPacks
     },
+
+    resetFilters(state, action: PayloadAction<typeof defaultFilterValues>) {
+      return {
+        ...state,
+        page: action.payload.page,
+        sortPacks: action.payload.sortPacks,
+        pageCount: action.payload.pageCount,
+        search: action.payload.search,
+      }
+    },
   },
 })
 
@@ -49,7 +60,8 @@ export const packListReducer = slice.reducer
 
 // Actions
 
-export const { getPacks, updatePacksPagination, updateSearch, setSort } = slice.actions
+export const { getPacks, updatePacksPagination, updateSearch, setSort, resetFilters } =
+  slice.actions
 
 //Thunks
 

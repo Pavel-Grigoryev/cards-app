@@ -22,6 +22,7 @@ const initialState = {
   pageCount: 8,
   packUserId: '',
   search: '' as string | undefined,
+  packName: '',
 }
 
 const slice = createSlice({
@@ -29,7 +30,12 @@ const slice = createSlice({
   initialState,
   reducers: {
     getCards(state, action: PayloadAction<{ data: GetCardsResponseType }>) {
-      return { ...action.payload.data, search: state.search }
+      return {
+        ...action.payload.data,
+        search: state.search,
+        packUserId: action.payload.data.packUserId,
+        packName: action.payload.data.packName,
+      }
     },
     updateCardsPagination(state, action: PayloadAction<{ page: number; pageCount: number }>) {
       state.page = action.payload.page
