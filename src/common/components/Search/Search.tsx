@@ -5,10 +5,11 @@ import InputBase from '@mui/material/InputBase'
 import Paper from '@mui/material/Paper'
 
 import { useDebounce } from '../../hooks/useDebounce'
+import { SearchPaperSXType } from '../../styles/sx/sx_styles'
 
 import s from './Search.module.scss'
 
-export const Search = memo(({ value, onChange }: SearchPropsType) => {
+export const Search = memo(({ value, onChange, paperStyle }: SearchPropsType) => {
   const [title, setTitle] = useState<string | undefined>(value)
 
   const debouncedValue = useDebounce<string | undefined>(title, 700)
@@ -24,16 +25,7 @@ export const Search = memo(({ value, onChange }: SearchPropsType) => {
   return (
     <div>
       <p className={s.title}>Search</p>
-      <Paper
-        component="form"
-        sx={{
-          p: '2px 4px 2px 16px',
-          display: 'flex',
-          alignItems: 'center',
-          width: 400,
-          height: 36,
-        }}
-      >
+      <Paper component="form" sx={{ ...paperStyle }}>
         <SearchIcon sx={{ opacity: '0.5' }} />
         <InputBase
           sx={{ ml: 1, flex: 1 }}
@@ -51,4 +43,5 @@ export const Search = memo(({ value, onChange }: SearchPropsType) => {
 type SearchPropsType = {
   value: string | undefined
   onChange: (newValue: string | undefined) => void
+  paperStyle: SearchPaperSXType
 }

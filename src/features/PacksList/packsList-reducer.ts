@@ -20,7 +20,7 @@ const initialState = {
   page: 1,
   pageCount: 8,
   search: '' as string | undefined,
-  sortPacks: ''
+  sortPacks: '',
 }
 
 const slice = createSlice({
@@ -28,7 +28,7 @@ const slice = createSlice({
   initialState,
   reducers: {
     getPacks(state, action: PayloadAction<{ data: GetPacksResponseType }>) {
-      return { ...action.payload.data, search: state.search, sortPacks: state.sortPacks}
+      return { ...action.payload.data, search: state.search, sortPacks: state.sortPacks }
     },
 
     updatePacksPagination(state, action: PayloadAction<{ page: number; pageCount: number }>) {

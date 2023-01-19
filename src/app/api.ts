@@ -55,9 +55,7 @@ export const cardsAPI = {
   ///////////////////////////Cards
   getCards(data: GetCardsType) {
     return instance.get<GetPacksType, AxiosResponse<GetCardsResponseType>>(`/cards/card`, {
-      params: {
-        cardsPack_id: data.cardsPack_id,
-      },
+      params: { ...data },
     })
   },
   createNewCard(data: CreateNewCardType) {
@@ -159,11 +157,7 @@ export type PackType = {
   updated: string
 }
 
-export type DomainCardType = {
-  sortPacks: string
-}
-
-export type GetPacksResponseType = DomainCardType & {
+export type GetPacksResponseType = {
   cardPacks: PackType[]
   cardPacksTotalCount: number
   maxCardsCount: number

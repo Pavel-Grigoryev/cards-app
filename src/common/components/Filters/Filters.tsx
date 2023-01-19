@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { SearchPaperSX } from '../../styles/sx/sx_styles'
 import { Search } from '../Search/Search'
 
 import s from './Filters.module.scss'
@@ -9,7 +10,7 @@ export const Filters = (props: FiltersPropsType) => {
 
   return (
     <div className={s.filterCont}>
-      <Search value={value} onChange={onChange} />
+      <Search value={value} onChange={onChange} paperStyle={SearchPaperSX} />
     </div>
   )
 }

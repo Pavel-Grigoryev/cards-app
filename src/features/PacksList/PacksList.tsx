@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 
-import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import { PackType } from '../../app/api'
 import { useAppDispatch, useAppSelector } from '../../app/store'
@@ -8,7 +8,6 @@ import { Filters } from '../../common/components/Filters/Filters'
 import { SuperButton } from '../../common/components/SuperButton/SuperButton'
 import { SuperPagination } from '../../common/components/SuperPagination/SuperPagination'
 import { SuperTable } from '../../common/components/SuperTable/SuperTable'
-import { PATH } from '../../common/routes/routes'
 import {
   cardPacksTotalCountData,
   packsData,
@@ -20,12 +19,12 @@ import {
 
 import {
   createNewPackTC,
-  getPacksTC,
-  updatePacksPagination,
   deletePackTC,
+  getPacksTC,
+  setSort,
+  updatePacksPagination,
   updatePackTC,
   updateSearch,
-  setSort,
 } from './packsList-reducer'
 import s from './PacksList.module.scss'
 // const packsListTableNames = ['Name', 'Cards', 'Last Updated', 'Created by', 'Actions']
@@ -43,6 +42,7 @@ export const PacksList = () => {
   const packs = useAppSelector<PackType[]>(packsData)
   const page = useAppSelector<number>(pageData)
   const pageCount = useAppSelector<number>(pageCountData)
+  const sort = useAppSelector<string>(sortPacks)
   const cardPacksTotalCount = useAppSelector<number>(cardPacksTotalCountData)
   const search = useAppSelector<string | undefined>(searchData)
 
