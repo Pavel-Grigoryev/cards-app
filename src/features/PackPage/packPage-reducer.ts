@@ -22,6 +22,7 @@ const initialState = {
   pageCount: 8,
   packUserId: '',
   search: '' as string | undefined,
+  sortCards: '',
 }
 
 const slice = createSlice({
@@ -29,7 +30,7 @@ const slice = createSlice({
   initialState,
   reducers: {
     getCards(state, action: PayloadAction<{ data: GetCardsResponseType }>) {
-      return { ...action.payload.data, search: state.search }
+      return { ...action.payload.data, search: state.search, sortCards: state.sortCards }
     },
     updateCardsPagination(state, action: PayloadAction<{ page: number; pageCount: number }>) {
       state.page = action.payload.page
@@ -38,6 +39,9 @@ const slice = createSlice({
     updateCardsSearch(state, action: PayloadAction<{ newValue: string | undefined }>) {
       state.search = action.payload.newValue
     },
+    setSortCards(state, action: PayloadAction<{ sortCards: string }>) {
+      state.sortCards = action.payload.sortCards
+    },
   },
 })
 
@@ -45,7 +49,7 @@ export const packPageReducer = slice.reducer
 
 // Actions
 
-export const { getCards, updateCardsSearch, updateCardsPagination } = slice.actions
+export const { getCards, updateCardsSearch, updateCardsPagination, setSortCards } = slice.actions
 
 //Thunks
 
@@ -55,7 +59,7 @@ export const getCardsTC =
     dispatch(setAppStatusAC({ status: 'loading' }))
 
     try {
-      const res = await cardsAPI.getCards(data)
+      const res = await cardsAPI.getCards({ ...data })
 
       dispatch(getCards({ data: res.data }))
       dispatch(setAppStatusAC({ status: 'succeeded' }))

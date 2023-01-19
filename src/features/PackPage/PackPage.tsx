@@ -14,6 +14,7 @@ import {
   pageCountData,
   pageData,
   searchData,
+  sortCards,
 } from '../../common/selectors/cards-selector'
 import { SearchPaperSX } from '../../common/styles/sx/sx_styles'
 
@@ -21,20 +22,19 @@ import {
   createCardTC,
   deleteCardTC,
   getCardsTC,
+  setSortCards,
   updateCardsPagination,
   updateCardsSearch,
   updateCardTC,
 } from './packPage-reducer'
 import s from './PackPage.module.scss'
 
-// const packPageTableNames = ['Question', 'Answer', 'Last Updated', 'Grade']
-
 const packPageTableNames = [
   { name: 'Question', sortName: 'question' },
   { name: 'Answer', sortName: 'answer' },
   { name: 'Last Updated', sortName: 'updated' },
   { name: 'Grade', sortName: 'grade' },
-  { name: 'Actions', sortDirection: '' },
+  { name: 'Actions', sortDirection: 'updated' },
 ]
 
 export const PackPage = () => {
@@ -44,6 +44,7 @@ export const PackPage = () => {
   const page = useAppSelector<number>(pageData)
   const pageCount = useAppSelector<number>(pageCountData)
   const cardsTotalCount = useAppSelector<number>(cardsTotalCountData)
+  const sort = useAppSelector<string>(sortCards)
 
   const { id } = useParams<string>()
 
@@ -57,6 +58,10 @@ export const PackPage = () => {
     dispatch(deleteCardTC(cardId))
   }
 
+  const sortingHandler = (sortCards: string) => {
+    dispatch(setSortCards({ sortCards }))
+  }
+
   const updateCardHandler = (cardId: string) => {
     dispatch(
       updateCardTC({
@@ -67,7 +72,6 @@ export const PackPage = () => {
       })
     )
   }
-
   const changeSearchHandler = (newValue: string | undefined) => {
     dispatch(updateCardsSearch({ newValue }))
   }
@@ -78,10 +82,11 @@ export const PackPage = () => {
 
   useEffect(() => {
     if (id) {
-      dispatch(getCardsTC({ cardsPack_id: id, cardQuestion: search, page, pageCount }))
+      dispatch(
+        getCardsTC({ cardsPack_id: id, cardQuestion: search, page, pageCount, sortCards: sort })
+      )
     }
-  }, [search, page, pageCount])
-  // console.log(cards)
+  }, [search, page, pageCount, sort])
 
   return (
     <>
@@ -91,10 +96,6 @@ export const PackPage = () => {
       </div>
       <div>
         <SuperButton title={'Add new card'} onClick={createNewCardHandler} />
-        {/* Если пак пустой - кнопка Add new card */}
-        {/* ELSE */}
-        {/*  Компонента для поиска */}
-        {/*  Компонента для таблицы */}
         <div className={s.searchBlock}>
           <Search
             value={search}
@@ -107,6 +108,7 @@ export const PackPage = () => {
           bodyData={cards}
           deleteHandler={deleteCardHandler}
           updateHandler={updateCardHandler}
+          sortingHandler={sortingHandler}
         />
       </div>
       <SuperPagination
