@@ -96,7 +96,11 @@ export const PackPage = () => {
         {/*  Компонента для поиска */}
         {/*  Компонента для таблицы */}
         <div className={s.searchBlock}>
-          <Search value={search} onChange={changeSearchHandler} paperStyle={SearchPaperSX} />
+          <Search
+            value={search}
+            onChange={changeSearchHandler}
+            paperStyle={{ ...SearchPaperSX, width: '100%' }}
+          />
         </div>
         <SuperTable
           headerNames={packPageTableNames}
