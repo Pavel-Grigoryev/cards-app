@@ -10,15 +10,15 @@ import { SuperButton } from '../../common/components/SuperButton/SuperButton'
 import { SuperPagination } from '../../common/components/SuperPagination/SuperPagination'
 import { SuperTable } from '../../common/components/SuperTable/SuperTable'
 import { PATH } from '../../common/routes/routes'
-import { cardsData } from '../../common/selectors/cards-selector'
-import s from '../PacksList/PacksList.module.scss'
 import {
   cardsData,
   cardsTotalCountData,
   pageCountData,
   pageData,
   searchData,
+  userPackIdtData,
 } from '../../common/selectors/cards-selector'
+import { userIdData } from '../../common/selectors/profile-selector'
 import { SearchPaperSX } from '../../common/styles/sx/sx_styles'
 
 import {
@@ -48,6 +48,9 @@ export const PackPage = () => {
   const page = useAppSelector<number>(pageData)
   const pageCount = useAppSelector<number>(pageCountData)
   const cardsTotalCount = useAppSelector<number>(cardsTotalCountData)
+  const userPackId = useAppSelector<string>(userPackIdtData)
+  const userId = useAppSelector<string>(userIdData)
+  const packName = useAppSelector<string>(state => state.cards.packName)
 
   const { id } = useParams<string>()
 
@@ -91,8 +94,12 @@ export const PackPage = () => {
     <>
       <ReturnLink path={PATH.PACKS_LIST} title={'Back to Packs List'} />
       <div className={s.head}>
-        <h1>Name pack</h1>
-        <SuperButton title={'Add new card'} onClick={createNewCardHandler} />
+        <h1>{packName}</h1>
+        {userPackId === userId ? (
+          <SuperButton title={'Add new card'} onClick={createNewCardHandler} />
+        ) : (
+          <SuperButton title={'Learn to pack'} onClick={() => {}} />
+        )}
         {/*  Кнопка Learn new pack или add new card (если пак свой)  */}
       </div>
       <div>
