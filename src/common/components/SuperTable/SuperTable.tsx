@@ -11,7 +11,7 @@ export const SuperTable = (props: any) => {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <SuperTableHead data={props.headerNames} />
+        <SuperTableHead data={props.headerNames} sortingHandler={props.sortingHandler} />
         <SuperTableBody
           data={props.bodyData}
           studyHandler={props.studyHandler}

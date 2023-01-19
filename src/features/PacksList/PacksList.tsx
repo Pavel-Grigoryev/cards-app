@@ -15,6 +15,7 @@ import {
   pageCountData,
   pageData,
   searchData,
+  sortPacks,
 } from '../../common/selectors/packs-selector'
 
 import {
@@ -24,15 +25,25 @@ import {
   deletePackTC,
   updatePackTC,
   updateSearch,
+  setSort,
 } from './packsList-reducer'
 import s from './PacksList.module.scss'
-const packsListTableNames = ['Name', 'Cards', 'Last Updated', 'Created by', 'Actions']
+// const packsListTableNames = ['Name', 'Cards', 'Last Updated', 'Created by', 'Actions']
+
+const packsListTableNames = [
+  { name: 'Name', sortName: 'name' },
+  { name: 'Cards', sortName: 'cardsCount' },
+  { name: 'Last Updated', sortName: 'updated' },
+  { name: 'Created by', sortName: 'user_name' },
+  { name: 'Actions', sortDirection: '' },
+]
 
 export const PacksList = () => {
   const dispatch = useAppDispatch()
   const packs = useAppSelector<PackType[]>(packsData)
   const page = useAppSelector<number>(pageData)
   const pageCount = useAppSelector<number>(pageCountData)
+  const sort = useAppSelector<string>(sortPacks)
   const cardPacksTotalCount = useAppSelector<number>(cardPacksTotalCountData)
   const search = useAppSelector<string | undefined>(searchData)
 
@@ -49,6 +60,10 @@ export const PacksList = () => {
     }
 
     dispatch(createNewPackTC(cardsPack))
+  }
+
+  const sortingHandler = (sortPacks: string) => {
+    dispatch(setSort({ sortPacks }))
   }
 
   const deletePackHandler = (packId: string) => {
@@ -80,7 +95,7 @@ export const PacksList = () => {
 
   useEffect(() => {
     dispatch(getPacksTC())
-  }, [page, pageCount])
+  }, [page, pageCount, sort])
 
   return (
     <>
@@ -97,6 +112,7 @@ export const PacksList = () => {
           deleteHandler={deletePackHandler}
           updateHandler={updatePackHandler}
           studyHandler={studyPackHandler}
+          sortingHandler={sortingHandler}
         />
       </div>
       <SuperPagination
