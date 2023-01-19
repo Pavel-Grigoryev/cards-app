@@ -55,8 +55,8 @@ export const PacksList = () => {
     dispatch(deletePackTC(packId))
   }
 
-  const studyPackHandler = (packId: string, userId: string) => {
-    navigate(PATH.PACK_PAGE, { state: { packId, userId } })
+  const studyPackHandler = (packId: string) => {
+    navigate(`/packPage/${packId}`)
   }
 
   const updatePackHandler = (packId: string) => {

@@ -17,11 +17,14 @@ export const PackPage = () => {
   const dispatch = useAppDispatch()
   const cards = useAppSelector<CardType[]>(cardsData)
   const location = useLocation()
-  const [searchParams, setSearchParams] = useSearchParams()
+  /*const [searchParams, setSearchParams] = useSearchParams()*/
+  const { id } = useParams<string>()
 
   console.log(location.state)
   const createNewCardHandler = () => {
-    dispatch(createCardTC({ card: { cardsPack_id: location.state.packId } }))
+    if (id) {
+      dispatch(createCardTC({ card: { cardsPack_id: id } }))
+    }
   }
 
   const deleteCardHandler = (cardId: string) => {
@@ -40,8 +43,10 @@ export const PackPage = () => {
   }
 
   useEffect(() => {
-    dispatch(getCardsTC({ cardsPack_id: location.state.packId }))
-    setSearchParams({ packId: location.state.packId, userId: location.state.userId })
+    if (id) {
+      dispatch(getCardsTC({ cardsPack_id: id }))
+    }
+    /*setSearchParams({ packId: location.state.packId, userId: location.state.userId })*/
   }, [])
   // console.log(cards)
 

@@ -6,6 +6,8 @@ import Paper from '@mui/material/Paper'
 
 import { useDebounce } from '../../hooks/useDebounce'
 
+import s from './Search.module.scss'
+
 export const Search = memo(({ value, onChange }: SearchPropsType) => {
   const [title, setTitle] = useState<string | undefined>(value)
 
@@ -20,10 +22,17 @@ export const Search = memo(({ value, onChange }: SearchPropsType) => {
   }, [debouncedValue])
 
   return (
-    <>
+    <div>
+      <p className={s.title}>Search</p>
       <Paper
         component="form"
-        sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
+        sx={{
+          p: '2px 4px 2px 16px',
+          display: 'flex',
+          alignItems: 'center',
+          width: 400,
+          height: 36,
+        }}
       >
         <SearchIcon sx={{ opacity: '0.5' }} />
         <InputBase
@@ -33,7 +42,7 @@ export const Search = memo(({ value, onChange }: SearchPropsType) => {
           onChange={onChangeHandler}
         />
       </Paper>
-    </>
+    </div>
   )
 })
 
