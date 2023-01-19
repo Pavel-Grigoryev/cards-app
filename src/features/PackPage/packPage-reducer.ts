@@ -23,6 +23,7 @@ const initialState = {
   packUserId: '',
   search: '' as string | undefined,
   sortCards: '',
+  packName: '',
 }
 
 const slice = createSlice({
@@ -30,7 +31,13 @@ const slice = createSlice({
   initialState,
   reducers: {
     getCards(state, action: PayloadAction<{ data: GetCardsResponseType }>) {
-      return { ...action.payload.data, search: state.search, sortCards: state.sortCards }
+      return {
+        ...action.payload.data,
+        search: state.search,
+        packUserId: action.payload.data.packUserId,
+        packName: action.payload.data.packName,
+        sortCards: state.sortCards
+      }
     },
     updateCardsPagination(state, action: PayloadAction<{ page: number; pageCount: number }>) {
       state.page = action.payload.page

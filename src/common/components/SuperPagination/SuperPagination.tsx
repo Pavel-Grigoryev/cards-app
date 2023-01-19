@@ -37,7 +37,7 @@ export const SuperPagination: React.FC<SuperPaginationPropsType> = ({
         id={id + '-pagination'}
         sx={
           {
-            // стили для Pagination // пишет студент
+            // стили для Pagination
           }
         }
         page={page}
