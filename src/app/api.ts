@@ -54,7 +54,7 @@ export const cardsAPI = {
   },
   ///////////////////////////Cards
   getCards(data: GetCardsType) {
-    return instance.get<GetPacksType, AxiosResponse<GetCardsResponseType>>(`/cards/card`, {
+    return instance.get<GetCardsType, AxiosResponse<GetCardsResponseType>>(`/cards/card`, {
       params: { ...data },
     })
   },

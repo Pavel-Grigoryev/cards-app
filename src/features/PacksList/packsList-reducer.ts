@@ -28,7 +28,11 @@ const slice = createSlice({
   initialState,
   reducers: {
     getPacks(state, action: PayloadAction<{ data: GetPacksResponseType }>) {
-      return { ...action.payload.data, search: state.search, sortPacks: state.sortPacks }
+      return {
+        ...action.payload.data,
+        search: state.search,
+        sortPacks: state.sortPacks,
+      }
     },
 
     updatePacksPagination(state, action: PayloadAction<{ page: number; pageCount: number }>) {
@@ -60,7 +64,7 @@ export const getPacksTC = (): AppThunk => async (dispatch, getState) => {
   try {
     const res = await cardsAPI.getPacks({ page, pageCount, packName: search, sortPacks })
 
-    console.log(res)
+    //console.log(res)
 
     dispatch(getPacks({ data: res.data }))
     dispatch(setAppStatusAC({ status: 'succeeded' }))

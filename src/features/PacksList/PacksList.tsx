@@ -27,7 +27,6 @@ import {
   updateSearch,
 } from './packsList-reducer'
 import s from './PacksList.module.scss'
-// const packsListTableNames = ['Name', 'Cards', 'Last Updated', 'Created by', 'Actions']
 
 const packsListTableNames = [
   { name: 'Name', sortName: 'name' },
@@ -104,7 +103,6 @@ export const PacksList = () => {
       </div>
       <div>
         <Filters value={search} onChange={changeSearchHandler} />
-        {/*  Компонента для таблицы */}
         <SuperTable
           headerNames={packsListTableNames}
           bodyData={packs}
