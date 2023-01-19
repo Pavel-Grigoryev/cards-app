@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react'
 
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { PackType } from '../../app/api'
+import { RequestStatusType } from '../../app/app-reducer'
 import { useAppDispatch, useAppSelector } from '../../app/store'
 import { Filters } from '../../common/components/Filters/Filters'
 import { SuperButton } from '../../common/components/SuperButton/SuperButton'
 import { SuperPagination } from '../../common/components/SuperPagination/SuperPagination'
 import { SuperTable } from '../../common/components/SuperTable/SuperTable'
+import { isLoading } from '../../common/selectors/app-selector'
 import {
   cardPacksTotalCountData,
   packsData,
@@ -16,6 +18,7 @@ import {
   searchData,
   sortPacks,
 } from '../../common/selectors/packs-selector'
+import { packsListTableNames } from '../../common/utils/tableHeaderData'
 
 import {
   createNewPackTC,
@@ -28,14 +31,6 @@ import {
 } from './packsList-reducer'
 import s from './PacksList.module.scss'
 
-const packsListTableNames = [
-  { name: 'Name', sortName: 'name' },
-  { name: 'Cards', sortName: 'cardsCount' },
-  { name: 'Last Updated', sortName: 'updated' },
-  { name: 'Created by', sortName: 'user_name' },
-  { name: 'Actions', sortDirection: '' },
-]
-
 export const PacksList = () => {
   const dispatch = useAppDispatch()
   const packs = useAppSelector<PackType[]>(packsData)
@@ -44,9 +39,9 @@ export const PacksList = () => {
   const sort = useAppSelector<string>(sortPacks)
   const cardPacksTotalCount = useAppSelector<number>(cardPacksTotalCountData)
   const search = useAppSelector<string | undefined>(searchData)
+  const status = useAppSelector<RequestStatusType>(isLoading)
 
   const navigate = useNavigate()
-  const [searchParams, setSearchParams] = useSearchParams()
 
   const createNewPackHandler = () => {
     const cardsPack = {

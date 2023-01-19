@@ -9,11 +9,22 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 
+import { CardType, PackType } from '../../../../app/api'
+import { RequestStatusType } from '../../../../app/app-reducer'
 import { useAppSelector } from '../../../../app/store'
+import { isLoading } from '../../../selectors/app-selector'
 import { userIdData } from '../../../selectors/profile-selector'
 
-export const SuperTableBody = (props: any) => {
+type SuperTableBodyPropsType = {
+  data: PackType[] | CardType[]
+  studyHandler?: (cardId: string) => void
+  updateHandler: (cardId: string) => void
+  deleteHandler: (cardId: string) => void
+}
+
+export const SuperTableBody = (props: SuperTableBodyPropsType) => {
   const userId = useAppSelector(userIdData)
+  const status = useAppSelector<RequestStatusType>(isLoading)
 
   return (
     <TableBody>
@@ -38,7 +49,7 @@ export const SuperTableBody = (props: any) => {
           {props.data[0].type === 'card' && row.user_id !== userId ? null : (
             <TableCell align="left">
               <IconButton
-                onClick={() => props.studyHandler(row._id)}
+                onClick={() => props.studyHandler?.(row._id)}
                 disabled={!row.cardsCount && row.user_id !== userId}
               >
                 <SchoolIcon fontSize={'small'} />

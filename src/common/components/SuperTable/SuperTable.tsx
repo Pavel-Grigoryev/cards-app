@@ -4,14 +4,26 @@ import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableContainer from '@mui/material/TableContainer'
 
+import { CardType, PackType } from '../../../app/api'
+import { TableHeaderDataType } from '../../utils/tableHeaderData'
+
 import { SuperTableBody } from './SuperTableBody/SuperTableBody'
 import { SuperTableHead } from './SuperTableHead/SuperTableHead'
 
-export const SuperTable = (props: any) => {
+type SuperTablePropsType = {
+  bodyData: PackType[] | CardType[]
+  headerNames: Array<TableHeaderDataType>
+  deleteHandler: (cardId: string) => void
+  sortingHandler: (sortCards: string) => void
+  studyHandler?: (cardId: string) => void
+  updateHandler: (cardId: string) => void
+}
+
+export const SuperTable = (props: SuperTablePropsType) => {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <SuperTableHead data={props.headerNames} sortingHandler={props.sortingHandler} />
+        <SuperTableHead headerNames={props.headerNames} sortingHandler={props.sortingHandler} />
         <SuperTableBody
           data={props.bodyData}
           studyHandler={props.studyHandler}

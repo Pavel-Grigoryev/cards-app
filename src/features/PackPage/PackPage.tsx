@@ -3,11 +3,13 @@ import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { CardType } from '../../app/api'
+import { RequestStatusType } from '../../app/app-reducer'
 import { useAppDispatch, useAppSelector } from '../../app/store'
 import { Search } from '../../common/components/Search/Search'
 import { SuperButton } from '../../common/components/SuperButton/SuperButton'
 import { SuperPagination } from '../../common/components/SuperPagination/SuperPagination'
 import { SuperTable } from '../../common/components/SuperTable/SuperTable'
+import { isLoading } from '../../common/selectors/app-selector'
 import {
   cardsData,
   cardsTotalCountData,
@@ -17,6 +19,7 @@ import {
   sortCards,
 } from '../../common/selectors/cards-selector'
 import { SearchPaperSX } from '../../common/styles/sx/sx_styles'
+import { packPageTableNames } from '../../common/utils/tableHeaderData'
 
 import {
   createCardTC,
@@ -29,17 +32,10 @@ import {
 } from './packPage-reducer'
 import s from './PackPage.module.scss'
 
-const packPageTableNames = [
-  { name: 'Question', sortName: 'question' },
-  { name: 'Answer', sortName: 'answer' },
-  { name: 'Last Updated', sortName: 'updated' },
-  { name: 'Grade', sortName: 'grade' },
-  { name: 'Actions', sortDirection: 'updated' },
-]
-
 export const PackPage = () => {
   const dispatch = useAppDispatch()
   const cards = useAppSelector<CardType[]>(cardsData)
+  const status = useAppSelector<RequestStatusType>(isLoading)
   const search = useAppSelector<string | undefined>(searchData)
   const page = useAppSelector<number>(pageData)
   const pageCount = useAppSelector<number>(pageCountData)
@@ -103,6 +99,7 @@ export const PackPage = () => {
             paperStyle={{ ...SearchPaperSX, width: '100%' }}
           />
         </div>
+
         <SuperTable
           headerNames={packPageTableNames}
           bodyData={cards}
