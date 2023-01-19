@@ -36,7 +36,7 @@ const slice = createSlice({
         search: state.search,
         packUserId: action.payload.data.packUserId,
         packName: action.payload.data.packName,
-        sortCards: state.sortCards
+        sortCards: state.sortCards,
       }
     },
     updateCardsPagination(state, action: PayloadAction<{ page: number; pageCount: number }>) {

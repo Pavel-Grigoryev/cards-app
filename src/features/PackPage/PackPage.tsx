@@ -10,16 +10,16 @@ import { Search } from '../../common/components/Search/Search'
 import { SuperButton } from '../../common/components/SuperButton/SuperButton'
 import { SuperPagination } from '../../common/components/SuperPagination/SuperPagination'
 import { SuperTable } from '../../common/components/SuperTable/SuperTable'
-import { isLoading } from '../../common/selectors/app-selector'
 import { PATH } from '../../common/routes/routes'
+import { isLoading } from '../../common/selectors/app-selector'
 import {
   cardsData,
   cardsTotalCountData,
   pageCountData,
   pageData,
   searchData,
-  userPackIdtData,
   sortCards,
+  packUserId,
 } from '../../common/selectors/cards-selector'
 import { userIdData } from '../../common/selectors/profile-selector'
 import { SearchPaperSX } from '../../common/styles/sx/sx_styles'
@@ -45,7 +45,7 @@ export const PackPage = () => {
   const pageCount = useAppSelector<number>(pageCountData)
   const cardsTotalCount = useAppSelector<number>(cardsTotalCountData)
   const sort = useAppSelector<string>(sortCards)
-  const userPackId = useAppSelector<string>(userPackIdtData)
+  const userPackId = useAppSelector<string>(packUserId)
   const userId = useAppSelector<string>(userIdData)
   const packName = useAppSelector<string>(state => state.cards.packName)
 

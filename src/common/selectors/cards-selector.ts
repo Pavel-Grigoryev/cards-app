@@ -13,5 +13,3 @@ export const cardsTotalCountData = (state: AppRootStateType) => state.cards.card
 export const packUserId = (state: AppRootStateType) => state.cards.packUserId
 
 export const sortCards = (state: AppRootStateType) => state.cards.sortCards
-
-export const userPackIdtData = (state: AppRootStateType) => state.cards.packUserId
