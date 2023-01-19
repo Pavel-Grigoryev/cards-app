@@ -35,3 +35,15 @@ export const PassRecoveryFormGroupSX = {
   ...FormGroupSX,
   height: '300px',
 }
+
+export const SearchPaperSX = {
+  p: '2px 4px 2px 16px',
+  display: 'flex',
+  alignItems: 'center',
+  width: '413px',
+  height: '36px',
+}
+
+//Types
+
+export type SearchPaperSXType = typeof SearchPaperSX

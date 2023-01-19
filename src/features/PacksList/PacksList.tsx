@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 
-import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import { PackType } from '../../app/api'
 import { useAppDispatch, useAppSelector } from '../../app/store'
@@ -8,22 +8,23 @@ import { Filters } from '../../common/components/Filters/Filters'
 import { SuperButton } from '../../common/components/SuperButton/SuperButton'
 import { SuperPagination } from '../../common/components/SuperPagination/SuperPagination'
 import { SuperTable } from '../../common/components/SuperTable/SuperTable'
-import { PATH } from '../../common/routes/routes'
 import {
   cardPacksTotalCountData,
   packsData,
   pageCountData,
   pageData,
+  searchData,
   sortPacks,
 } from '../../common/selectors/packs-selector'
 
 import {
   createNewPackTC,
-  getPacksTC,
-  updatePacksPagination,
   deletePackTC,
-  updatePackTC,
+  getPacksTC,
   setSort,
+  updatePacksPagination,
+  updatePackTC,
+  updateSearch,
 } from './packsList-reducer'
 import s from './PacksList.module.scss'
 // const packsListTableNames = ['Name', 'Cards', 'Last Updated', 'Created by', 'Actions']
@@ -43,6 +44,8 @@ export const PacksList = () => {
   const pageCount = useAppSelector<number>(pageCountData)
   const sort = useAppSelector<string>(sortPacks)
   const cardPacksTotalCount = useAppSelector<number>(cardPacksTotalCountData)
+  const search = useAppSelector<string | undefined>(searchData)
+
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
 
@@ -66,8 +69,8 @@ export const PacksList = () => {
     dispatch(deletePackTC(packId))
   }
 
-  const studyPackHandler = (packId: string, userId: string) => {
-    navigate(PATH.PACK_PAGE, { state: { packId, userId } })
+  const studyPackHandler = (packId: string) => {
+    navigate(`/packPage/${packId}`)
   }
 
   const updatePackHandler = (packId: string) => {
@@ -85,9 +88,13 @@ export const PacksList = () => {
     dispatch(updatePacksPagination({ page, pageCount }))
   }
 
+  const changeSearchHandler = (newValue: string | undefined) => {
+    dispatch(updateSearch({ newValue }))
+  }
+
   useEffect(() => {
     dispatch(getPacksTC())
-  }, [page, pageCount, sort])
+  }, [page, pageCount, search, sort])
 
   return (
     <>
@@ -96,7 +103,8 @@ export const PacksList = () => {
         <SuperButton title={'Add new pack'} onClick={createNewPackHandler} />
       </div>
       <div>
-        <Filters />
+        <Filters value={search} onChange={changeSearchHandler} />
+        {/*  Компонента для таблицы */}
         <SuperTable
           headerNames={packsListTableNames}
           bodyData={packs}

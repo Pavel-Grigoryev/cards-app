@@ -8,4 +8,6 @@ export const pageCountData = (state: AppRootStateType) => state.packs.pageCount
 
 export const cardPacksTotalCountData = (state: AppRootStateType) => state.packs.cardPacksTotalCount
 
+export const searchData = (state: AppRootStateType) => state.packs.search
+
 export const sortPacks = (state: AppRootStateType) => state.packs.sortPacks

@@ -17,8 +17,9 @@ const initialState = {
   cardPacksTotalCount: 0,
   maxCardsCount: 0,
   minCardsCount: 0,
-  page: 0,
-  pageCount: 0,
+  page: 1,
+  pageCount: 8,
+  search: '' as string | undefined,
   sortPacks: '',
 }
 
@@ -27,12 +28,15 @@ const slice = createSlice({
   initialState,
   reducers: {
     getPacks(state, action: PayloadAction<{ data: GetPacksResponseType }>) {
-      return action.payload.data
+      return { ...action.payload.data, search: state.search, sortPacks: state.sortPacks }
     },
 
     updatePacksPagination(state, action: PayloadAction<{ page: number; pageCount: number }>) {
       state.page = action.payload.page
       state.pageCount = action.payload.pageCount
+    },
+    updateSearch(state, action: PayloadAction<{ newValue: string | undefined }>) {
+      state.search = action.payload.newValue
     },
 
     setSort(state, action: PayloadAction<{ sortPacks: string }>) {
@@ -45,18 +49,20 @@ export const packListReducer = slice.reducer
 
 // Actions
 
-export const { getPacks, updatePacksPagination, setSort } = slice.actions
+export const { getPacks, updatePacksPagination, updateSearch, setSort } = slice.actions
 
 //Thunks
 
 export const getPacksTC = (): AppThunk => async (dispatch, getState) => {
   dispatch(setAppStatusAC({ status: 'loading' }))
-  const { page, pageCount, sortPacks } = getState().packs
+  const { page, pageCount, search, sortPacks } = getState().packs
 
   try {
-    const res = await cardsAPI.getPacks({ page, pageCount, sortPacks })
+    const res = await cardsAPI.getPacks({ page, pageCount, packName: search, sortPacks })
 
-    dispatch(getPacks({ data: { ...res.data, sortPacks } }))
+    console.log(res)
+
+    dispatch(getPacks({ data: res.data }))
     dispatch(setAppStatusAC({ status: 'succeeded' }))
   } catch (e) {
     if (axios.isAxiosError(e)) {

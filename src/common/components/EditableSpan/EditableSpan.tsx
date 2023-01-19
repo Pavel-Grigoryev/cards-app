@@ -6,11 +6,6 @@ import TextField from '@mui/material/TextField'
 import s from './EditableSpan.module.scss'
 import editIcon from './editIcon.svg'
 
-type EditableSpanPropsType = {
-  value: string | undefined
-  onChange: (newValue: string | undefined) => void
-}
-
 export const EditableSpan = memo((props: EditableSpanPropsType) => {
   let [editMode, setEditMode] = useState(false)
   let [title, setTitle] = useState<string | undefined>(props.value)
@@ -65,3 +60,10 @@ export const EditableSpan = memo((props: EditableSpanPropsType) => {
     </div>
   )
 })
+
+//Types
+
+type EditableSpanPropsType = {
+  value: string | undefined
+  onChange: (newValue: string | undefined) => void
+}
