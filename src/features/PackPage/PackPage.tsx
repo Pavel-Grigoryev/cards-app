@@ -4,10 +4,13 @@ import { useLocation, useParams, useSearchParams } from 'react-router-dom'
 
 import { CardType } from '../../app/api'
 import { useAppDispatch, useAppSelector } from '../../app/store'
+import { ReturnLink } from '../../common/components/ReturnLink/ReturnLink'
 import { SuperButton } from '../../common/components/SuperButton/SuperButton'
 import { SuperPagination } from '../../common/components/SuperPagination/SuperPagination'
 import { SuperTable } from '../../common/components/SuperTable/SuperTable'
+import { PATH } from '../../common/routes/routes'
 import { cardsData } from '../../common/selectors/cards-selector'
+import s from '../PacksList/PacksList.module.scss'
 
 import { createCardTC, deleteCardTC, getCardsTC, updateCardTC } from './packPage-reducer'
 
@@ -54,12 +57,13 @@ export const PackPage = () => {
 
   return (
     <>
-      <div>
+      <ReturnLink path={PATH.PACKS_LIST} title={'Back to Packs List'} />
+      <div className={s.head}>
         <h1>Name pack</h1>
+        <SuperButton title={'Add new card'} onClick={createNewCardHandler} />
         {/*  Кнопка Learn new pack или add new card (если пак свой)  */}
       </div>
       <div>
-        <SuperButton title={'Add new card'} onClick={createNewCardHandler} />
         {/* Если пак пустой - кнопка Add new card */}
         {/* ELSE */}
         {/*  Компонента для поиска */}
