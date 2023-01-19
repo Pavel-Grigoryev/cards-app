@@ -15,7 +15,7 @@ import { handleServerNetworkError } from '../../common/utils/error-utils'
 
 const initialState = {
   cards: [] as CardType[],
-  cardsTotalCount: 0,
+  cardsTotalCount: 1,
   maxGrade: 0,
   minGrade: 0,
   page: 1,

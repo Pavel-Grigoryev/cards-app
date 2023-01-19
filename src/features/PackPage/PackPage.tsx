@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom'
 import { CardType } from '../../app/api'
 import { RequestStatusType } from '../../app/app-reducer'
 import { useAppDispatch, useAppSelector } from '../../app/store'
+import { NotFound } from '../../common/components/NotFound/NotFound'
 import { ReturnLink } from '../../common/components/ReturnLink/ReturnLink'
 import { Search } from '../../common/components/Search/Search'
 import { SuperButton } from '../../common/components/SuperButton/SuperButton'
@@ -75,6 +76,7 @@ export const PackPage = () => {
       })
     )
   }
+
   const changeSearchHandler = (newValue: string | undefined) => {
     dispatch(updateCardsSearch({ newValue }))
   }
@@ -112,20 +114,28 @@ export const PackPage = () => {
           />
         </div>
 
-        <SuperTable
-          headerNames={packPageTableNames}
-          bodyData={cards}
-          deleteHandler={deleteCardHandler}
-          updateHandler={updateCardHandler}
-          sortingHandler={sortingHandler}
-        />
+        {cardsTotalCount ? (
+          <div>
+            <SuperTable
+              headerNames={packPageTableNames}
+              bodyData={cards}
+              deleteHandler={deleteCardHandler}
+              updateHandler={updateCardHandler}
+              sortingHandler={sortingHandler}
+            />
+            <SuperPagination
+              page={page}
+              itemsCountForPage={pageCount}
+              totalCount={cardsTotalCount}
+              onChange={changePaginationHandler}
+            />
+          </div>
+        ) : (
+          <NotFound
+            message={'Cards not found. Add a card to this pack or change your search options.'}
+          />
+        )}
       </div>
-      <SuperPagination
-        page={page}
-        itemsCountForPage={pageCount}
-        totalCount={cardsTotalCount}
-        onChange={changePaginationHandler}
-      />
     </>
   )
 }

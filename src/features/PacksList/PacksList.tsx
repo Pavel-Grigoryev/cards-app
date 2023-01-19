@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react'
 
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import { PackType } from '../../app/api'
 import { RequestStatusType } from '../../app/app-reducer'
 import { useAppDispatch, useAppSelector } from '../../app/store'
 import { Filters } from '../../common/components/Filters/Filters'
+import { NotFound } from '../../common/components/NotFound/NotFound'
 import { SuperButton } from '../../common/components/SuperButton/SuperButton'
 import { SuperPagination } from '../../common/components/SuperPagination/SuperPagination'
 import { SuperTable } from '../../common/components/SuperTable/SuperTable'
@@ -42,6 +43,7 @@ export const PacksList = () => {
   const status = useAppSelector<RequestStatusType>(isLoading)
 
   const navigate = useNavigate()
+  const [searchParams, setSearchParams] = useSearchParams()
 
   const createNewPackHandler = () => {
     const cardsPack = {
@@ -98,21 +100,27 @@ export const PacksList = () => {
       </div>
       <div>
         <Filters value={search} onChange={changeSearchHandler} />
-        <SuperTable
-          headerNames={packsListTableNames}
-          bodyData={packs}
-          deleteHandler={deletePackHandler}
-          updateHandler={updatePackHandler}
-          studyHandler={studyPackHandler}
-          sortingHandler={sortingHandler}
-        />
+        {cardPacksTotalCount ? (
+          <div>
+            <SuperTable
+              headerNames={packsListTableNames}
+              bodyData={packs}
+              deleteHandler={deletePackHandler}
+              updateHandler={updatePackHandler}
+              studyHandler={studyPackHandler}
+              sortingHandler={sortingHandler}
+            />
+            <SuperPagination
+              page={page}
+              itemsCountForPage={pageCount}
+              totalCount={cardPacksTotalCount}
+              onChange={changePaginationHandler}
+            />
+          </div>
+        ) : (
+          <NotFound message={'Desks not found. Change your search options.'} />
+        )}
       </div>
-      <SuperPagination
-        page={page}
-        itemsCountForPage={pageCount}
-        totalCount={cardPacksTotalCount}
-        onChange={changePaginationHandler}
-      />
     </>
   )
 }
