@@ -3,6 +3,7 @@ import React from 'react'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import SchoolIcon from '@mui/icons-material/School'
+import { Rating } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
@@ -29,12 +30,17 @@ export const SuperTableBody = (props: any) => {
           <TableCell align="left">
             {(row.cardsCount === 0 ? '0' : row.cardsCount) || row.answer}
           </TableCell>
-          <TableCell align="left">{row.updated}</TableCell>
-          <TableCell align="left">{row.user_name || row.grade}</TableCell>
+          <TableCell align="left">{row.updated.slice(0, row.updated.indexOf('T'))}</TableCell>
+          <TableCell align="left">
+            {row.user_name || <Rating name="simple-controlled" value={0} readOnly />}
+          </TableCell>
 
-          {props.data[0].type === 'card' ? null : (
+          {props.data[0].type === 'card' && row.user_id !== userId ? null : (
             <TableCell align="left">
-              <IconButton onClick={() => props.studyHandler(row._id, row.user_id)}>
+              <IconButton
+                onClick={() => props.studyHandler(row._id)}
+                disabled={!row.cardsCount && row.user_id !== userId}
+              >
                 <SchoolIcon fontSize={'small'} />
               </IconButton>
               {row.user_id === userId && (

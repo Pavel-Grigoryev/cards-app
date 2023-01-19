@@ -6,14 +6,33 @@ import TableRow from '@mui/material/TableRow'
 import TableSortLabel from '@mui/material/TableSortLabel'
 
 import { useAppSelector } from '../../../../app/store'
-import { sortPacks } from '../../../selectors/packs-selector'
+import { cardsData, packUserId, sortCards } from '../../../selectors/cards-selector'
+import { packsData, sortPacks } from '../../../selectors/packs-selector'
+import { userIdData } from '../../../selectors/profile-selector'
 
-export const pureChange = (sort: string, down: string, up: string) => {
+const pureChange = (sort: string, down: string, up: string) => {
   return sort === up ? down : up
 }
 
+type SuperTableHeadPropsType = {}
+
 export const SuperTableHead = (props: any) => {
-  const sort = useAppSelector<string>(sortPacks)
+  const sortPack = useAppSelector<string>(sortPacks)
+  const sortCard = useAppSelector<string>(sortCards)
+  const userId = useAppSelector(userIdData)
+  const packUser = useAppSelector(packUserId)
+
+  let headerTitles = props.data
+
+  if (props.data[0].name === 'Question') {
+    if (packUser === userId) {
+      headerTitles = props.data
+    } else {
+      headerTitles = props.data.filter((el: any) => (el.name === 'Actions' ? '' : el))
+    }
+  }
+
+  const sort = props.data[0].name === 'Question' ? sortCard : sortPack
 
   return (
     <TableHead
@@ -22,7 +41,7 @@ export const SuperTableHead = (props: any) => {
       }}
     >
       <TableRow>
-        {props.data.map((el: any) => {
+        {headerTitles.map((el: any) => {
           const up = '0' + el.sortName
           const down = '1' + el.sortName
 
