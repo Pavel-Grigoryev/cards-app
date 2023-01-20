@@ -10,7 +10,6 @@ import {
 } from '../../app/api'
 import { setAppErrorAC, setAppStatusAC } from '../../app/app-reducer'
 import { AppThunk } from '../../app/store'
-import { defaultFilterValues } from '../../common/components/ResetFilters/ResetFilters'
 import { handleServerNetworkError } from '../../common/utils/error-utils'
 
 const initialState = {
@@ -18,6 +17,8 @@ const initialState = {
   cardPacksTotalCount: 1,
   maxCardsCount: 0,
   minCardsCount: 0,
+  max: 0,
+  min: 0,
   page: 1,
   pageCount: 8,
   search: '' as string | undefined,
@@ -48,14 +49,16 @@ const slice = createSlice({
       state.sortPacks = action.payload.sortPacks
     },
 
-    resetFilters(state, action: PayloadAction<typeof defaultFilterValues>) {
-      return {
-        ...state,
-        page: action.payload.page,
-        sortPacks: action.payload.sortPacks,
-        pageCount: action.payload.pageCount,
-        search: action.payload.search,
-      }
+    resetFilters(state) {
+      state.sortPacks = ''
+      state.search = ''
+      state.page = 1
+      state.pageCount = 8
+    },
+
+    setCardsCount(state, action: PayloadAction<{ values: number[] }>) {
+      state.min = action.payload.values[0]
+      state.max = action.payload.values[1]
     },
   },
 })
@@ -64,19 +67,32 @@ export const packListReducer = slice.reducer
 
 // Actions
 
-export const { getPacks, updatePacksPagination, updateSearch, setSort, resetFilters } =
-  slice.actions
+export const {
+  getPacks,
+  updatePacksPagination,
+  updateSearch,
+  setSort,
+  resetFilters,
+  setCardsCount,
+} = slice.actions
 
 //Thunks
 
 export const getPacksTC = (): AppThunk => async (dispatch, getState) => {
   dispatch(setAppStatusAC({ status: 'loading' }))
-  const { page, pageCount, search, sortPacks } = getState().packs
+  const { page, pageCount, search, sortPacks, min, max } = getState().packs
 
   try {
-    const res = await cardsAPI.getPacks({ page, pageCount, packName: search, sortPacks })
+    const res = await cardsAPI.getPacks({
+      page,
+      pageCount,
+      packName: search,
+      sortPacks,
+      min,
+      max,
+    })
 
-    //console.log(res)
+    // console.log(res)
 
     dispatch(getPacks({ data: res.data }))
     dispatch(setAppStatusAC({ status: 'succeeded' }))
