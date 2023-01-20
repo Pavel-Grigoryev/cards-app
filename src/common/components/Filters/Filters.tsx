@@ -13,6 +13,7 @@ import { SearchPaperSX } from '../../styles/sx/sx_styles'
 import { NumberOfCards } from '../NumberOfCards/NumberOfCards'
 import { ResetFilters } from '../ResetFilters/ResetFilters'
 import { Search } from '../Search/Search'
+import { ShowPacksCards } from '../ShowPacksCards/ShowPacksCards'
 
 import s from './Filters.module.scss'
 
@@ -34,13 +35,10 @@ export const Filters = (props: FiltersPropsType) => {
   return (
     <div className={s.filterCont}>
       <Search value={value} onChange={onChange} paperStyle={SearchPaperSX} />
+      <ShowPacksCards value={showPackCards} onChange={changeShowPacksCardsHandler} />
       <NumberOfCards />
       <ResetFilters />
-      <ShowPacksCards value={showPackCards} onChange={changeShowPacksCardsHandler} />
-      <IconButton
-        onClick={() => dispatch(resetFilters(defaultFilterValues))}
-        title={'Reset all filters'}
-      >
+      <IconButton onClick={() => dispatch(resetFilters())} title={'Reset all filters'}>
         <FilterAltOffIcon fontSize={'large'} />
       </IconButton>
     </div>
