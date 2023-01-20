@@ -11,7 +11,7 @@ export const instance = axios.create({
 
 export const authAPI = {
   login(data: AuthType) {
-    return instance.post<AuthType, AxiosResponse<ResponseType<{ id: number }>>>('/auth/login', data)
+    return instance.post<'', AxiosResponse<ResponseType>, AuthType>('/auth/login', data)
   },
   me() {
     return instance.post<ResponseType>('/auth/me')
@@ -20,19 +20,22 @@ export const authAPI = {
     return instance.delete<ResponseType>('/auth/me')
   },
   signup(data: AuthType) {
-    return instance.post<AuthType, AxiosResponse<ResponseType>>('/auth/register', {
-      email: data.email,
-      password: data.password,
-    })
+    return instance.post<'', AxiosResponse<ResponseType>, AuthType>('/auth/register', data)
   },
   forgot(data: DataRecovType) {
-    return instance.post('/auth/forgot', data)
+    return instance.post<'', AxiosResponse<ResponseType>, DataRecovType>('/auth/forgot', data)
   },
   setNewPassword(data: SetNewPasswordType) {
-    return instance.post('/auth/set-new-password', data)
+    return instance.post<'', AxiosResponse<ResponseType>, SetNewPasswordType>(
+      '/auth/set-new-password',
+      data
+    )
   },
   updateProfile(data: ProfilePayloadType) {
-    return instance.put<UpdatedUserTypeResponseType>('/auth/me', data)
+    return instance.put<'', AxiosResponse<UpdatedUserTypeResponseType>, ProfilePayloadType>(
+      '/auth/me',
+      data
+    )
   },
 }
 
@@ -44,13 +47,13 @@ export const cardsAPI = {
     })
   },
   createNewPack(data: CreateNewPackType) {
-    return instance.post('/cards/pack', data)
+    return instance.post<'', AxiosResponse, CreateNewPackType>('/cards/pack', data)
   },
   deletePack(data: string) {
-    return instance.delete(`/cards/pack?id=${data}`)
+    return instance.delete<AxiosResponse>(`/cards/pack?id=${data}`)
   },
   updatePack(data: UpdatePackType) {
-    return instance.put('/cards/pack', data)
+    return instance.put<'', AxiosResponse, UpdatePackType>('/cards/pack', data)
   },
   ///////////////////////////Cards
   getCards(data: GetCardsType) {
@@ -59,13 +62,13 @@ export const cardsAPI = {
     })
   },
   createNewCard(data: CreateNewCardType) {
-    return instance.post('/cards/card', data)
+    return instance.post<'', AxiosResponse, CreateNewCardType>('/cards/card', data)
   },
   deleteCard(data: string) {
     return instance.delete(`/cards/card?id=${data}`)
   },
   updateCard(data: UpdateCardType) {
-    return instance.put('/cards/card', data)
+    return instance.put<'', AxiosResponse, UpdateCardType>('/cards/card', data)
   },
 }
 
@@ -79,7 +82,7 @@ export type AuthType = {
   captcha?: string
 }
 
-export type ResponseType<D = {}> = {
+export type ResponseType = {
   _id: string
   email: string
   name: string
