@@ -46,10 +46,7 @@ const App = () => {
         <Route element={<Layout />}>
           <Route element={<PrivateRoutes />}>
             <Route index element={<Profile />} />
-            <Route path={PATH.SIGN_UP} element={<SignUp />} />
             <Route path={PATH.PROFILE} element={<Profile />} />
-            <Route path={PATH.PASSWORD_RECOVERY} element={<PasswordRecovery />} />
-            <Route path={PATH.SET_NEW_PASSWORD} element={<CreateNewPassword />} />
             <Route path={PATH.PACKS_LIST} element={<PacksList />} />
             <Route path={PATH.PACK_PAGE} element={<PackPage />} />
             <Route path={PATH.NOT_FOUND} element={<Error404 />} />
@@ -57,6 +54,9 @@ const App = () => {
             <Route path={PATH.TEST_PAGE} element={<TestPage />} />
           </Route>
           <Route path={PATH.LOGIN} element={<Login />} />
+          <Route path={PATH.SIGN_UP} element={<SignUp />} />
+          <Route path={PATH.PASSWORD_RECOVERY} element={<PasswordRecovery />} />
+          <Route path={PATH.SET_NEW_PASSWORD} element={<CreateNewPassword />} />
         </Route>
       </Routes>
     </div>
