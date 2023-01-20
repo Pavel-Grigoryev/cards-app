@@ -10,7 +10,7 @@ import {
 } from '../../app/api'
 import { setAppErrorAC, setAppStatusAC } from '../../app/app-reducer'
 import { AppThunk } from '../../app/store'
-import { defaultFilterValues } from '../../common/components/Filters/Filters'
+import { defaultFilterValues } from '../../common/components/ResetFilters/ResetFilters'
 import { handleServerNetworkError } from '../../common/utils/error-utils'
 
 const initialState = {
