@@ -38,9 +38,6 @@ export const Filters = (props: FiltersPropsType) => {
       <ShowPacksCards value={showPackCards} onChange={changeShowPacksCardsHandler} />
       <NumberOfCards />
       <ResetFilters />
-      <IconButton onClick={() => dispatch(resetFilters())} title={'Reset all filters'}>
-        <FilterAltOffIcon fontSize={'large'} />
-      </IconButton>
     </div>
   )
 }
