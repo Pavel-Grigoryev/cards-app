@@ -48,12 +48,14 @@ export const SuperTableBody = (props: SuperTableBodyPropsType) => {
 
           {props.data[0].type === 'card' && row.user_id !== userId ? null : (
             <TableCell align="left">
-              <IconButton
-                onClick={() => props.studyHandler?.(row._id)}
-                disabled={(!row.cardsCount && row.user_id !== userId) || status === 'loading'}
-              >
-                <SchoolIcon fontSize={'small'} />
-              </IconButton>
+              {row.user_id === userId && props.data[0].type === 'card' ? null : (
+                <IconButton
+                  onClick={() => props.studyHandler?.(row._id)}
+                  disabled={(!row.cardsCount && row.user_id !== userId) || status === 'loading'}
+                >
+                  <SchoolIcon fontSize={'small'} />
+                </IconButton>
+              )}
               {row.user_id === userId && (
                 <span>
                   <IconButton
