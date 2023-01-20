@@ -80,7 +80,7 @@ export const {
   setSort,
   resetFilters,
   setCardsCount,
-  updateShowPackCards
+  updateShowPackCards,
 } = slice.actions
 
 //Thunks
@@ -90,6 +90,7 @@ export const getPacksTC = (): AppThunk => async (dispatch, getState) => {
   const { page, pageCount, search, sortPacks, min, max, showPackCards } = getState().packs
   const { _id } = getState().userProfile.profile
   const user_id = showPackCards === 'my' ? _id : ''
+
   try {
     const res = await cardsAPI.getPacks({
       page,
@@ -98,7 +99,7 @@ export const getPacksTC = (): AppThunk => async (dispatch, getState) => {
       sortPacks,
       min,
       max,
-      user_id
+      user_id,
     })
 
     //console.log(res)
