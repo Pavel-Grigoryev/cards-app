@@ -7,6 +7,7 @@ import { RequestStatusType } from '../../app/app-reducer'
 import { useAppDispatch, useAppSelector } from '../../app/store'
 import { Filters } from '../../common/components/Filters/Filters'
 import { NotFound } from '../../common/components/NotFound/NotFound'
+import { Preloader } from '../../common/components/Preloader/Preloader'
 import { SuperButton } from '../../common/components/SuperButton/SuperButton'
 import { SuperPagination } from '../../common/components/SuperPagination/SuperPagination'
 import { SuperTable } from '../../common/components/SuperTable/SuperTable'
@@ -43,7 +44,6 @@ export const PacksList = () => {
   const status = useAppSelector<RequestStatusType>(isLoading)
 
   const navigate = useNavigate()
-  const [searchParams, setSearchParams] = useSearchParams()
 
   const createNewPackHandler = () => {
     const cardsPack = {
@@ -101,7 +101,8 @@ export const PacksList = () => {
       <div>
         <Filters value={search} onChange={changeSearchHandler} />
         {cardPacksTotalCount ? (
-          <div>
+          <div className={s.wrapper}>
+            {status === 'loading' && <Preloader contStyle={{ opacity: '0.5' }} />}
             <SuperTable
               headerNames={packsListTableNames}
               bodyData={packs}

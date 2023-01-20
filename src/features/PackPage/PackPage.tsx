@@ -6,6 +6,7 @@ import { CardType } from '../../app/api'
 import { RequestStatusType } from '../../app/app-reducer'
 import { useAppDispatch, useAppSelector } from '../../app/store'
 import { NotFound } from '../../common/components/NotFound/NotFound'
+import { Preloader } from '../../common/components/Preloader/Preloader'
 import { ReturnLink } from '../../common/components/ReturnLink/ReturnLink'
 import { Search } from '../../common/components/Search/Search'
 import { SuperButton } from '../../common/components/SuperButton/SuperButton'
@@ -103,7 +104,6 @@ export const PackPage = () => {
         ) : (
           <SuperButton title={'Learn to pack'} onClick={() => {}} />
         )}
-        {/*  Кнопка Learn new pack или add new card (если пак свой)  */}
       </div>
       <div>
         <div className={s.searchBlock}>
@@ -115,7 +115,8 @@ export const PackPage = () => {
         </div>
 
         {cardsTotalCount ? (
-          <div>
+          <div className={s.wrapper}>
+            {status === 'loading' && <Preloader contStyle={{ opacity: '0.5' }} />}
             <SuperTable
               headerNames={packPageTableNames}
               bodyData={cards}

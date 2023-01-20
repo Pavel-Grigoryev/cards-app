@@ -50,16 +50,22 @@ export const SuperTableBody = (props: SuperTableBodyPropsType) => {
             <TableCell align="left">
               <IconButton
                 onClick={() => props.studyHandler?.(row._id)}
-                disabled={!row.cardsCount && row.user_id !== userId}
+                disabled={(!row.cardsCount && row.user_id !== userId) || status === 'loading'}
               >
                 <SchoolIcon fontSize={'small'} />
               </IconButton>
               {row.user_id === userId && (
                 <span>
-                  <IconButton onClick={() => props.updateHandler(row._id)}>
+                  <IconButton
+                    disabled={status === 'loading'}
+                    onClick={() => props.updateHandler(row._id)}
+                  >
                     <EditIcon fontSize={'small'} />
                   </IconButton>
-                  <IconButton onClick={() => props.deleteHandler(row._id)}>
+                  <IconButton
+                    disabled={status === 'loading'}
+                    onClick={() => props.deleteHandler(row._id)}
+                  >
                     <DeleteIcon fontSize={'small'} />
                   </IconButton>
                 </span>
