@@ -22,6 +22,7 @@ const initialState = {
   pageCount: 8,
   search: '' as string | undefined,
   sortPacks: '',
+  showPackCards: 'all' as ShowPackCardsType,
 }
 
 const slice = createSlice({
@@ -33,6 +34,7 @@ const slice = createSlice({
         ...action.payload.data,
         search: state.search,
         sortPacks: state.sortPacks,
+        showPackCards: state.showPackCards,
       }
     },
 
@@ -57,6 +59,9 @@ const slice = createSlice({
         search: action.payload.search,
       }
     },
+    updateShowPackCards(state, action: PayloadAction<{ butValue: ShowPackCardsType }>) {
+      state.showPackCards = action.payload.butValue
+    },
   },
 })
 
@@ -64,17 +69,26 @@ export const packListReducer = slice.reducer
 
 // Actions
 
-export const { getPacks, updatePacksPagination, updateSearch, setSort, resetFilters } =
-  slice.actions
+export const {
+  getPacks,
+  updatePacksPagination,
+  updateSearch,
+  setSort,
+  resetFilters,
+  updateShowPackCards,
+} = slice.actions
 
 //Thunks
 
 export const getPacksTC = (): AppThunk => async (dispatch, getState) => {
   dispatch(setAppStatusAC({ status: 'loading' }))
-  const { page, pageCount, search, sortPacks } = getState().packs
+  const { page, pageCount, search, sortPacks, showPackCards } = getState().packs
+  const { _id } = getState().userProfile.profile
+
+  const user_id = showPackCards === 'my' ? _id : ''
 
   try {
-    const res = await cardsAPI.getPacks({ page, pageCount, packName: search, sortPacks })
+    const res = await cardsAPI.getPacks({ page, pageCount, packName: search, sortPacks, user_id })
 
     //console.log(res)
 
@@ -135,3 +149,7 @@ export const updatePackTC =
       dispatch(setAppErrorAC({ error }))
     }
   }
+
+//Types
+
+export type ShowPackCardsType = 'all' | 'my'

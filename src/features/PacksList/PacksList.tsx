@@ -17,6 +17,7 @@ import {
   pageCountData,
   pageData,
   searchData,
+  showPackCardsData,
   sortPacks,
 } from '../../common/selectors/packs-selector'
 import { packsListTableNames } from '../../common/utils/tableHeaderData'
@@ -26,6 +27,7 @@ import {
   deletePackTC,
   getPacksTC,
   setSort,
+  ShowPackCardsType,
   updatePacksPagination,
   updatePackTC,
   updateSearch,
@@ -41,6 +43,7 @@ export const PacksList = () => {
   const cardPacksTotalCount = useAppSelector<number>(cardPacksTotalCountData)
   const search = useAppSelector<string | undefined>(searchData)
   const status = useAppSelector<RequestStatusType>(isLoading)
+  const showPackCards = useAppSelector<ShowPackCardsType>(showPackCardsData)
 
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
@@ -90,7 +93,7 @@ export const PacksList = () => {
 
   useEffect(() => {
     dispatch(getPacksTC())
-  }, [page, pageCount, search, sort])
+  }, [page, pageCount, search, sort, showPackCards])
 
   return (
     <>
@@ -99,7 +102,7 @@ export const PacksList = () => {
         <SuperButton title={'Add new pack'} onClick={createNewPackHandler} />
       </div>
       <div>
-        <Filters value={search} onChange={changeSearchHandler} />
+        <Filters value={search} onChange={changeSearchHandler} showPackCards={showPackCards} />
         {cardPacksTotalCount ? (
           <div>
             <SuperTable

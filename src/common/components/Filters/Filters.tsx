@@ -4,9 +4,14 @@ import FilterAltOffIcon from '@mui/icons-material/FilterAltOff'
 import IconButton from '@mui/material/IconButton'
 
 import { useAppDispatch } from '../../../app/store'
-import { resetFilters } from '../../../features/PacksList/packsList-reducer'
+import {
+  resetFilters,
+  ShowPackCardsType,
+  updateShowPackCards,
+} from '../../../features/PacksList/packsList-reducer'
 import { SearchPaperSX } from '../../styles/sx/sx_styles'
 import { Search } from '../Search/Search'
+import { ShowPacksCards } from '../ShowPacksCards/ShowPacksCards'
 
 import s from './Filters.module.scss'
 
@@ -18,12 +23,17 @@ export const defaultFilterValues = {
 } as const
 
 export const Filters = (props: FiltersPropsType) => {
-  const { value, onChange } = props
+  const { value, onChange, showPackCards } = props
   const dispatch = useAppDispatch()
+
+  const changeShowPacksCardsHandler = (butValue: ShowPackCardsType) => {
+    dispatch(updateShowPackCards({ butValue }))
+  }
 
   return (
     <div className={s.filterCont}>
       <Search value={value} onChange={onChange} paperStyle={SearchPaperSX} />
+      <ShowPacksCards value={showPackCards} onChange={changeShowPacksCardsHandler} />
       <IconButton
         onClick={() => dispatch(resetFilters(defaultFilterValues))}
         title={'Reset all filters'}
@@ -39,4 +49,5 @@ export const Filters = (props: FiltersPropsType) => {
 type FiltersPropsType = {
   value: string | undefined
   onChange: (newValue: string | undefined) => void
+  showPackCards: ShowPackCardsType
 }
