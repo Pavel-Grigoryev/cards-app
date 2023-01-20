@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { SearchPaperSX } from '../../styles/sx/sx_styles'
+import { NumberOfCards } from '../NumberOfCards/NumberOfCards'
 import { ResetFilters } from '../ResetFilters/ResetFilters'
 import { Search } from '../Search/Search'
 
@@ -12,6 +13,7 @@ export const Filters = (props: FiltersPropsType) => {
   return (
     <div className={s.filterCont}>
       <Search value={value} onChange={onChange} paperStyle={SearchPaperSX} />
+      <NumberOfCards />
       <ResetFilters />
     </div>
   )
