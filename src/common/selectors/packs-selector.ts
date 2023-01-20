@@ -12,6 +12,8 @@ export const searchData = (state: AppRootStateType) => state.packs.search
 
 export const sortPacks = (state: AppRootStateType) => state.packs.sortPacks
 
+export const showPackCardsData = (state: AppRootStateType) => state.packs.showPackCards
+
 export const minCardsCountData = (state: AppRootStateType) => state.packs.minCardsCount
 
 export const maxCardsCountData = (state: AppRootStateType) => state.packs.maxCardsCount

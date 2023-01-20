@@ -10,6 +10,7 @@ import {
 } from '../../app/api'
 import { setAppErrorAC, setAppStatusAC } from '../../app/app-reducer'
 import { AppThunk } from '../../app/store'
+import { defaultFilterValues } from '../../common/components/Filters/Filters'
 import { handleServerNetworkError } from '../../common/utils/error-utils'
 
 const initialState = {
@@ -23,6 +24,7 @@ const initialState = {
   pageCount: 8,
   search: '' as string | undefined,
   sortPacks: '',
+  showPackCards: 'all' as ShowPackCardsType,
 }
 
 const slice = createSlice({
@@ -34,6 +36,7 @@ const slice = createSlice({
         ...action.payload.data,
         search: state.search,
         sortPacks: state.sortPacks,
+        showPackCards: state.showPackCards,
       }
     },
 
@@ -60,6 +63,9 @@ const slice = createSlice({
       state.min = action.payload.values[0]
       state.max = action.payload.values[1]
     },
+    updateShowPackCards(state, action: PayloadAction<{ butValue: ShowPackCardsType }>) {
+      state.showPackCards = action.payload.butValue
+    },
   },
 })
 
@@ -74,14 +80,16 @@ export const {
   setSort,
   resetFilters,
   setCardsCount,
+  updateShowPackCards
 } = slice.actions
 
 //Thunks
 
 export const getPacksTC = (): AppThunk => async (dispatch, getState) => {
   dispatch(setAppStatusAC({ status: 'loading' }))
-  const { page, pageCount, search, sortPacks, min, max } = getState().packs
-
+  const { page, pageCount, search, sortPacks, min, max, showPackCards } = getState().packs
+  const { _id } = getState().userProfile.profile
+  const user_id = showPackCards === 'my' ? _id : ''
   try {
     const res = await cardsAPI.getPacks({
       page,
@@ -90,9 +98,10 @@ export const getPacksTC = (): AppThunk => async (dispatch, getState) => {
       sortPacks,
       min,
       max,
+      user_id
     })
 
-    // console.log(res)
+    //console.log(res)
 
     dispatch(getPacks({ data: res.data }))
     dispatch(setAppStatusAC({ status: 'succeeded' }))
@@ -151,3 +160,7 @@ export const updatePackTC =
       dispatch(setAppErrorAC({ error }))
     }
   }
+
+//Types
+
+export type ShowPackCardsType = 'all' | 'my'
