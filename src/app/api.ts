@@ -173,6 +173,8 @@ export type GetPacksResponseType = {
   minCardsCount: number
   page: number
   pageCount: number
+  min: number
+  max: number
 }
 
 export type CreateNewPackType = {

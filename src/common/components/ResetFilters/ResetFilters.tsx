@@ -6,22 +6,20 @@ import IconButton from '@mui/material/IconButton'
 import { useAppDispatch } from '../../../app/store'
 import { resetFilters } from '../../../features/PacksList/packsList-reducer'
 
-export const defaultFilterValues = {
-  page: 1,
-  sortPacks: '',
-  pageCount: 8,
-  search: '',
-} as const
+import s from './ResetFilters.module.scss'
 
 export const ResetFilters = () => {
   const dispatch = useAppDispatch()
 
+  const resetFiltersHandler = () => {
+    dispatch(resetFilters())
+  }
+
   return (
-    <IconButton
-      onClick={() => dispatch(resetFilters(defaultFilterValues))}
-      title={'Reset all filters'}
-    >
-      <FilterAltOffIcon fontSize={'large'} />
-    </IconButton>
+    <div className={s.filter}>
+      <IconButton onClick={() => resetFiltersHandler()} title={'Reset all filters'}>
+        <FilterAltOffIcon fontSize={'large'} />
+      </IconButton>
+    </div>
   )
 }

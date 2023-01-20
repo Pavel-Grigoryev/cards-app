@@ -1,0 +1,33 @@
+.main {
+  flex: 0 0 20%;
+  margin-right: 6rem;
+}
+
+.sliderBlock {
+  display: flex;
+  margin-top: 1rem;
+
+  & div:not(:last-child) {
+    margin-right: 1.5rem;
+  }
+}
+
+.value {
+  padding: .3rem .5rem;
+  box-shadow: 0 0 0 .1rem rgba(0, 0, 0, 0.15);
+  font-weight: 500;
+  background-color: white;
+}
+
+.slider {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  margin-bottom: -2px;
+  line-height: 17px;
+  font-weight: 500;
+  text-align: left;
+}

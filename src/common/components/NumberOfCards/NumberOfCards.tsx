@@ -1,53 +1,64 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
 import Box from '@mui/material/Box'
 import Slider from '@mui/material/Slider'
 
-import { updateProfileTC } from '../../../features/Profile/profile-reducer'
-import { EditableSpan } from '../EditableSpan/EditableSpan'
+import { RequestStatusType } from '../../../app/app-reducer'
+import { useAppDispatch, useAppSelector } from '../../../app/store'
+import { getPacksTC, setCardsCount } from '../../../features/PacksList/packsList-reducer'
+import { isLoading } from '../../selectors/app-selector'
+import {
+  maxCardsCountData,
+  maxData,
+  minCardsCountData,
+  minData,
+} from '../../selectors/packs-selector'
 
-function valuetext(value: number) {
-  return `${value}`
-}
-
-const minDistance = 0
+import s from './NumberOfCards.module.scss'
 
 export const NumberOfCards = () => {
-  const [value1, setValue1] = useState<number[]>([0, 37])
+  const status = useAppSelector<RequestStatusType>(isLoading)
+  const minCardsCount = useAppSelector<number>(minCardsCountData)
+  const maxCardsCount = useAppSelector<number>(maxCardsCountData)
+  const min = useAppSelector<number>(minData)
+  const max = useAppSelector<number>(maxData)
+  const dispatch = useAppDispatch()
 
-  const handleChange1 = (event: Event, newValue: number | number[], activeThumb: number) => {
-    if (!Array.isArray(newValue)) {
-      return
-    }
+  const [value, setValue] = useState<number[]>([min, max])
 
-    if (activeThumb === 0) {
-      setValue1([Math.min(newValue[0], value1[1] - minDistance), value1[1]])
-    } else {
-      setValue1([value1[0], Math.max(newValue[1], value1[0] + minDistance)])
-    }
+  useEffect(() => {
+    setValue([minCardsCount, maxCardsCount])
+  }, [minCardsCount, maxCardsCount])
+
+  const handleChange1 = (event: Event, newValue: number | number[]) => {
+    setValue(newValue as number[])
   }
 
-  // const onChangeMinCardsHandler = useCallback(
-  //   (name: string | undefined) => {
-  //     dispatch(updateProfileTC({ name }))
-  //   },
-  //   [dispatch]
-  // )
+  const changeCommitted = () => {
+    dispatch(setCardsCount({ values: value }))
+    dispatch(getPacksTC())
+  }
 
   return (
-    <div>
-      {/*<EditableSpan value={value1[0].toString()} onChange={onChangeMinCardsHandler} />*/}
-      <Box sx={{ width: 155 }}>
-        <Slider
-          getAriaLabel={() => 'Minimum distance'}
-          value={value1}
-          onChange={handleChange1}
-          valueLabelDisplay="auto"
-          getAriaValueText={valuetext}
-          disableSwap
-          color={'secondary'}
-        />
-      </Box>
+    <div className={s.main}>
+      <p className={s.title}>Number of cards</p>
+      <div className={s.sliderBlock}>
+        <div className={s.value}>{value[0]}</div>
+        <Box sx={{ width: 155 }} className={s.slider}>
+          <Slider
+            min={minCardsCount}
+            max={maxCardsCount}
+            getAriaLabel={() => 'Minimum distance'}
+            value={value}
+            onChange={handleChange1}
+            onChangeCommitted={changeCommitted}
+            disableSwap
+            color={'secondary'}
+            disabled={status === 'loading'}
+          />
+        </Box>
+        <div className={s.value}>{value[1]}</div>
+      </div>
     </div>
   )
 }

@@ -11,3 +11,11 @@ export const cardPacksTotalCountData = (state: AppRootStateType) => state.packs.
 export const searchData = (state: AppRootStateType) => state.packs.search
 
 export const sortPacks = (state: AppRootStateType) => state.packs.sortPacks
+
+export const minCardsCountData = (state: AppRootStateType) => state.packs.minCardsCount
+
+export const maxCardsCountData = (state: AppRootStateType) => state.packs.maxCardsCount
+
+export const minData = (state: AppRootStateType) => state.packs.min
+
+export const maxData = (state: AppRootStateType) => state.packs.max
