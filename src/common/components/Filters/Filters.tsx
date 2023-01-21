@@ -1,11 +1,7 @@
 import React from 'react'
 
-import FilterAltOffIcon from '@mui/icons-material/FilterAltOff'
-import IconButton from '@mui/material/IconButton'
-
 import { useAppDispatch } from '../../../app/store'
 import {
-  resetFilters,
   ShowPackCardsType,
   updateShowPackCards,
 } from '../../../features/PacksList/packsList-reducer'
@@ -16,13 +12,6 @@ import { Search } from '../Search/Search'
 import { ShowPacksCards } from '../ShowPacksCards/ShowPacksCards'
 
 import s from './Filters.module.scss'
-
-export const defaultFilterValues = {
-  page: 1,
-  sortPacks: '',
-  pageCount: 8,
-  search: '',
-} as const
 
 export const Filters = (props: FiltersPropsType) => {
   const { value, onChange, showPackCards } = props
