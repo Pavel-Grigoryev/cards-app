@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 
 import { useParams } from 'react-router-dom'
 
-import { CardType } from '../../app/api'
+import { CardType } from '../../app/api/cardsAPI/cardsAPITypes'
 import { RequestStatusType } from '../../app/app-reducer'
 import { useAppDispatch, useAppSelector } from '../../app/store'
 import { NotFound } from '../../common/components/NotFound/NotFound'

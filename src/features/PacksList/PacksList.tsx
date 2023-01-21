@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
-import { PackType } from '../../app/api'
+import { PackType } from '../../app/api/cardsAPI/cardsAPITypes'
 import { RequestStatusType } from '../../app/app-reducer'
 import { useAppDispatch, useAppSelector } from '../../app/store'
 import { Filters } from '../../common/components/Filters/Filters'
