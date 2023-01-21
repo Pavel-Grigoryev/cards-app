@@ -1,14 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 
+import { cardsAPI } from '../../app/api/cardsAPI/cardsAPI'
 import {
-  cardsAPI,
   CardType,
   CreateNewCardType,
   GetCardsResponseType,
   GetCardsType,
   UpdateCardType,
-} from '../../app/api'
+} from '../../app/api/cardsAPI/cardsAPITypes'
 import { setAppStatusAC } from '../../app/app-reducer'
 import { AppThunk } from '../../app/store'
 import { handleServerNetworkError } from '../../common/utils/error-utils'

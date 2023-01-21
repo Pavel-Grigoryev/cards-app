@@ -9,7 +9,7 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 
-import { CardType, PackType } from '../../../../app/api'
+import { CardType, PackType } from '../../../../app/api/cardsAPI/cardsAPITypes'
 import { RequestStatusType } from '../../../../app/app-reducer'
 import { useAppSelector } from '../../../../app/store'
 import { isLoading } from '../../../selectors/app-selector'

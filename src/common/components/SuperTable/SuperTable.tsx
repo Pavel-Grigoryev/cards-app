@@ -4,7 +4,7 @@ import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableContainer from '@mui/material/TableContainer'
 
-import { CardType, PackType } from '../../../app/api'
+import { CardType, PackType } from '../../../app/api/cardsAPI/cardsAPITypes'
 import { TableHeaderDataType } from '../../utils/tableHeaderData'
 
 import { SuperTableBody } from './SuperTableBody/SuperTableBody'

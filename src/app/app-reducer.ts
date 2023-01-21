@@ -4,7 +4,7 @@ import axios from 'axios'
 import { setLoginAC } from '../features/auth/auth-reducer'
 import { setProfileAC } from '../features/Profile/profile-reducer'
 
-import { authAPI } from './api'
+import { authAPI } from './api/authAPI/authAPI'
 import { AppThunk } from './store'
 
 const initialState = {

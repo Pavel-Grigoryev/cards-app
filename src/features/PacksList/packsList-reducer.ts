@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios, { AxiosError } from 'axios'
 
+import { cardsAPI } from '../../app/api/cardsAPI/cardsAPI'
 import {
-  cardsAPI,
   CreateNewPackType,
   GetPacksResponseType,
   PackType,
   UpdatePackType,
-} from '../../app/api'
+} from '../../app/api/cardsAPI/cardsAPITypes'
 import { setAppErrorAC, setAppStatusAC } from '../../app/app-reducer'
 import { AppThunk } from '../../app/store'
 import { defaultFilterValues } from '../../common/components/Filters/Filters'
