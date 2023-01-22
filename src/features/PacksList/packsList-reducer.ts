@@ -56,6 +56,10 @@ const slice = createSlice({
       state.search = ''
       state.page = 1
       state.pageCount = 8
+      // state.maxCardsCount = 0
+      // state.minCardsCount = 0
+      // state.min = 0
+      // state.max = 0
     },
 
     setCardsCount(state, action: PayloadAction<{ values: number[] }>) {
@@ -92,16 +96,16 @@ export const getPacksTC = (): AppThunk => async (dispatch, getState) => {
 
   try {
     const res = await cardsAPI.getPacks({
-      page,
-      pageCount,
       packName: search,
-      sortPacks,
       min,
       max,
+      page,
+      pageCount,
       user_id,
+      sortPacks,
     })
 
-    //console.log(res)
+    console.log(res.data)
 
     dispatch(getPacks({ data: res.data }))
     dispatch(setAppStatusAC({ status: 'succeeded' }))

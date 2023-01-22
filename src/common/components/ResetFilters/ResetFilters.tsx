@@ -18,7 +18,7 @@ export const ResetFilters = () => {
   return (
     <div className={s.filter}>
       <IconButton onClick={() => resetFiltersHandler()} title={'Reset all filters'}>
-        <FilterAltOffIcon fontSize={'large'} />
+        <FilterAltOffIcon fontSize={'medium'} />
       </IconButton>
     </div>
   )

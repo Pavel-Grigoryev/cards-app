@@ -19,6 +19,12 @@ export const Search = memo(({ value, onChange, paperStyle }: SearchPropsType) =>
   }
 
   useEffect(() => {
+    if (title != value) {
+      setTitle(value)
+    }
+  }, [value])
+
+  useEffect(() => {
     onChange(title)
   }, [debouncedValue])
 

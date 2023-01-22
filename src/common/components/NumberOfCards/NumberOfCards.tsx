@@ -30,14 +30,19 @@ export const NumberOfCards = () => {
     setValue([minCardsCount, maxCardsCount])
   }, [minCardsCount, maxCardsCount])
 
+  // useEffect(() => {
+  //   if (value[0] === min && value[1] === max) return
+  //   setValue([min, max])
+  // }, [min, max])
+
   const handleChange1 = (event: Event, newValue: number | number[]) => {
     setValue(newValue as number[])
   }
 
-  const changeCommitted = () => {
+  const changeCommitted = useCallback(() => {
     dispatch(setCardsCount({ values: value }))
     dispatch(getPacksTC())
-  }
+  }, [value])
 
   return (
     <div className={s.main}>
