@@ -1,6 +1,5 @@
 .main {
   flex: 0 0 20%;
-  margin-right: 6rem;
 }
 
 .sliderBlock {
@@ -16,6 +15,8 @@
   padding: .3rem .5rem;
   box-shadow: 0 0 0 .1rem rgba(0, 0, 0, 0.15);
   font-weight: 500;
+  min-height: 36px;
+  min-width: 36px;
   background-color: white;
 }
 
