@@ -8,12 +8,13 @@ import { useNavigate } from 'react-router-dom'
 
 import { RequestStatusType } from '../../app/app-reducer'
 import { useAppSelector } from '../../app/store'
-import logo from '../../assets/images/logo.png'
 import { SuperButton } from '../../common/components/SuperButton/SuperButton'
 import { PATH } from '../../common/routes/routes'
 import { ProfileType } from '../Profile/profile-reducer'
 
 import s from './Header.module.scss'
+
+import logo from 'assets/images/logo.png'
 
 export const Header = () => {
   const navigate = useNavigate()
