@@ -14,6 +14,10 @@ import { SuperTable } from '../../common/components/SuperTable/SuperTable'
 import { isLoading } from '../../common/selectors/app-selector'
 import {
   cardPacksTotalCountData,
+  maxCardsCountData,
+  maxData,
+  minCardsCountData,
+  minData,
   packsData,
   pageCountData,
   pageData,
@@ -45,6 +49,11 @@ export const PacksList = () => {
   const search = useAppSelector<string | undefined>(searchData)
   const status = useAppSelector<RequestStatusType>(isLoading)
   const showPackCards = useAppSelector<ShowPackCardsType>(showPackCardsData)
+
+  const minCardsCount = useAppSelector(minCardsCountData)
+  const maxCardsCount = useAppSelector(maxCardsCountData)
+  const min = useAppSelector(minData)
+  const max = useAppSelector(maxData)
 
   const navigate = useNavigate()
 
@@ -93,7 +102,7 @@ export const PacksList = () => {
 
   useEffect(() => {
     dispatch(getPacksTC())
-  }, [page, pageCount, search, sort, showPackCards])
+  }, [page, pageCount, search, sort, showPackCards, minCardsCount, maxCardsCount, min, max])
 
   return (
     <>
@@ -102,7 +111,15 @@ export const PacksList = () => {
         <SuperButton title={'Add new pack'} onClick={createNewPackHandler} />
       </div>
       <div>
-        <Filters value={search} onChange={changeSearchHandler} showPackCards={showPackCards} />
+        <Filters
+          value={search}
+          onChange={changeSearchHandler}
+          showPackCards={showPackCards}
+          min={min}
+          max={max}
+          minCardsCount={minCardsCount}
+          maxCardsCount={maxCardsCount}
+        />
         {cardPacksTotalCount ? (
           <div className={s.wrapper}>
             {status === 'loading' && <Preloader contStyle={{ opacity: '0.5' }} />}

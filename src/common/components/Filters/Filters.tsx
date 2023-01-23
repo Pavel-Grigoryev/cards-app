@@ -25,7 +25,12 @@ export const Filters = (props: FiltersPropsType) => {
     <div className={s.filterCont}>
       <Search value={value} onChange={onChange} paperStyle={SearchPaperSX} />
       <ShowPacksCards value={showPackCards} onChange={changeShowPacksCardsHandler} />
-      <NumberOfCards />
+      <NumberOfCards
+        min={props.min}
+        max={props.max}
+        minCardsCount={props.minCardsCount}
+        maxCardsCount={props.maxCardsCount}
+      />
       <ResetFilters />
     </div>
   )
@@ -37,4 +42,8 @@ type FiltersPropsType = {
   value: string | undefined
   onChange: (newValue: string | undefined) => void
   showPackCards: ShowPackCardsType
+  min: number
+  max: number
+  minCardsCount: number
+  maxCardsCount: number
 }
