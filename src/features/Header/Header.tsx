@@ -14,6 +14,7 @@ import { PATH } from '../../common/routes/routes'
 import { ProfileType } from '../Profile/profile-reducer'
 
 import s from './Header.module.scss'
+import { ProfileLink } from './ProfileLink/ProfileLink'
 
 import logo from 'assets/images/logo.png'
 
@@ -36,11 +37,10 @@ export const Header = () => {
         >
           <Toolbar className={s.toolbar} style={{ padding: '0' }}>
             <img className={s.image} src={logo} alt="Logo image" />
-
             {isLoggedIn ? (
               <div className={s.profileBlock}>
                 <p className={s.profileName}>{profile?.name}</p>
-                <SuperTooltip title={<h1>Title</h1>} placement={'bottom-end'}>
+                <SuperTooltip title={<ProfileLink />} placement={'bottom-end'}>
                   <button className={s.profileImgWrap}>
                     <img className={s.profileImg} src={profile?.avatar} alt="" />
                   </button>
