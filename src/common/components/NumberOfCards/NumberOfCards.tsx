@@ -5,35 +5,20 @@ import Slider from '@mui/material/Slider'
 
 import { RequestStatusType } from '../../../app/app-reducer'
 import { useAppDispatch, useAppSelector } from '../../../app/store'
-import { getPacksTC, setCardsCount } from '../../../features/PacksList/packsList-reducer'
+import { setCardsCount } from '../../../features/PacksList/packsList-reducer'
 import { isLoading } from '../../selectors/app-selector'
-import {
-  maxCardsCountData,
-  maxData,
-  minCardsCountData,
-  minData,
-} from '../../selectors/packs-selector'
 
 import s from './NumberOfCards.module.scss'
 
-export const NumberOfCards = () => {
+export const NumberOfCards = (props: NumberOfCardsType) => {
   const status = useAppSelector<RequestStatusType>(isLoading)
-  const minCardsCount = useAppSelector<number>(minCardsCountData)
-  const maxCardsCount = useAppSelector<number>(maxCardsCountData)
-  const min = useAppSelector<number>(minData)
-  const max = useAppSelector<number>(maxData)
   const dispatch = useAppDispatch()
 
-  const [value, setValue] = useState<number[]>([min, max])
+  const [value, setValue] = useState<number[]>([props.min, props.max])
 
   useEffect(() => {
-    setValue([minCardsCount, maxCardsCount])
-  }, [minCardsCount, maxCardsCount])
-
-  // useEffect(() => {
-  //   if (value[0] === min && value[1] === max) return
-  //   setValue([min, max])
-  // }, [min, max])
+    setValue([props.minCardsCount, props.maxCardsCount])
+  }, [props.minCardsCount, props.maxCardsCount])
 
   const handleChange1 = (event: Event, newValue: number | number[]) => {
     setValue(newValue as number[])
@@ -41,7 +26,6 @@ export const NumberOfCards = () => {
 
   const changeCommitted = useCallback(() => {
     dispatch(setCardsCount({ values: value }))
-    dispatch(getPacksTC())
   }, [value])
 
   return (
@@ -51,8 +35,8 @@ export const NumberOfCards = () => {
         <div className={s.value}>{value[0]}</div>
         <Box sx={{ width: 155 }} className={s.slider}>
           <Slider
-            min={minCardsCount}
-            max={maxCardsCount}
+            min={props.minCardsCount}
+            max={props.maxCardsCount}
             getAriaLabel={() => 'Minimum distance'}
             value={value}
             onChange={handleChange1}
@@ -66,4 +50,11 @@ export const NumberOfCards = () => {
       </div>
     </div>
   )
+}
+
+type NumberOfCardsType = {
+  min: number
+  max: number
+  minCardsCount: number
+  maxCardsCount: number
 }

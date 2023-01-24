@@ -20,6 +20,7 @@ type SuperTableBodyPropsType = {
   studyHandler?: (cardId: string) => void
   updateHandler: (cardId: string) => void
   deleteHandler: (cardId: string) => void
+  openPackHandler?: (cardId: string) => void
 }
 
 export const SuperTableBody = (props: SuperTableBodyPropsType) => {
@@ -39,7 +40,7 @@ export const SuperTableBody = (props: SuperTableBodyPropsType) => {
           <TableCell
             onClick={() => {
               row.cardsCount || row.user_id === userId || !row.name
-                ? props.studyHandler?.(row._id)
+                ? props.openPackHandler?.(row._id)
                 : alert('There are no cards in this pack!')
             }}
             component="th"
@@ -70,7 +71,7 @@ export const SuperTableBody = (props: SuperTableBodyPropsType) => {
               {row.user_id === userId && props.data[0].type === 'card' ? null : (
                 <IconButton
                   onClick={e => {
-                    // props.studyHandler?.(row._id)      STUDY BUTTON
+                    props.studyHandler?.(row._id)
                   }}
                   disabled={(!row.cardsCount && row.user_id !== userId) || status === 'loading'}
                 >

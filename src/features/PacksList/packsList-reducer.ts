@@ -31,6 +31,10 @@ const slice = createSlice({
         search: state.search,
         sortPacks: state.sortPacks,
         showPackCards: state.showPackCards,
+        maxCardsCount: state.maxCardsCount,
+        minCardsCount: state.minCardsCount,
+        max: state.max,
+        min: state.min,
       }
     },
 
@@ -51,10 +55,16 @@ const slice = createSlice({
       state.search = ''
       state.page = 1
       state.pageCount = 8
-      // state.maxCardsCount = 0
-      // state.minCardsCount = 0
-      // state.min = 0
-      // state.max = 0
+      state.showPackCards = 'all'
+      state.maxCardsCount = 0
+      state.minCardsCount = 0
+      state.min = 0
+      state.max = 0
+    },
+
+    setPacksCount(state, action: PayloadAction<{ values: number[] }>) {
+      state.minCardsCount = action.payload.values[0]
+      state.maxCardsCount = action.payload.values[1]
     },
 
     setCardsCount(state, action: PayloadAction<{ values: number[] }>) {
@@ -79,6 +89,7 @@ export const {
   resetFilters,
   setCardsCount,
   updateShowPackCards,
+  setPacksCount,
 } = slice.actions
 
 //Thunks
@@ -103,6 +114,7 @@ export const getPacksTC = (): AppThunk => async (dispatch, getState) => {
     console.log(res.data)
 
     dispatch(getPacks({ data: res.data }))
+    dispatch(setPacksCount({ values: [res.data.minCardsCount, res.data.maxCardsCount] }))
     dispatch(setAppStatusAC({ status: 'succeeded' }))
   } catch (e) {
     if (axios.isAxiosError(e)) {

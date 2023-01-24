@@ -8,4 +8,5 @@ export const PATH = {
   TEST_PAGE: '/testPage',
   PACKS_LIST: '/packsList',
   PACK_PAGE: '/packPage/:id',
+  LEARN_PAGE: '/learn/:id',
 } as const
