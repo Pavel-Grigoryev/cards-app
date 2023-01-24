@@ -3,17 +3,14 @@ import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { CardType } from '../../app/api/cardsAPI/cardsAPITypes'
-import { RequestStatusType } from '../../app/app-reducer'
 import { useAppDispatch, useAppSelector } from '../../app/store'
 import { NotFound } from '../../common/components/NotFound/NotFound'
-import { Preloader } from '../../common/components/Preloader/Preloader'
 import { ReturnLink } from '../../common/components/ReturnLink/ReturnLink'
 import { Search } from '../../common/components/Search/Search'
 import { SuperButton } from '../../common/components/SuperButton/SuperButton'
 import { SuperPagination } from '../../common/components/SuperPagination/SuperPagination'
 import { SuperTable } from '../../common/components/SuperTable/SuperTable'
 import { PATH } from '../../common/routes/routes'
-import { isLoading } from '../../common/selectors/app-selector'
 import {
   cardsData,
   cardsTotalCountData,
@@ -41,7 +38,6 @@ import s from './PackPage.module.scss'
 export const PackPage = () => {
   const dispatch = useAppDispatch()
   const cards = useAppSelector<CardType[]>(cardsData)
-  const status = useAppSelector<RequestStatusType>(isLoading)
   const search = useAppSelector<string | undefined>(searchData)
   const page = useAppSelector<number>(pageData)
   const pageCount = useAppSelector<number>(pageCountData)
@@ -116,7 +112,6 @@ export const PackPage = () => {
 
         {cardsTotalCount ? (
           <div className={s.wrapper}>
-            {status === 'loading' && <Preloader contStyle={{ opacity: '0.5' }} />}
             <SuperTable
               headerNames={packPageTableNames}
               bodyData={cards}

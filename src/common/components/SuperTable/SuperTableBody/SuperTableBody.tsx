@@ -3,8 +3,8 @@ import React from 'react'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import SchoolIcon from '@mui/icons-material/School'
-import { Rating } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
+import Rating from '@mui/material/Rating'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
@@ -31,11 +31,30 @@ export const SuperTableBody = (props: SuperTableBodyPropsType) => {
       {props.data.map((row: any) => (
         <TableRow
           key={row._id}
+          hover={true}
           sx={{
             '&:last-child td, &:last-child th': { border: 0 },
           }}
         >
-          <TableCell component="th" scope="row" sx={{ maxWidth: '220px', wordBreak: 'break-all' }}>
+          <TableCell
+            onClick={() => {
+              row.cardsCount || !row.name
+                ? props.studyHandler?.(row._id)
+                : alert('There are no cards in this pack!')
+            }}
+            component="th"
+            scope="row"
+            sx={
+              row.name && {
+                cursor: 'pointer',
+                width: '230px',
+                wordBreak: 'break-all',
+                '&:hover': {
+                  fontWeight: 'bold',
+                },
+              }
+            }
+          >
             {row.name || row.question}
           </TableCell>
           <TableCell align="left">
@@ -50,7 +69,9 @@ export const SuperTableBody = (props: SuperTableBodyPropsType) => {
             <TableCell align="left">
               {row.user_id === userId && props.data[0].type === 'card' ? null : (
                 <IconButton
-                  onClick={() => props.studyHandler?.(row._id)}
+                  onClick={e => {
+                    // props.studyHandler?.(row._id)      STUDY BUTTON
+                  }}
                   disabled={(!row.cardsCount && row.user_id !== userId) || status === 'loading'}
                 >
                   <SchoolIcon fontSize={'small'} />

@@ -1,17 +1,14 @@
 import React, { useEffect } from 'react'
 
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { PackType } from '../../app/api/cardsAPI/cardsAPITypes'
-import { RequestStatusType } from '../../app/app-reducer'
 import { useAppDispatch, useAppSelector } from '../../app/store'
 import { Filters } from '../../common/components/Filters/Filters'
 import { NotFound } from '../../common/components/NotFound/NotFound'
-import { Preloader } from '../../common/components/Preloader/Preloader'
 import { SuperButton } from '../../common/components/SuperButton/SuperButton'
 import { SuperPagination } from '../../common/components/SuperPagination/SuperPagination'
 import { SuperTable } from '../../common/components/SuperTable/SuperTable'
-import { isLoading } from '../../common/selectors/app-selector'
 import {
   cardPacksTotalCountData,
   packsData,
@@ -43,7 +40,6 @@ export const PacksList = () => {
   const sort = useAppSelector<string>(sortPacks)
   const cardPacksTotalCount = useAppSelector<number>(cardPacksTotalCountData)
   const search = useAppSelector<string | undefined>(searchData)
-  const status = useAppSelector<RequestStatusType>(isLoading)
   const showPackCards = useAppSelector<ShowPackCardsType>(showPackCardsData)
 
   const navigate = useNavigate()
@@ -105,7 +101,6 @@ export const PacksList = () => {
         <Filters value={search} onChange={changeSearchHandler} showPackCards={showPackCards} />
         {cardPacksTotalCount ? (
           <div className={s.wrapper}>
-            {status === 'loading' && <Preloader contStyle={{ opacity: '0.5' }} />}
             <SuperTable
               headerNames={packsListTableNames}
               bodyData={packs}
