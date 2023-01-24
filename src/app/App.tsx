@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 
 import './App.css'
-import { Navigate, Route, Routes, Outlet } from 'react-router-dom'
+import { Navigate, Route, Routes, Outlet, useNavigate } from 'react-router-dom'
 
 import { ErrorSnackbar } from '../common/components/ErrorSnackbar/ErrorSnackbar'
 import { Preloader } from '../common/components/Preloader/Preloader'
@@ -27,6 +27,11 @@ const App = () => {
   const dispatch = useAppDispatch()
   const isLoggedIn = useAppSelector<boolean>(isLoggedInSelector)
   const isInitialized = useAppSelector<boolean>(isInitializedSelector)
+  const navigate = useNavigate()
+
+  const studyPackHandler = (packId: string) => {
+    navigate(`/learn/${packId}`)
+  }
 
   const PrivateRoutes = () => {
     return isLoggedIn ? <Outlet /> : <Navigate to={PATH.LOGIN} />
@@ -48,7 +53,10 @@ const App = () => {
           <Route element={<PrivateRoutes />}>
             <Route index element={<Profile />} />
             <Route path={PATH.PROFILE} element={<Profile />} />
-            <Route path={PATH.PACKS_LIST} element={<PacksList />} />
+            <Route
+              path={PATH.PACKS_LIST}
+              element={<PacksList studyPackHandler={studyPackHandler} />}
+            />
             <Route path={PATH.PACK_PAGE} element={<PackPage />} />
             <Route path={PATH.LEARN_PAGE} element={<LearnPage />} />
             <Route path={PATH.NOT_FOUND} element={<Error404 />} />

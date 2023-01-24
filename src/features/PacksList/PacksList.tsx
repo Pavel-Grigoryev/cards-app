@@ -39,7 +39,7 @@ import {
 } from './packsList-reducer'
 import s from './PacksList.module.scss'
 
-export const PacksList = () => {
+export const PacksList = (props: any) => {
   const dispatch = useAppDispatch()
   const packs = useAppSelector<PackType[]>(packsData)
   const page = useAppSelector<number>(pageData)
@@ -77,9 +77,9 @@ export const PacksList = () => {
     dispatch(deletePackTC(packId))
   }
 
-  const studyPackHandler = (packId: string) => {
-    navigate(`/packPage/${packId}`)
-  }
+  // const studyPackHandler = (packId: string) => {
+  //   navigate(`/packPage/${packId}`)
+  // }
 
   const updatePackHandler = (packId: string) => {
     dispatch(
@@ -128,7 +128,7 @@ export const PacksList = () => {
               bodyData={packs}
               deleteHandler={deletePackHandler}
               updateHandler={updatePackHandler}
-              studyHandler={studyPackHandler}
+              studyHandler={props.studyPackHandler}
               sortingHandler={sortingHandler}
             />
             <SuperPagination
