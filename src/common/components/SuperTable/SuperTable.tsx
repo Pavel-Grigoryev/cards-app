@@ -17,7 +17,7 @@ type SuperTablePropsType = {
   sortingHandler: (sortCards: string) => void
   studyHandler?: (cardId: string) => void
   updateHandler: (cardId: string) => void
-  openPackHandler: (cardId: string) => void
+  openPackHandler?: (cardId: string) => void
 }
 
 export const SuperTable = (props: SuperTablePropsType) => {

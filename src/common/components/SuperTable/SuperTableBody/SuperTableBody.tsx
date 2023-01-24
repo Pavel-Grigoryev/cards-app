@@ -20,7 +20,7 @@ type SuperTableBodyPropsType = {
   studyHandler?: (cardId: string) => void
   updateHandler: (cardId: string) => void
   deleteHandler: (cardId: string) => void
-  openPackHandler: (cardId: string) => void
+  openPackHandler?: (cardId: string) => void
 }
 
 export const SuperTableBody = (props: SuperTableBodyPropsType) => {
