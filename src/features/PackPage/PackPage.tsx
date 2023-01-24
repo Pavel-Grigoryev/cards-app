@@ -84,9 +84,7 @@ export const PackPage = () => {
 
   useEffect(() => {
     if (id) {
-      dispatch(
-        getCardsTC({ cardsPack_id: id, cardQuestion: search, page, pageCount, sortCards: sort })
-      )
+      dispatch(getCardsTC({ cardsPack_id: id, cardQuestion: search, page, pageCount, sortCards: sort }))
     }
   }, [search, page, pageCount, sort])
 
@@ -103,11 +101,7 @@ export const PackPage = () => {
       </div>
       <div>
         <div className={s.searchBlock}>
-          <Search
-            value={search}
-            onChange={changeSearchHandler}
-            paperStyle={{ ...SearchPaperSX, width: '100%' }}
-          />
+          <Search value={search} onChange={changeSearchHandler} paperStyle={{ ...SearchPaperSX, width: '100%' }} />
         </div>
 
         {cardsTotalCount ? (
@@ -127,9 +121,7 @@ export const PackPage = () => {
             />
           </div>
         ) : (
-          <NotFound
-            message={'Cards not found. Add a card to this pack or change your search options.'}
-          />
+          <NotFound message={'Cards not found. Add a card to this pack or change your search options.'} />
         )}
       </div>
     </>
