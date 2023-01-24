@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import { RequestStatusType } from '../../app/app-reducer'
 import { useAppSelector } from '../../app/store'
 import { SuperButton } from '../../common/components/SuperButton/SuperButton'
+import { SuperTooltip } from '../../common/components/SuperTooltip/SuperTooltip'
 import { PATH } from '../../common/routes/routes'
 import { ProfileType } from '../Profile/profile-reducer'
 
@@ -39,9 +40,11 @@ export const Header = () => {
             {isLoggedIn ? (
               <div className={s.profileBlock}>
                 <p className={s.profileName}>{profile?.name}</p>
-                <div className={s.profileImgWrap}>
-                  <img className={s.profileImg} src={profile?.avatar} alt="" />
-                </div>
+                <SuperTooltip title={<h1>Title</h1>} placement={'bottom-end'}>
+                  <button className={s.profileImgWrap}>
+                    <img className={s.profileImg} src={profile?.avatar} alt="" />
+                  </button>
+                </SuperTooltip>
               </div>
             ) : (
               <div className={s.butCont}>
