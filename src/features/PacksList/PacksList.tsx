@@ -11,6 +11,10 @@ import { SuperPagination } from '../../common/components/SuperPagination/SuperPa
 import { SuperTable } from '../../common/components/SuperTable/SuperTable'
 import {
   cardPacksTotalCountData,
+  maxCardsCountData,
+  maxData,
+  minCardsCountData,
+  minData,
   packsData,
   pageCountData,
   pageData,
@@ -32,7 +36,7 @@ import {
 } from './packsList-reducer'
 import s from './PacksList.module.scss'
 
-export const PacksList = () => {
+export const PacksList = (props: any) => {
   const dispatch = useAppDispatch()
   const packs = useAppSelector<PackType[]>(packsData)
   const page = useAppSelector<number>(pageData)
@@ -41,6 +45,11 @@ export const PacksList = () => {
   const cardPacksTotalCount = useAppSelector<number>(cardPacksTotalCountData)
   const search = useAppSelector<string | undefined>(searchData)
   const showPackCards = useAppSelector<ShowPackCardsType>(showPackCardsData)
+
+  const minCardsCount = useAppSelector(minCardsCountData)
+  const maxCardsCount = useAppSelector(maxCardsCountData)
+  const min = useAppSelector(minData)
+  const max = useAppSelector(maxData)
 
   const navigate = useNavigate()
 
@@ -64,9 +73,9 @@ export const PacksList = () => {
     dispatch(deletePackTC(packId))
   }
 
-  const studyPackHandler = (packId: string) => {
-    navigate(`/packPage/${packId}`)
-  }
+  // const studyPackHandler = (packId: string) => {
+  //   navigate(`/packPage/${packId}`)
+  // }
 
   const updatePackHandler = (packId: string) => {
     dispatch(
@@ -89,7 +98,7 @@ export const PacksList = () => {
 
   useEffect(() => {
     dispatch(getPacksTC())
-  }, [page, pageCount, search, sort, showPackCards])
+  }, [page, pageCount, search, sort, showPackCards, minCardsCount, maxCardsCount, min, max])
 
   return (
     <>
@@ -98,7 +107,15 @@ export const PacksList = () => {
         <SuperButton title={'Add new pack'} onClick={createNewPackHandler} />
       </div>
       <div>
-        <Filters value={search} onChange={changeSearchHandler} showPackCards={showPackCards} />
+        <Filters
+          value={search}
+          onChange={changeSearchHandler}
+          showPackCards={showPackCards}
+          min={min}
+          max={max}
+          minCardsCount={minCardsCount}
+          maxCardsCount={maxCardsCount}
+        />
         {cardPacksTotalCount ? (
           <div className={s.wrapper}>
             <SuperTable
@@ -106,7 +123,7 @@ export const PacksList = () => {
               bodyData={packs}
               deleteHandler={deletePackHandler}
               updateHandler={updatePackHandler}
-              studyHandler={studyPackHandler}
+              studyHandler={props.studyPackHandler}
               sortingHandler={sortingHandler}
             />
             <SuperPagination

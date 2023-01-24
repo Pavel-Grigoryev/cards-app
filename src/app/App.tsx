@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 
 import './App.css'
-import { Navigate, Route, Routes, Outlet } from 'react-router-dom'
+import { Navigate, Route, Routes, Outlet, useNavigate } from 'react-router-dom'
 
 import { ErrorSnackbar } from '../common/components/ErrorSnackbar/ErrorSnackbar'
 import { Preloader } from '../common/components/Preloader/Preloader'
@@ -15,6 +15,7 @@ import { PasswordRecovery } from '../features/auth/PasswordRecovery/PasswordReco
 import { SignUp } from '../features/auth/SignUp/SignUp'
 import { Error404 } from '../features/Error404/Error404'
 import { Layout } from '../features/Layout/Layout'
+import { LearnPage } from '../features/Learn/LearnPage'
 import { PackPage } from '../features/PackPage/PackPage'
 import { PacksList } from '../features/PacksList/PacksList'
 import { Profile } from '../features/Profile/Profile'
@@ -26,6 +27,11 @@ const App = () => {
   const dispatch = useAppDispatch()
   const isLoggedIn = useAppSelector<boolean>(isLoggedInSelector)
   const isInitialized = useAppSelector<boolean>(isInitializedSelector)
+  const navigate = useNavigate()
+
+  const studyPackHandler = (packId: string) => {
+    navigate(`/learn/${packId}`)
+  }
 
   const PrivateRoutes = () => {
     return isLoggedIn ? <Outlet /> : <Navigate to={PATH.LOGIN} />
@@ -47,8 +53,12 @@ const App = () => {
           <Route element={<PrivateRoutes />}>
             <Route index element={<Profile />} />
             <Route path={PATH.PROFILE} element={<Profile />} />
-            <Route path={PATH.PACKS_LIST} element={<PacksList />} />
+            <Route
+              path={PATH.PACKS_LIST}
+              element={<PacksList studyPackHandler={studyPackHandler} />}
+            />
             <Route path={PATH.PACK_PAGE} element={<PackPage />} />
+            <Route path={PATH.LEARN_PAGE} element={<LearnPage />} />
             <Route path={PATH.NOT_FOUND} element={<Error404 />} />
             <Route path={'*'} element={<Navigate to={PATH.NOT_FOUND} />} />
             <Route path={PATH.TEST_PAGE} element={<TestPage />} />
