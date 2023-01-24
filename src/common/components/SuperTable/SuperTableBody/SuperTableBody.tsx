@@ -38,7 +38,7 @@ export const SuperTableBody = (props: SuperTableBodyPropsType) => {
         >
           <TableCell
             onClick={() => {
-              row.cardsCount || !row.name
+              row.cardsCount || row.user_id === userId || !row.name
                 ? props.studyHandler?.(row._id)
                 : alert('There are no cards in this pack!')
             }}
