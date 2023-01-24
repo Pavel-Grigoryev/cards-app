@@ -79,12 +79,14 @@ export const getCardsTC =
 
 export const createCardTC =
   (data: CreateNewCardType): AppThunk =>
-  async dispatch => {
+  async (dispatch, getState) => {
+    const { pageCount } = getState().cards
+
     dispatch(setAppStatusAC({ status: 'loading' }))
     try {
       const res = await cardsAPI.createNewCard(data)
 
-      dispatch(getCardsTC({ cardsPack_id: res.data.newCard.cardsPack_id }))
+      dispatch(getCardsTC({ cardsPack_id: res.data.newCard.cardsPack_id, pageCount }))
       dispatch(setAppStatusAC({ status: 'succeeded' }))
     } catch (e) {
       if (axios.isAxiosError(e)) {
@@ -95,12 +97,14 @@ export const createCardTC =
 
 export const deleteCardTC =
   (data: string): AppThunk =>
-  async dispatch => {
+  async (dispatch, getState) => {
+    const { pageCount, page } = getState().cards
+
     dispatch(setAppStatusAC({ status: 'loading' }))
     try {
       const res = await cardsAPI.deleteCard(data)
 
-      dispatch(getCardsTC({ cardsPack_id: res.data.deletedCard.cardsPack_id }))
+      dispatch(getCardsTC({ cardsPack_id: res.data.deletedCard.cardsPack_id, pageCount, page }))
       dispatch(setAppStatusAC({ status: 'succeeded' }))
     } catch (e) {
       if (axios.isAxiosError(e)) {
@@ -111,12 +115,14 @@ export const deleteCardTC =
 
 export const updateCardTC =
   (data: UpdateCardType): AppThunk =>
-  async dispatch => {
+  async (dispatch, getState) => {
+    const { pageCount, page } = getState().cards
+
     dispatch(setAppStatusAC({ status: 'loading' }))
     try {
       const res = await cardsAPI.updateCard(data)
 
-      dispatch(getCardsTC({ cardsPack_id: res.data.updatedCard.cardsPack_id }))
+      dispatch(getCardsTC({ cardsPack_id: res.data.updatedCard.cardsPack_id, pageCount, page }))
       dispatch(setAppStatusAC({ status: 'succeeded' }))
     } catch (e) {
       if (axios.isAxiosError(e)) {
