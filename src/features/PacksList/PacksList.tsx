@@ -73,9 +73,9 @@ export const PacksList = (props: any) => {
     dispatch(deletePackTC(packId))
   }
 
-  // const studyPackHandler = (packId: string) => {
-  //   navigate(`/packPage/${packId}`)
-  // }
+  const openPackHandler = (packId: string) => {
+    navigate(`/packPage/${packId}`)
+  }
 
   const updatePackHandler = (packId: string) => {
     dispatch(
@@ -125,6 +125,7 @@ export const PacksList = (props: any) => {
               updateHandler={updatePackHandler}
               studyHandler={props.studyPackHandler}
               sortingHandler={sortingHandler}
+              openPackHandler={openPackHandler}
             />
             <SuperPagination
               page={page}
