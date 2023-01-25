@@ -1,8 +1,9 @@
-import React, { FC, ReactNode } from 'react'
+import React, { FC, PropsWithChildren } from 'react'
 
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
 import Modal from '@mui/material/Modal'
+
+import { SuperButton } from '../SuperButton/SuperButton'
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -13,31 +14,47 @@ const style = {
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
-  p: '12px 24px 36px',
+  p: 4,
 }
 
 type ModalPropsType = {
-  children: ReactNode
-  title: ReactNode
+  title: string
+  modalHeader: string
 }
 
-export const SuperModal: FC<ModalPropsType> = ({ children, title }) => {
+export const SuperModal: FC<PropsWithChildren<ModalPropsType>> = ({
+  children,
+  title,
+  modalHeader,
+}) => {
   const [open, setOpen] = React.useState(false)
-  const handleOpen = (e: any) => setOpen(true)
+  const handleOpen = () => {
+    setOpen(true)
+  }
   const handleClose = () => setOpen(false)
 
   return (
     <div>
-      <Button sx={{ color: 'rgba(0,0,0,0.54)' }} onClick={handleOpen}>
-        {title}
-      </Button>
+      {/*<Button onClick={handleOpen}>{title}</Button>*/}
+      <SuperButton title={title} onClick={handleOpen} />
       <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>{children}</Box>
+        <Box sx={style}>
+          <h2
+            style={{
+              marginBottom: '20px',
+              fontSize: '16px',
+              fontWeight: 'bold',
+            }}
+          >
+            {modalHeader}
+          </h2>
+          {children}
+        </Box>
       </Modal>
     </div>
   )
