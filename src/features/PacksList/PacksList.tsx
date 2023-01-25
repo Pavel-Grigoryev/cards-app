@@ -54,13 +54,7 @@ export const PacksList = (props: any) => {
   const navigate = useNavigate()
 
   const createNewPackHandler = () => {
-    const cardsPack = {
-      cardsPack: {
-        name: 'No Name',
-        deckCover: '',
-        private: false,
-      },
-    }
+    const cardsPack = { cardsPack: { name: 'No Name', deckCover: '', private: false } }
 
     dispatch(createNewPackTC(cardsPack))
   }
@@ -78,14 +72,7 @@ export const PacksList = (props: any) => {
   }
 
   const updatePackHandler = (packId: string) => {
-    dispatch(
-      updatePackTC({
-        cardsPack: {
-          _id: packId,
-          name: 'New Name',
-        },
-      })
-    )
+    dispatch(updatePackTC({ cardsPack: { _id: packId, name: 'New Name' } }))
   }
 
   const changePaginationHandler = (page: number, pageCount: number) => {

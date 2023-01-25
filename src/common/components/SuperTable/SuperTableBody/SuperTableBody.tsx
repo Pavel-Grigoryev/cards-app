@@ -64,7 +64,7 @@ export const SuperTableBody = (props: SuperTableBodyPropsType) => {
           </TableCell>
           <TableCell align="left">{row.updated.slice(0, row.updated.indexOf('T'))}</TableCell>
           <TableCell align="left">
-            {row.user_name || <Rating name="simple-controlled" value={0} readOnly />}
+            {row.user_name || <Rating name="simple-controlled" value={row.grade} readOnly />}
           </TableCell>
 
           {props.data[0].type === 'card' && row.user_id !== userId ? null : (

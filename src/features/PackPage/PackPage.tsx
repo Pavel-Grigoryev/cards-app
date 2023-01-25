@@ -65,14 +65,7 @@ export const PackPage = () => {
   }
 
   const updateCardHandler = (cardId: string) => {
-    dispatch(
-      updateCardTC({
-        card: {
-          _id: cardId,
-          question: 'new question',
-        },
-      })
-    )
+    dispatch(updateCardTC({ card: { _id: cardId, question: 'new question' } }))
   }
 
   const changeSearchHandler = (newValue: string | undefined) => {

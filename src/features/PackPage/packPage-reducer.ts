@@ -7,6 +7,7 @@ import {
   CreateNewCardType,
   GetCardsResponseType,
   GetCardsType,
+  SendCardGradeType,
   UpdateCardType,
 } from '../../app/api/cardsAPI/cardsAPITypes'
 import { setAppStatusAC } from '../../app/app-reducer'
@@ -49,6 +50,17 @@ const slice = createSlice({
     setSortCards(state, action: PayloadAction<{ sortCards: string }>) {
       state.sortCards = action.payload.sortCards
     },
+    updateCardGrade(
+      state,
+      action: PayloadAction<{ shots: number; grade: number; card_id: string }>
+    ) {
+      const { shots, card_id, grade } = action.payload
+
+      return {
+        ...state,
+        cards: state.cards.map(c => (c._id === card_id ? { ...c, shots: shots, grade: grade } : c)),
+      }
+    },
   },
 })
 
@@ -56,7 +68,8 @@ export const packPageReducer = slice.reducer
 
 // Actions
 
-export const { getCards, updateCardsSearch, updateCardsPagination, setSortCards } = slice.actions
+export const { getCards, updateCardsSearch, updateCardsPagination, setSortCards, updateCardGrade } =
+  slice.actions
 
 //Thunks
 
@@ -123,6 +136,23 @@ export const updateCardTC =
       const res = await cardsAPI.updateCard(data)
 
       dispatch(getCardsTC({ cardsPack_id: res.data.updatedCard.cardsPack_id, pageCount, page }))
+      dispatch(setAppStatusAC({ status: 'succeeded' }))
+    } catch (e) {
+      if (axios.isAxiosError(e)) {
+        handleServerNetworkError(e, dispatch)
+      }
+    }
+  }
+
+export const sendCardGradeTC =
+  (data: SendCardGradeType): AppThunk =>
+  async dispatch => {
+    dispatch(setAppStatusAC({ status: 'loading' }))
+    try {
+      const res = await cardsAPI.sendCardGrade(data)
+      const { shots, card_id, grade } = res.data.updatedGrade
+
+      dispatch(updateCardGrade({ shots, card_id, grade }))
       dispatch(setAppStatusAC({ status: 'succeeded' }))
     } catch (e) {
       if (axios.isAxiosError(e)) {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 
 import { Radio, RadioGroup, Rating } from '@mui/material'
 import FormControl from '@mui/material/FormControl'
@@ -11,39 +11,29 @@ import { ReturnLink } from '../../common/components/ReturnLink/ReturnLink'
 import { SuperButton } from '../../common/components/SuperButton/SuperButton'
 import { PATH } from '../../common/routes/routes'
 import { cardsData } from '../../common/selectors/cards-selector'
-import { getCardsTC } from '../PackPage/packPage-reducer'
+import { getCardsTC, sendCardGradeTC } from '../PackPage/packPage-reducer'
 
 import s from './LearnPage.module.scss'
+import { getCard } from './learnPageRandom'
 
-const grades = ['Did not know', 'Forgot', 'A lot of thought', 'Сonfused', 'Knew the answer']
+const grades = [
+  { value: 1, label: "Didn't know" },
+  { value: 2, label: 'Forgot' },
+  { value: 3, label: 'Doubted' },
+  { value: 4, label: 'Confused' },
+  { value: 5, label: 'Knew the answer' },
+]
 
-////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////Random/////////////////////////////////////////
-const getCard = (cards: CardType[]) => {
-  const sum = cards.reduce((acc, card) => acc + (6 - card.grade) * (6 - card.grade), 0)
-  const rand = Math.random() * sum
-  const res = cards.reduce(
-    (acc: { sum: number; id: number }, card, i) => {
-      const newSum = acc.sum + (6 - card.grade) * (6 - card.grade)
-
-      return { sum: newSum, id: newSum < rand ? i : acc.id }
-    },
-    { sum: 0, id: -1 }
-  )
-
-  return cards[res.id + 1]
-}
-
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
 export const LearnPage = () => {
   const dispatch = useAppDispatch()
-  const [isChecked, setIsChecked] = useState<boolean>(false)
-  const [first, setFirst] = useState<boolean>(true)
   const cards = useAppSelector(cardsData)
-  const { id } = useParams<string>()
   const packName = useAppSelector(state => state.cards.packName)
 
+  const { id } = useParams<string>()
+
+  const [grade, setGrade] = useState<number>(0)
+  const [isChecked, setIsChecked] = useState<boolean>(false)
+  const [first, setFirst] = useState<boolean>(true)
   const [card, setCard] = useState<CardType>({
     answer: 'answer',
     question: 'question',
@@ -71,12 +61,12 @@ export const LearnPage = () => {
   }, [dispatch, id, cards, first])
 
   const onNext = () => {
+    dispatch(sendCardGradeTC({ grade, card_id: card._id }))
     setIsChecked(false)
+  }
 
-    if (cards.length > 0) {
-      // dispatch
-      setCard(getCard(cards))
-    }
+  const setGradeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    setGrade(Number(event.currentTarget.value))
   }
 
   return (
@@ -89,7 +79,7 @@ export const LearnPage = () => {
             <div className={s.question}>
               Question: {card.question}
               <div className={s.rating}>
-                <Rating onChange={() => {}} precision={0.1} readOnly value={card.grade} />
+                <Rating precision={0.1} readOnly value={card.grade} />
               </div>
             </div>
 
@@ -115,13 +105,13 @@ export const LearnPage = () => {
                 </div>
                 <FormControl className={s.rateCase}>
                   <div className={s.rateLabel}>Rate yourself:</div>
-                  <RadioGroup onChange={() => {}} className={s.radioButton}>
+                  <RadioGroup onChange={setGradeHandler} className={s.radioButton}>
                     {grades.map((g, i) => (
                       <FormControlLabel
                         key={'grade-' + i}
-                        value={g}
+                        value={g.value}
                         control={<Radio color={'secondary'} />}
-                        label={g}
+                        label={g.label}
                       />
                     ))}
                   </RadioGroup>
