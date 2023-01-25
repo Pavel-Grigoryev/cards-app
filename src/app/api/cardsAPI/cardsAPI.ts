@@ -9,6 +9,8 @@ import {
   GetCardsType,
   GetPacksResponseType,
   GetPacksType,
+  SendCardGradeResponseType,
+  SendCardGradeType,
   UpdateCardType,
   UpdatePackType,
 } from './cardsAPITypes'
@@ -43,5 +45,11 @@ export const cardsAPI = {
   },
   updateCard(data: UpdateCardType) {
     return instance.put('/cards/card', data)
+  },
+  sendCardGrade(data: SendCardGradeType) {
+    return instance.put<SendCardGradeType, AxiosResponse<SendCardGradeResponseType>>(
+      '/cards/grade',
+      data
+    )
   },
 }

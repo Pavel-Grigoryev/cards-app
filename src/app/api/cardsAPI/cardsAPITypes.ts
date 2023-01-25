@@ -113,3 +113,19 @@ export type UpdateCardType = {
     question?: string
   }
 }
+
+export type SendCardGradeType = {
+  grade: number
+  card_id: string
+}
+
+export type SendCardGradeResponseType = {
+  updatedGrade: {
+    _id: string
+    cardsPack_id: string
+    card_id: string
+    user_id: string
+    grade: number
+    shots: number
+  }
+}
