@@ -1,4 +1,4 @@
-import React, { FC, PropsWithChildren } from 'react'
+import React, { FC, ReactNode } from 'react'
 
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -13,20 +13,24 @@ const style = {
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
-  p: 4,
+  p: '12px 24px 36px',
 }
 
-/*type ModalPropsType = {
-}*/
+type ModalPropsType = {
+  children: ReactNode
+  title: ReactNode
+}
 
-export const SuperModal: FC<PropsWithChildren> = ({ children }) => {
+export const SuperModal: FC<ModalPropsType> = ({ children, title }) => {
   const [open, setOpen] = React.useState(false)
-  const handleOpen = () => setOpen(true)
+  const handleOpen = (e: any) => setOpen(true)
   const handleClose = () => setOpen(false)
 
   return (
     <div>
-      <Button onClick={handleOpen}>Open modal</Button>
+      <Button sx={{ color: 'rgba(0,0,0,0.54)' }} onClick={handleOpen}>
+        {title}
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}

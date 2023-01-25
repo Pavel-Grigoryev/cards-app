@@ -5,6 +5,7 @@ import { Navigate, Route, Routes, Outlet, useNavigate } from 'react-router-dom'
 
 import { ErrorSnackbar } from '../common/components/ErrorSnackbar/ErrorSnackbar'
 import { Preloader } from '../common/components/Preloader/Preloader'
+import { SuperModal } from '../common/components/SuperModal/SuperModal'
 import { PATH } from '../common/routes/routes'
 import { isInitializedSelector } from '../common/selectors/app-selector'
 import { isLoggedInSelector } from '../common/selectors/auth-selector'

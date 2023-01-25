@@ -24,6 +24,7 @@ import { userIdData } from '../../common/selectors/profile-selector'
 import { SearchPaperSX } from '../../common/styles/sx/sx_styles'
 import { packPageTableNames } from '../../common/utils/tableHeaderData'
 
+import { DeleteCardModal } from './DeleteCardModal/DeleteCardModal'
 import {
   createCardTC,
   deleteCardTC,
