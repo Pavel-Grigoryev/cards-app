@@ -1,8 +1,9 @@
 import React, { FC, PropsWithChildren } from 'react'
 
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
 import Modal from '@mui/material/Modal'
+
+import { SuperButton } from '../SuperButton/SuperButton'
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -16,24 +17,44 @@ const style = {
   p: 4,
 }
 
-/*type ModalPropsType = {
-}*/
+type ModalPropsType = {
+  title: string
+  modalHeader: string
+}
 
-export const SuperModal: FC<PropsWithChildren> = ({ children }) => {
+export const SuperModal: FC<PropsWithChildren<ModalPropsType>> = ({
+  children,
+  title,
+  modalHeader,
+}) => {
   const [open, setOpen] = React.useState(false)
-  const handleOpen = () => setOpen(true)
+  const handleOpen = () => {
+    setOpen(true)
+  }
   const handleClose = () => setOpen(false)
 
   return (
     <div>
-      <Button onClick={handleOpen}>Open modal</Button>
+      {/*<Button onClick={handleOpen}>{title}</Button>*/}
+      <SuperButton title={title} onClick={handleOpen} />
       <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>{children}</Box>
+        <Box sx={style}>
+          <h2
+            style={{
+              marginBottom: '20px',
+              fontSize: '16px',
+              fontWeight: 'bold',
+            }}
+          >
+            {modalHeader}
+          </h2>
+          {children}
+        </Box>
       </Modal>
     </div>
   )

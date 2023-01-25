@@ -23,6 +23,7 @@ import {
   sortPacks,
 } from '../../common/selectors/packs-selector'
 import { packsListTableNames } from '../../common/utils/tableHeaderData'
+import { AddNewPackModal } from '../Modals/AddNewPackModal'
 
 import {
   createNewPackTC,
@@ -53,8 +54,8 @@ export const PacksList = (props: any) => {
 
   const navigate = useNavigate()
 
-  const createNewPackHandler = () => {
-    const cardsPack = { cardsPack: { name: 'No Name', deckCover: '', private: false } }
+  const createNewPackHandler = (packName: string, isPrivatePack: boolean) => {
+    const cardsPack = { cardsPack: { name: packName, deckCover: '', private: isPrivatePack } }
 
     dispatch(createNewPackTC(cardsPack))
   }
@@ -91,7 +92,8 @@ export const PacksList = (props: any) => {
     <>
       <div className={s.head}>
         <h1>Packs list</h1>
-        <SuperButton title={'Add new pack'} onClick={createNewPackHandler} />
+        {/*<SuperButton title={'Add new pack'} onClick={createNewPackHandler} />*/}
+        <AddNewPackModal title={'Add new pack'} createNewPackHandler={createNewPackHandler} />
       </div>
       <div>
         <Filters
