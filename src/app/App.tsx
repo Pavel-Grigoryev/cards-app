@@ -51,12 +51,11 @@ const App = () => {
       <Routes>
         <Route element={<Layout />}>
           <Route element={<PrivateRoutes />}>
-            <Route index element={<Profile />} />
-            <Route path={PATH.PROFILE} element={<Profile />} />
             <Route
               path={PATH.PACKS_LIST}
               element={<PacksList studyPackHandler={studyPackHandler} />}
             />
+            <Route path={PATH.PROFILE} element={<Profile />} />
             <Route path={PATH.PACK_PAGE} element={<PackPage />} />
             <Route path={PATH.LEARN_PAGE} element={<LearnPage />} />
             <Route path={PATH.NOT_FOUND} element={<Error404 />} />
