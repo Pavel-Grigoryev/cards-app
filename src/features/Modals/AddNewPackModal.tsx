@@ -5,10 +5,10 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import Input from '@mui/material/Input'
 import InputLabel from '@mui/material/InputLabel'
 
-import { SuperButton } from '../../common/components/SuperButton/SuperButton'
-import { SuperModal } from '../../common/components/SuperModal/SuperModal'
-
 import s from './AddNewPackModal.module.scss'
+
+import { SuperButton } from 'common/components/SuperButton/SuperButton'
+import { SuperModal } from 'common/components/SuperModal/SuperModal'
 
 type AddNewPackModalPropsType = {
   title: string

@@ -1,4 +1,4 @@
-import React, { FC, PropsWithChildren } from 'react'
+import React, { FC, PropsWithChildren, ReactNode } from 'react'
 
 import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
@@ -18,7 +18,7 @@ const style = {
 }
 
 type ModalPropsType = {
-  title: string
+  title: any
   modalHeader: string
 }
 
@@ -43,18 +43,7 @@ export const SuperModal: FC<PropsWithChildren<ModalPropsType>> = ({
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
-          <h2
-            style={{
-              marginBottom: '20px',
-              fontSize: '16px',
-              fontWeight: 'bold',
-            }}
-          >
-            {modalHeader}
-          </h2>
-          {children}
-        </Box>
+        <Box sx={style}>{children}</Box>
       </Modal>
     </div>
   )

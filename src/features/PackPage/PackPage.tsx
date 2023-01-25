@@ -14,15 +14,16 @@ import { PATH } from '../../common/routes/routes'
 import {
   cardsData,
   cardsTotalCountData,
+  packUserId,
   pageCountData,
   pageData,
   searchData,
   sortCards,
-  packUserId,
 } from '../../common/selectors/cards-selector'
 import { userIdData } from '../../common/selectors/profile-selector'
 import { SearchPaperSX } from '../../common/styles/sx/sx_styles'
 import { packPageTableNames } from '../../common/utils/tableHeaderData'
+import { AddNewCardModal } from '../Modals/AddNewCardModal/AddNewCardModal'
 
 import {
   createCardTC,
@@ -89,7 +90,8 @@ export const PackPage = () => {
       <div className={s.head}>
         <h1>{packName}</h1>
         {userPackId === userId ? (
-          <SuperButton title={'Add new card'} onClick={createNewCardHandler} />
+          // <SuperButton title={'Add new card'} onClick={createNewCardHandler} />
+          <AddNewCardModal title={'Add new card'} createNewCardHandler={createNewCardHandler} />
         ) : (
           <SuperButton title={'Learn to pack'} onClick={() => {}} />
         )}
