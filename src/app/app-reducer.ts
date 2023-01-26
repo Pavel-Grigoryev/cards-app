@@ -55,6 +55,7 @@ export const initializeAppTC = (): AppThunk => async dispatch => {
   }
 }
 
+export const appThunks = { initializeAppTC }
+
 //Types
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
-export const appThunks = { initializeAppTC }

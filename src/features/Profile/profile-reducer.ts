@@ -71,6 +71,8 @@ export const updateProfileTC =
     }
   }
 
+export const profileThunks = { updateProfileTC }
+
 //Types
 
 export type ProfileType = {

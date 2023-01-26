@@ -24,10 +24,6 @@ export const AddNewCardModal: FC<AddNewCardModalPropsType> = ({ title, createNew
   const [mode, setMode] = useState<string>('text')
   const [open, setOpen] = useState(false)
 
-  // const onChangeSetLocalTitle = (e: ChangeEvent<HTMLInputElement>) => {
-  //   setPackName(e.currentTarget.value)
-  // }
-
   const handleChange = (e: SelectChangeEvent) => {
     debugger
     setMode(e.target.value)

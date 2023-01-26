@@ -10,12 +10,13 @@ import logoutImg from '../../assets/images/logout.svg'
 import { EditableSpan } from '../../common/components/EditableSpan/EditableSpan'
 import { Preloader } from '../../common/components/Preloader/Preloader'
 import { ReturnLink } from '../../common/components/ReturnLink/ReturnLink'
+import { useActions } from '../../common/hooks/useActions'
 import { PATH } from '../../common/routes/routes'
 import { entityStatusData, profileData } from '../../common/selectors/profile-selector'
 import { ContainerSX } from '../../common/styles/sx/sx_styles'
 import { logoutTC } from '../auth/auth-reducer'
 
-import { ProfileType, updateProfileTC } from './profile-reducer'
+import { profileThunks, ProfileType } from './profile-reducer'
 import s from './Profile.module.scss'
 
 export const Profile = () => {
@@ -23,11 +24,13 @@ export const Profile = () => {
 
   const entityStatus = useAppSelector<RequestStatusType>(entityStatusData)
 
+  const { updateProfileTC } = useActions(profileThunks)
+
   const dispatch = useAppDispatch()
 
   const onChangeNameHandler = useCallback(
     (name: string | undefined) => {
-      dispatch(updateProfileTC({ name }))
+      updateProfileTC({ name })
     },
     [dispatch]
   )
