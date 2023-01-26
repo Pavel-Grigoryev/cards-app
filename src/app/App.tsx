@@ -6,6 +6,7 @@ import { Navigate, Route, Routes, Outlet, useNavigate } from 'react-router-dom'
 import { ErrorSnackbar } from '../common/components/ErrorSnackbar/ErrorSnackbar'
 import { Preloader } from '../common/components/Preloader/Preloader'
 import { SuperModal } from '../common/components/SuperModal/SuperModal'
+import { useActions } from '../common/hooks/useActions'
 import { PATH } from '../common/routes/routes'
 import { isInitializedSelector } from '../common/selectors/app-selector'
 import { isLoggedInSelector } from '../common/selectors/auth-selector'
@@ -21,7 +22,7 @@ import { PackPage } from '../features/PackPage/PackPage'
 import { PacksList } from '../features/PacksList/PacksList'
 import { Profile } from '../features/Profile/Profile'
 
-import { initializeAppTC } from './app-reducer'
+import { appThunks } from './app-reducer'
 import { useAppDispatch, useAppSelector } from './store'
 
 const App = () => {
@@ -38,8 +39,10 @@ const App = () => {
     return isLoggedIn ? <Outlet /> : <Navigate to={PATH.LOGIN} />
   }
 
+  const { initializeAppTC } = useActions(appThunks)
+
   useEffect(() => {
-    dispatch(initializeAppTC())
+    initializeAppTC({})
   }, [])
 
   if (!isInitialized) {
