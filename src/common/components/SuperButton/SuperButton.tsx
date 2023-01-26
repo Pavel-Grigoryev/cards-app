@@ -5,6 +5,7 @@ import Button from '@mui/material/Button'
 type StyleSXPropsType = {
   mt?: string
   width?: string
+  backgroundColor?: string
 }
 
 type SuperButtonType = {

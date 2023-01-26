@@ -12,9 +12,11 @@ import TableRow from '@mui/material/TableRow'
 import { CardType, PackType } from '../../../../app/api/cardsAPI/cardsAPITypes'
 import { RequestStatusType } from '../../../../app/app-reducer'
 import { useAppSelector } from '../../../../app/store'
-import { DeleteCardModal } from '../../../../features/PackPage/DeleteCardModal/DeleteCardModal'
+import { DeleteModal } from '../../../../features/Modals/DeleteModal/DeleteModal'
 import { isLoading } from '../../../selectors/app-selector'
 import { userIdData } from '../../../selectors/profile-selector'
+
+import s from './SuperTableBody.module.scss'
 
 type SuperTableBodyPropsType = {
   data: PackType[] | CardType[]
@@ -87,13 +89,11 @@ export const SuperTableBody = (props: SuperTableBodyPropsType) => {
                   >
                     <EditIcon fontSize={'small'} />
                   </IconButton>
-                  <DeleteCardModal title={<DeleteIcon fontSize={'small'} />} id={row._id} />
-                  <IconButton
-                    disabled={status === 'loading'}
-                    onClick={() => props.deleteHandler(row._id)}
-                  >
-                    <DeleteIcon fontSize={'small'} />
-                  </IconButton>
+                  <DeleteModal
+                    title={<DeleteIcon fontSize={'small'} />}
+                    name={row.name || row.question}
+                    deleteItem={() => props.deleteHandler(row._id)}
+                  />
                 </span>
               )}
             </TableCell>
