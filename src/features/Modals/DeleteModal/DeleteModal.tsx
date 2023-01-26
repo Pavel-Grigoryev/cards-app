@@ -1,19 +1,29 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 
 import Button from '@mui/material/Button'
 
+import { StyleSXPropsType } from '../../../common/components/SuperButton/SuperButton'
 import { SuperModal } from '../../../common/components/SuperModal/SuperModal'
 
 import s from './DeleteModal.module.scss'
 
 export const DeleteModal: FC<DeleteCardModalPropsType> = ({ title, name, deleteItem }) => {
+  const [open, setOpen] = useState(false)
+
   const deleteHandler = () => {
     deleteItem()
+    setOpen(false)
   }
 
   return (
     <>
-      <SuperModal title={title} modalHeader={'Delete Pack'}>
+      <SuperModal
+        title={title}
+        modalHeader={'Delete Pack'}
+        open={open}
+        handleOpen={() => setOpen(true)}
+        handleClose={() => setOpen(false)}
+      >
         <div className={s.wrapper}>
           <p className={s.desc}>
             Do you really want to remove <span className={s.name}>{name}</span>? All cards will be

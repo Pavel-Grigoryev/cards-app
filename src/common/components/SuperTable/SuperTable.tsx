@@ -18,6 +18,7 @@ type SuperTablePropsType = {
   studyHandler?: (cardId: string) => void
   updateHandler: (cardId: string) => void
   openPackHandler?: (cardId: string) => void
+  updateCardHandler?: (cardId: string, question: string, answer: string) => void
 }
 
 export const SuperTable = (props: SuperTablePropsType) => {
@@ -31,6 +32,7 @@ export const SuperTable = (props: SuperTablePropsType) => {
           deleteHandler={props.deleteHandler}
           updateHandler={props.updateHandler}
           openPackHandler={props.openPackHandler}
+          updateCardHandler={props.updateCardHandler}
         />
       </Table>
     </TableContainer>

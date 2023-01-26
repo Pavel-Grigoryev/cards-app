@@ -2,7 +2,7 @@ import React from 'react'
 
 import Button from '@mui/material/Button'
 
-type StyleSXPropsType = {
+export type StyleSXPropsType = {
   mt?: string
   width?: string
   backgroundColor?: string

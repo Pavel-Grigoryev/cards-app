@@ -25,7 +25,6 @@ import { SearchPaperSX } from '../../common/styles/sx/sx_styles'
 import { packPageTableNames } from '../../common/utils/tableHeaderData'
 import { AddNewCardModal } from '../Modals/AddNewCardModal/AddNewCardModal'
 
-import { DeleteCardModal } from './DeleteCardModal/DeleteCardModal'
 import {
   createCardTC,
   deleteCardTC,
@@ -51,9 +50,10 @@ export const PackPage = () => {
 
   const { id } = useParams<string>()
 
-  const createNewCardHandler = () => {
+  const createNewCardHandler = (question: string, answer: string) => {
+    debugger
     if (id) {
-      dispatch(createCardTC({ card: { cardsPack_id: id } }))
+      dispatch(createCardTC({ card: { cardsPack_id: id, question, answer } }))
     }
   }
 
@@ -65,8 +65,8 @@ export const PackPage = () => {
     dispatch(setSortCards({ sortCards }))
   }
 
-  const updateCardHandler = (cardId: string) => {
-    dispatch(updateCardTC({ card: { _id: cardId, question: 'new question' } }))
+  const updateCardHandler = (cardId: string, question: string, answer: string) => {
+    dispatch(updateCardTC({ card: { _id: cardId, question, answer } }))
   }
 
   const changeSearchHandler = (newValue: string | undefined) => {
@@ -111,9 +111,10 @@ export const PackPage = () => {
             <SuperTable
               headerNames={packPageTableNames}
               bodyData={cards}
+              updateHandler={cardId => {}}
               deleteHandler={deleteCardHandler}
-              updateHandler={updateCardHandler}
               sortingHandler={sortingHandler}
+              updateCardHandler={updateCardHandler}
             />
             <SuperPagination
               page={page}

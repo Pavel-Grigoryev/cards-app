@@ -111,6 +111,7 @@ export type UpdateCardType = {
   card: {
     _id: string
     question?: string
+    answer?: string
   }
 }
 

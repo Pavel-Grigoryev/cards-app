@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, useState } from 'react'
+import React, { FC, useState } from 'react'
 
 import FormControl from '@mui/material/FormControl'
 import Input from '@mui/material/Input'
@@ -10,51 +10,51 @@ import { useFormik } from 'formik'
 import styles from '../../../common/styles/errors.module.scss'
 import { addNewCardSchema } from '../../../common/utils/validationSchema'
 
-import s from './AddNewCardModal.module.scss'
+import s from './EditCardModal.module.scss'
 
 import { SuperButton } from 'common/components/SuperButton/SuperButton'
 import { SuperModal } from 'common/components/SuperModal/SuperModal'
 
-type AddNewCardModalPropsType = {
+type EditCardModalPropsType = {
   title: any
-  createNewCardHandler: (question: string, answer: string) => void
+  updateCard: (question: string, answer: string) => void
+  rowQuestion: string
+  rowAnswer: string
 }
 
-export const AddNewCardModal: FC<AddNewCardModalPropsType> = ({ title, createNewCardHandler }) => {
+export const EditCardModal: FC<EditCardModalPropsType> = ({
+  title,
+  updateCard,
+  rowQuestion,
+  rowAnswer,
+}) => {
   const [mode, setMode] = useState<string>('text')
   const [open, setOpen] = useState(false)
-
-  // const onChangeSetLocalTitle = (e: ChangeEvent<HTMLInputElement>) => {
-  //   setPackName(e.currentTarget.value)
-  // }
-
-  const handleChange = (e: SelectChangeEvent) => {
-    debugger
+  const handleChange = (e: SelectChangeEvent<string>) => {
     setMode(e.target.value)
   }
 
   const formik = useFormik({
     initialValues: {
-      question: '',
-      answer: '',
+      question: rowQuestion,
+      answer: rowAnswer,
     },
 
     validationSchema: addNewCardSchema,
 
     onSubmit: values => {
-      createNewCardHandler(values.question, values.answer)
-      formik.resetForm()
+      updateCard(values.question, values.answer)
       setOpen(false)
     },
   })
 
   return (
     <SuperModal
-      title={title}
-      modalHeader={'Add new card'}
       open={open}
       handleOpen={() => setOpen(true)}
       handleClose={() => setOpen(false)}
+      title={title}
+      modalHeader={'Add new card'}
     >
       <div className={s.wrapper}>
         <form onSubmit={formik.handleSubmit}>

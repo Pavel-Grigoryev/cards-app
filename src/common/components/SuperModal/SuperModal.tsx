@@ -1,9 +1,10 @@
 import React, { FC, PropsWithChildren, ReactNode } from 'react'
 
 import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
 import Modal from '@mui/material/Modal'
 
-import { SuperButton } from '../SuperButton/SuperButton'
+import { StyleSXPropsType, SuperButton } from '../SuperButton/SuperButton'
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -18,25 +19,35 @@ const style = {
 }
 
 type ModalPropsType = {
-  title: any
+  title: string | ReactNode
   modalHeader: string
+  open: boolean
+  handleClose: () => void
+  handleOpen: () => void
+  styleSX?: StyleSXPropsType
 }
 
 export const SuperModal: FC<PropsWithChildren<ModalPropsType>> = ({
   children,
   title,
   modalHeader,
+  open,
+  handleClose,
+  handleOpen,
 }) => {
-  const [open, setOpen] = React.useState(false)
-  const handleOpen = () => {
-    setOpen(true)
-  }
-  const handleClose = () => setOpen(false)
-
   return (
     <div>
-      {/*<Button onClick={handleOpen}>{title}</Button>*/}
-      <SuperButton title={title} onClick={handleOpen} />
+      {typeof title === 'string' ? (
+        <SuperButton title={title} onClick={handleOpen} />
+      ) : (
+        <Button
+          sx={{ color: 'rgba(0,0,0,0.54)', minWidth: '0px' }}
+          variant="text"
+          onClick={handleOpen}
+        >
+          {title}
+        </Button>
+      )}
       <Modal
         open={open}
         onClose={handleClose}

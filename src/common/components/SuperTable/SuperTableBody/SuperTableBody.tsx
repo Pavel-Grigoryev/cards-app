@@ -13,6 +13,7 @@ import { CardType, PackType } from '../../../../app/api/cardsAPI/cardsAPITypes'
 import { RequestStatusType } from '../../../../app/app-reducer'
 import { useAppSelector } from '../../../../app/store'
 import { DeleteModal } from '../../../../features/Modals/DeleteModal/DeleteModal'
+import { EditCardModal } from '../../../../features/Modals/EditCardModal/EditCardModal'
 import { isLoading } from '../../../selectors/app-selector'
 import { userIdData } from '../../../selectors/profile-selector'
 
@@ -24,6 +25,7 @@ type SuperTableBodyPropsType = {
   updateHandler: (cardId: string) => void
   deleteHandler: (cardId: string) => void
   openPackHandler?: (cardId: string) => void
+  updateCardHandler?: (cardId: string, question: string, answer: string) => void
 }
 
 export const SuperTableBody = (props: SuperTableBodyPropsType) => {
@@ -83,12 +85,18 @@ export const SuperTableBody = (props: SuperTableBodyPropsType) => {
               )}
               {row.user_id === userId && (
                 <span>
-                  <IconButton
-                    disabled={status === 'loading'}
-                    onClick={() => props.updateHandler(row._id)}
-                  >
-                    <EditIcon fontSize={'small'} />
-                  </IconButton>
+                  {props.data[0].type === 'card' && (
+                    <EditCardModal
+                      title={<EditIcon fontSize={'small'} />}
+                      rowQuestion={row.question}
+                      rowAnswer={row.answer}
+                      updateCard={(question, answer) => {
+                        if (props.updateCardHandler) {
+                          props.updateCardHandler(row._id, question, answer)
+                        }
+                      }}
+                    />
+                  )}
                   <DeleteModal
                     title={<DeleteIcon fontSize={'small'} />}
                     name={row.name || row.question}

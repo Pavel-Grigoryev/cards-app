@@ -18,6 +18,7 @@ type AddNewPackModalPropsType = {
 export const AddNewPackModal: FC<AddNewPackModalPropsType> = ({ title, createNewPackHandler }) => {
   const [packName, setPackName] = useState<string>('Name Pack')
   const [isPrivatePack, setIsPrivatePack] = useState<boolean>(false)
+  const [open, setOpen] = useState(false)
 
   const onChangeSetLocalTitle = (e: ChangeEvent<HTMLInputElement>) => {
     setPackName(e.currentTarget.value)
@@ -29,10 +30,17 @@ export const AddNewPackModal: FC<AddNewPackModalPropsType> = ({ title, createNew
 
   const handleAddNewPack = () => {
     createNewPackHandler(packName, isPrivatePack)
+    setOpen(false)
   }
 
   return (
-    <SuperModal title={title} modalHeader={'Add new pack'}>
+    <SuperModal
+      title={title}
+      modalHeader={'Add new pack'}
+      open={open}
+      handleOpen={() => setOpen(true)}
+      handleClose={() => setOpen(false)}
+    >
       <div className={s.wrapper}>
         <div className={s.inputs}>
           <InputLabel color={'secondary'}>Name pack</InputLabel>

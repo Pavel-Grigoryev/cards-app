@@ -23,3 +23,8 @@ export const passwordRecoverySchema = Yup.object().shape({
 export const createNewPasswordSchema = Yup.object().shape({
   password: validate.password,
 })
+
+export const addNewCardSchema = Yup.object().shape({
+  question: Yup.string().required('Required'),
+  answer: Yup.string().required('Required'),
+})
