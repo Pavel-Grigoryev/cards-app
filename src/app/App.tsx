@@ -60,7 +60,10 @@ const App = () => {
               element={<PacksList studyPackHandler={studyPackHandler} />}
             />
             <Route path={PATH.PROFILE} element={<Profile />} />
-            <Route path={PATH.PACK_PAGE} element={<PackPage />} />
+            <Route
+              path={PATH.PACK_PAGE}
+              element={<PackPage studyPackHandler={studyPackHandler} />}
+            />
             <Route path={PATH.LEARN_PAGE} element={<LearnPage />} />
             <Route path={PATH.NOT_FOUND} element={<Error404 />} />
             <Route path={'*'} element={<Navigate to={PATH.NOT_FOUND} />} />
