@@ -16,7 +16,7 @@ type SuperTablePropsType = {
   deleteHandler: (cardId: string) => void
   sortingHandler: (sortCards: string) => void
   studyHandler?: (cardId: string) => void
-  updateHandler: (cardId: string) => void
+  updatePackHandler?: (cardId: string, packName: string, isPrivatePack: boolean) => void
   openPackHandler?: (cardId: string) => void
   updateCardHandler?: (cardId: string, question: string, answer: string) => void
 }
@@ -30,7 +30,7 @@ export const SuperTable = (props: SuperTablePropsType) => {
           data={props.bodyData}
           studyHandler={props.studyHandler}
           deleteHandler={props.deleteHandler}
-          updateHandler={props.updateHandler}
+          updatePackHandler={props.updatePackHandler}
           openPackHandler={props.openPackHandler}
           updateCardHandler={props.updateCardHandler}
         />

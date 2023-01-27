@@ -14,6 +14,7 @@ import { RequestStatusType } from '../../../../app/app-reducer'
 import { useAppSelector } from '../../../../app/store'
 import { DeleteModal } from '../../../../features/Modals/DeleteModal/DeleteModal'
 import { EditCardModal } from '../../../../features/Modals/EditCardModal/EditCardModal'
+import { EditPackModal } from '../../../../features/Modals/EditPackModal/EditPackModal'
 import { isLoading } from '../../../selectors/app-selector'
 import { userIdData } from '../../../selectors/profile-selector'
 
@@ -22,7 +23,7 @@ import s from './SuperTableBody.module.scss'
 type SuperTableBodyPropsType = {
   data: PackType[] | CardType[]
   studyHandler?: (cardId: string) => void
-  updateHandler: (cardId: string) => void
+  updatePackHandler?: (cardId: string, packName: string, isPrivatePack: boolean) => void
   deleteHandler: (cardId: string) => void
   openPackHandler?: (cardId: string) => void
   updateCardHandler?: (cardId: string, question: string, answer: string) => void
@@ -53,7 +54,7 @@ export const SuperTableBody = (props: SuperTableBodyPropsType) => {
             sx={
               row.name && {
                 cursor: 'pointer',
-                width: '230px',
+                width: '260px',
                 wordBreak: 'break-all',
                 '&:hover': {
                   fontWeight: 'bold',
@@ -72,7 +73,7 @@ export const SuperTableBody = (props: SuperTableBodyPropsType) => {
           </TableCell>
 
           {props.data[0].type === 'card' && row.user_id !== userId ? null : (
-            <TableCell align="left">
+            <TableCell align="left" sx={{ display: 'flex', flexDirection: 'row' }}>
               {row.user_id === userId && props.data[0].type === 'card' ? null : (
                 <IconButton
                   onClick={e => {
@@ -84,11 +85,12 @@ export const SuperTableBody = (props: SuperTableBodyPropsType) => {
                 </IconButton>
               )}
               {row.user_id === userId && (
-                <span>
+                <span style={{ display: 'flex', flexDirection: 'row' }}>
                   {props.data[0].type === 'card' && (
                     <EditCardModal
                       title={<EditIcon fontSize={'small'} />}
                       rowQuestion={row.question}
+                      disabledButton={status === 'loading'}
                       rowAnswer={row.answer}
                       updateCard={(question, answer) => {
                         if (props.updateCardHandler) {
@@ -97,9 +99,23 @@ export const SuperTableBody = (props: SuperTableBodyPropsType) => {
                       }}
                     />
                   )}
+                  {props.data[0].type === 'pack' && (
+                    <EditPackModal
+                      title={<EditIcon fontSize={'small'} />}
+                      disabledButton={status === 'loading'}
+                      currentPackName={row.name}
+                      isPrivate={row.private}
+                      updatePack={(packName: string, isPrivatePack: boolean) => {
+                        if (props.updatePackHandler) {
+                          props.updatePackHandler(row._id, packName, isPrivatePack)
+                        }
+                      }}
+                    />
+                  )}
                   <DeleteModal
                     title={<DeleteIcon fontSize={'small'} />}
                     name={row.name || row.question}
+                    disabledButton={status === 'loading'}
                     deleteItem={() => props.deleteHandler(row._id)}
                   />
                 </span>
