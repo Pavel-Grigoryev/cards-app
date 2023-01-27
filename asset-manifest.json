@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/cards-app/static/css/main.fb9a22bd.css",
-    "main.js": "/cards-app/static/js/main.20dff82f.js",
+    "main.css": "/cards-app/static/css/main.a9fba087.css",
+    "main.js": "/cards-app/static/js/main.9886d42f.js",
     "static/js/787.3cdc8eeb.chunk.js": "/cards-app/static/js/787.3cdc8eeb.chunk.js",
     "static/media/not-found.png": "/cards-app/static/media/not-found.e9d636057ef50f494693.png",
     "static/media/sendMessage.png": "/cards-app/static/media/sendMessage.1f5609ea22ca7498488a.png",
@@ -10,13 +10,14 @@
     "static/media/chevron-down.svg": "/cards-app/static/media/chevron-down.7851703ce34391626fae.svg",
     "index.html": "/cards-app/index.html",
     "static/media/logout.svg": "/cards-app/static/media/logout.4631dbd136b384a8118857f16dae43d5.svg",
+    "static/media/user.svg": "/cards-app/static/media/user.80fa9754947dabe414f5181c7b26bc2c.svg",
     "static/media/backArrow.svg": "/cards-app/static/media/backArrow.19c7bd8ee7d32ca8451f1de3f6803354.svg",
-    "main.fb9a22bd.css.map": "/cards-app/static/css/main.fb9a22bd.css.map",
-    "main.20dff82f.js.map": "/cards-app/static/js/main.20dff82f.js.map",
+    "main.a9fba087.css.map": "/cards-app/static/css/main.a9fba087.css.map",
+    "main.9886d42f.js.map": "/cards-app/static/js/main.9886d42f.js.map",
     "787.3cdc8eeb.chunk.js.map": "/cards-app/static/js/787.3cdc8eeb.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.fb9a22bd.css",
-    "static/js/main.20dff82f.js"
+    "static/css/main.a9fba087.css",
+    "static/js/main.9886d42f.js"
   ]
 }
