@@ -63,6 +63,7 @@ export const LearnPage = () => {
   const onNext = () => {
     dispatch(sendCardGradeTC({ grade, card_id: card._id }))
     setIsChecked(false)
+    setGrade(0)
   }
 
   const setGradeHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -118,6 +119,7 @@ export const LearnPage = () => {
                 </FormControl>
                 <div>
                   <SuperButton
+                    disabled={grade === 0}
                     onClick={onNext}
                     title={'Next'}
                     styleSX={{
