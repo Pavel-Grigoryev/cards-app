@@ -2,11 +2,12 @@ import React, { useEffect } from 'react'
 
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from '../../app/store'
+import { useAppSelector } from '../../app/store'
 import { Filters } from '../../common/components/Filters/Filters'
 import { NotFound } from '../../common/components/NotFound/NotFound'
 import { SuperPagination } from '../../common/components/SuperPagination/SuperPagination'
 import { SuperTable } from '../../common/components/SuperTable/SuperTable'
+import { useActions } from '../../common/hooks/useActions'
 import {
   cardPacksTotalCountData,
   maxCardsCountData,
@@ -23,21 +24,10 @@ import {
 import { packsListTableNames } from '../../common/utils/tableHeaderData'
 import { AddNewPackModal } from '../Modals/AddNewPackModal/AddNewPackModal'
 
-import {
-  createNewPackTC,
-  deletePackTC,
-  getPacksTC,
-  setSort,
-  ShowPackCardsType,
-  updatePacksPagination,
-  updatePackTC,
-  updateSearch,
-  updateShowPackCards,
-} from './packsList-reducer'
+import { packThunks, ShowPackCardsType } from './packsList-reducer'
 import s from './PacksList.module.scss'
 
 export const PacksList = (props: any) => {
-  const dispatch = useAppDispatch()
   const packs = useAppSelector(packsData)
   const page = useAppSelector(pageData)
   const pageCount = useAppSelector(pageCountData)
@@ -55,18 +45,29 @@ export const PacksList = (props: any) => {
 
   const [searchParams, setSearchParams] = useSearchParams()
 
+  const {
+    getPacksTC,
+    createNewPackTC,
+    deletePackTC,
+    updatePackTC,
+    setSort,
+    updatePacksPagination,
+    updateSearch,
+    updateShowPackCards,
+  } = useActions(packThunks)
+
   const createNewPackHandler = (packName: string, isPrivatePack: boolean) => {
     const cardsPack = { cardsPack: { name: packName, deckCover: '', private: isPrivatePack } }
 
-    dispatch(createNewPackTC(cardsPack))
+    createNewPackTC(cardsPack)
   }
 
   const sortingHandler = (sortPacks: string) => {
-    dispatch(setSort({ sortPacks }))
+    setSort({ sortPacks })
   }
 
   const deletePackHandler = (packId: string) => {
-    dispatch(deletePackTC(packId))
+    deletePackTC(packId)
   }
 
   const openPackHandler = (packId: string) => {
@@ -74,19 +75,19 @@ export const PacksList = (props: any) => {
   }
 
   const updatePackHandler = (packId: string, packName: string, isPrivatePack: boolean) => {
-    dispatch(updatePackTC({ cardsPack: { _id: packId, name: packName, private: isPrivatePack } }))
+    updatePackTC({ cardsPack: { _id: packId, name: packName, private: isPrivatePack } })
   }
 
   const changePaginationHandler = (page: number, pageCount: number) => {
-    dispatch(updatePacksPagination({ page, pageCount }))
+    updatePacksPagination({ page, pageCount })
   }
 
   const changeSearchHandler = (newValue: string | undefined) => {
-    dispatch(updateSearch({ newValue }))
+    updateSearch({ newValue })
   }
 
   const updShowPackCards = (butValue: ShowPackCardsType) => {
-    dispatch(updateShowPackCards({ butValue }))
+    updateShowPackCards({ butValue })
     setSearchParams({ accessory: butValue })
   }
 
@@ -94,8 +95,8 @@ export const PacksList = (props: any) => {
     const params: SearchPramsType = Object.fromEntries(searchParams)
     const accessory = params.accessory || 'all'
 
-    dispatch(updateShowPackCards({ butValue: accessory }))
-    dispatch(getPacksTC({ showPackCards: accessory }))
+    updateShowPackCards({ butValue: accessory })
+    getPacksTC({})
   }, [page, pageCount, search, sort, min, max])
 
   return (

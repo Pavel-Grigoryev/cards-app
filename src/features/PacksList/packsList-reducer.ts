@@ -4,7 +4,6 @@ import axios, { AxiosError } from 'axios'
 import { cardsAPI } from '../../app/api/cardsAPI/cardsAPI'
 import {
   CreateNewPackType,
-  GetCardsType,
   GetPacksResponseType,
   PackType,
   UpdatePackType,
@@ -100,36 +99,34 @@ export const {
 
 //Thunks
 
-export const getPacksTC =
-  (data: GetCardsModelType): AppThunk =>
-  async (dispatch, getState) => {
-    dispatch(setAppStatusAC({ status: 'loading' }))
-    const { page, pageCount, search, sortPacks, min, max, showPackCards } = getState().packs
-    const { _id } = getState().userProfile.profile
-    const user_id = showPackCards === 'my' ? _id : ''
+export const getPacksTC = (): AppThunk => async (dispatch, getState) => {
+  dispatch(setAppStatusAC({ status: 'loading' }))
+  const { page, pageCount, search, sortPacks, min, max, showPackCards } = getState().packs
+  const { _id } = getState().userProfile.profile
+  const user_id = showPackCards === 'my' ? _id : ''
 
-    try {
-      const res = await cardsAPI.getPacks({
-        packName: search,
-        min,
-        max,
-        page,
-        pageCount,
-        user_id,
-        sortPacks,
-      })
+  try {
+    const res = await cardsAPI.getPacks({
+      packName: search,
+      min,
+      max,
+      page,
+      pageCount,
+      user_id,
+      sortPacks,
+    })
 
-      console.log(res.data)
+    console.log(res.data)
 
-      dispatch(getPacks({ data: res.data }))
-      dispatch(setPacksCount({ values: [res.data.minCardsCount, res.data.maxCardsCount] }))
-      dispatch(setAppStatusAC({ status: 'succeeded' }))
-    } catch (e) {
-      if (axios.isAxiosError(e)) {
-        handleServerNetworkError(e, dispatch)
-      }
+    dispatch(getPacks({ data: res.data }))
+    dispatch(setPacksCount({ values: [res.data.minCardsCount, res.data.maxCardsCount] }))
+    dispatch(setAppStatusAC({ status: 'succeeded' }))
+  } catch (e) {
+    if (axios.isAxiosError(e)) {
+      handleServerNetworkError(e, dispatch)
     }
   }
+}
 
 export const createNewPackTC =
   (data: CreateNewPackType): AppThunk =>
@@ -138,7 +135,7 @@ export const createNewPackTC =
     try {
       const res = await cardsAPI.createNewPack(data)
 
-      dispatch(getPacksTC({}))
+      dispatch(getPacksTC())
       dispatch(setAppStatusAC({ status: 'succeeded' }))
     } catch (e) {
       if (axios.isAxiosError(e)) {
@@ -154,7 +151,7 @@ export const deletePackTC =
     try {
       const res = await cardsAPI.deletePack(data)
 
-      dispatch(getPacksTC({}))
+      dispatch(getPacksTC())
       dispatch(setAppStatusAC({ status: 'succeeded' }))
     } catch (e) {
       if (axios.isAxiosError(e)) {
@@ -170,7 +167,7 @@ export const updatePackTC =
     try {
       const res = await cardsAPI.updatePack(data)
 
-      dispatch(getPacksTC({}))
+      dispatch(getPacksTC())
       dispatch(setAppStatusAC({ status: 'succeeded' }))
     } catch (err: AxiosError<{ error: string }> | any) {
       const error = err.response ? err.response.data.error : err.message
@@ -180,10 +177,21 @@ export const updatePackTC =
     }
   }
 
+export const packThunks = {
+  getPacksTC,
+  createNewPackTC,
+  deletePackTC,
+  updatePackTC,
+  getPacks,
+  updatePacksPagination,
+  updateSearch,
+  setSort,
+  resetFilters,
+  setCardsCount,
+  updateShowPackCards,
+  setPacksCount,
+}
+
 //Types
 
 export type ShowPackCardsType = 'all' | 'my'
-
-type GetCardsModelType = Omit<GetCardsType, 'cardsPack_id'> & {
-  showPackCards?: ShowPackCardsType
-}
