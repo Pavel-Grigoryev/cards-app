@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 
 import { useParams } from 'react-router-dom'
 
-import { CardType } from '../../app/api/cardsAPI/cardsAPITypes'
 import { useAppDispatch, useAppSelector } from '../../app/store'
 import { NotFound } from '../../common/components/NotFound/NotFound'
 import { ReturnLink } from '../../common/components/ReturnLink/ReturnLink'
@@ -36,17 +35,21 @@ import {
 } from './packPage-reducer'
 import s from './PackPage.module.scss'
 
-export const PackPage = () => {
+type PackPagePropsType = {
+  studyPackHandler: (cardId: string) => void
+}
+
+export const PackPage = (props: PackPagePropsType) => {
   const dispatch = useAppDispatch()
-  const cards = useAppSelector<CardType[]>(cardsData)
-  const search = useAppSelector<string | undefined>(searchData)
-  const page = useAppSelector<number>(pageData)
-  const pageCount = useAppSelector<number>(pageCountData)
-  const cardsTotalCount = useAppSelector<number>(cardsTotalCountData)
-  const sort = useAppSelector<string>(sortCards)
-  const userPackId = useAppSelector<string>(packUserId)
-  const userId = useAppSelector<string>(userIdData)
-  const packName = useAppSelector<string>(state => state.cards.packName)
+  const cards = useAppSelector(cardsData)
+  const search = useAppSelector(searchData)
+  const page = useAppSelector(pageData)
+  const pageCount = useAppSelector(pageCountData)
+  const cardsTotalCount = useAppSelector(cardsTotalCountData)
+  const sort = useAppSelector(sortCards)
+  const userPackId = useAppSelector(packUserId)
+  const userId = useAppSelector(userIdData)
+  const packName = useAppSelector(state => state.cards.packName)
 
   const { id } = useParams<string>()
 
@@ -88,12 +91,25 @@ export const PackPage = () => {
     <>
       <ReturnLink path={PATH.PACKS_LIST} title={'Back to Packs List'} />
       <div className={s.head}>
-        <h1>{packName}</h1>
+        <h1>
+          {packName} {/*{userPackId === userId ? (*/}
+          {/*  <SuperTooltip*/}
+          {/*    title={<PopLink learn={props.studyPackHandler} />}*/}
+          {/*    placement={'bottom-end'}*/}
+          {/*  >*/}
+          {/*    <button className={s.popImgWrap}>*/}
+          {/*      <img className={s.popImg} src={pop} alt="" />*/}
+          {/*    </button>*/}
+          {/*  </SuperTooltip>*/}
+          {/*) : (*/}
+          {/*  ''*/}
+          {/*)}*/}
+        </h1>
         {userPackId === userId ? (
           // <SuperButton title={'Add new card'} onClick={createNewCardHandler} />
           <AddNewCardModal title={'Add new card'} createNewCardHandler={createNewCardHandler} />
         ) : (
-          <SuperButton title={'Learn to pack'} onClick={() => {}} />
+          <SuperButton title={'Learn to pack'} onClick={() => props.studyPackHandler(id!)} />
         )}
       </div>
       <div>

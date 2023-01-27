@@ -50,7 +50,7 @@ export const EditPackModal: FC<EditPackModalPropsType> = ({
     <SuperModal
       title={title}
       open={open}
-      modalHeader={'Add new pack'}
+      modalHeader={'Edit pack'}
       handleOpen={() => setOpen(true)}
       handleClose={() => setOpen(false)}
       disabledButton={disabledButton}

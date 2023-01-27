@@ -86,7 +86,7 @@ export const PacksList = (props: any) => {
 
   useEffect(() => {
     dispatch(getPacksTC())
-  }, [page, pageCount, search, sort, showPackCards, minCardsCount, maxCardsCount, min, max])
+  }, [page, pageCount, search, sort, showPackCards, min, max])
 
   return (
     <>
