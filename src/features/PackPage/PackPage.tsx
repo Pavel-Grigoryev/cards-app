@@ -109,7 +109,11 @@ export const PackPage = (props: PackPagePropsType) => {
           <div>
             <AddNewCardModal title={'Add new card'} createNewCardHandler={createNewCardHandler} />
             <div style={{ padding: '10px' }}>
-              <SuperButton title={'Learn to pack'} onClick={() => props.studyPackHandler(id!)} />
+              <SuperButton
+                title={'Learn to pack'}
+                disabled={cards.length === 0}
+                onClick={() => props.studyPackHandler(id!)}
+              />
             </div>
           </div>
         ) : (
