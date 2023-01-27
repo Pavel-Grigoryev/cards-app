@@ -56,7 +56,7 @@ export const EditCardModal: FC<EditCardModalPropsType> = ({
       handleOpen={() => setOpen(true)}
       handleClose={() => setOpen(false)}
       title={title}
-      modalHeader={'Add new card'}
+      modalHeader={'Edit cards'}
       disabledButton={disabledButton}
     >
       <div className={s.wrapper}>
