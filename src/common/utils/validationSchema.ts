@@ -28,3 +28,7 @@ export const addNewCardSchema = Yup.object().shape({
   question: Yup.string().required('Required'),
   answer: Yup.string().required('Required'),
 })
+
+export const addNewPackSchema = Yup.object().shape({
+  packName: Yup.string().required('Required'),
+})
