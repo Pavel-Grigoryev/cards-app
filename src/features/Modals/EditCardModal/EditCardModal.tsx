@@ -20,6 +20,7 @@ type EditCardModalPropsType = {
   updateCard: (question: string, answer: string) => void
   rowQuestion: string
   rowAnswer: string
+  disabledButton: boolean
 }
 
 export const EditCardModal: FC<EditCardModalPropsType> = ({
@@ -27,6 +28,7 @@ export const EditCardModal: FC<EditCardModalPropsType> = ({
   updateCard,
   rowQuestion,
   rowAnswer,
+  disabledButton,
 }) => {
   const [mode, setMode] = useState<string>('text')
   const [open, setOpen] = useState(false)
@@ -55,6 +57,7 @@ export const EditCardModal: FC<EditCardModalPropsType> = ({
       handleClose={() => setOpen(false)}
       title={title}
       modalHeader={'Add new card'}
+      disabledButton={disabledButton}
     >
       <div className={s.wrapper}>
         <form onSubmit={formik.handleSubmit}>

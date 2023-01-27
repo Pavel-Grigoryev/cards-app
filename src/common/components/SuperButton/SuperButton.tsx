@@ -13,6 +13,7 @@ type SuperButtonType = {
   styleSX?: StyleSXPropsType
   onClick?: () => void
   href?: string
+  disabled?: boolean
 }
 
 export const SuperButton = (props: SuperButtonType) => {
@@ -23,6 +24,7 @@ export const SuperButton = (props: SuperButtonType) => {
       type={'submit'}
       variant={'contained'}
       color={'secondary'}
+      disabled={props.disabled}
       sx={{
         fontSize: '16px',
         textTransform: 'capitalize',
