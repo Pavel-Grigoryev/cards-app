@@ -1,9 +1,14 @@
-import React, { ChangeEvent, FC, useState } from 'react'
+import React, { FC, useState } from 'react'
 
 import Checkbox from '@mui/material/Checkbox'
+import FormControl from '@mui/material/FormControl'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Input from '@mui/material/Input'
 import InputLabel from '@mui/material/InputLabel'
+import { useFormik } from 'formik'
+
+import styles from '../../../common/styles/errors.module.scss'
+import { addNewPackSchema } from '../../../common/utils/validationSchema'
 
 import s from './AddNewPackModal.module.scss'
 
@@ -16,22 +21,21 @@ type AddNewPackModalPropsType = {
 }
 
 export const AddNewPackModal: FC<AddNewPackModalPropsType> = ({ title, createNewPackHandler }) => {
-  const [packName, setPackName] = useState<string>('Name Pack')
-  const [isPrivatePack, setIsPrivatePack] = useState<boolean>(false)
   const [open, setOpen] = useState(false)
 
-  const onChangeSetLocalTitle = (e: ChangeEvent<HTMLInputElement>) => {
-    setPackName(e.currentTarget.value)
-  }
+  const formik = useFormik({
+    initialValues: {
+      packName: 'New Pack',
+      isPrivatePack: false,
+    },
 
-  const onChangeSetCheckbox = () => {
-    setIsPrivatePack(!isPrivatePack)
-  }
+    validationSchema: addNewPackSchema,
 
-  const handleAddNewPack = () => {
-    createNewPackHandler(packName, isPrivatePack)
-    setOpen(false)
-  }
+    onSubmit: values => {
+      createNewPackHandler(values.packName, values.isPrivatePack)
+      setOpen(false)
+    },
+  })
 
   return (
     <SuperModal
@@ -41,24 +45,29 @@ export const AddNewPackModal: FC<AddNewPackModalPropsType> = ({ title, createNew
       handleOpen={() => setOpen(true)}
       handleClose={() => setOpen(false)}
     >
-      <div className={s.wrapper}>
+      <form onSubmit={formik.handleSubmit} className={s.wrapper}>
         <div className={s.inputs}>
-          <InputLabel color={'secondary'}>Name pack</InputLabel>
-          <Input
-            id="standard-basic"
-            onChange={onChangeSetLocalTitle}
-            type={'text'}
-            color={'secondary'}
-            placeholder={'Name Pack'}
-          />
+          <FormControl fullWidth sx={{ marginBottom: '15px' }}>
+            <InputLabel color={'secondary'}>Name pack</InputLabel>
+            <Input
+              id="standard-basic"
+              type={'text'}
+              color={'secondary'}
+              placeholder={'Name Pack'}
+              {...formik.getFieldProps('packName')}
+            />
+            {formik.touched.packName && formik.errors.packName && (
+              <div className={styles.errorText}>{formik.errors.packName}</div>
+            )}
+          </FormControl>
           <FormControlLabel
             sx={{ alignSelf: 'flex-start' }}
             label={'Private pack'}
             control={
               <Checkbox
                 color={'secondary'}
-                checked={isPrivatePack}
-                onChange={onChangeSetCheckbox}
+                checked={formik.values.isPrivatePack}
+                {...formik.getFieldProps('isPrivatePack')}
               />
             }
           />
@@ -70,10 +79,9 @@ export const AddNewPackModal: FC<AddNewPackModalPropsType> = ({ title, createNew
               mt: '30px',
               width: '40%',
             }}
-            onClick={handleAddNewPack}
           />
         </div>
-      </div>
+      </form>
     </SuperModal>
   )
 }
