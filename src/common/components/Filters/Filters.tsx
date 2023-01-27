@@ -1,10 +1,6 @@
 import React from 'react'
 
-import { useAppDispatch } from '../../../app/store'
-import {
-  ShowPackCardsType,
-  updateShowPackCards,
-} from '../../../features/PacksList/packsList-reducer'
+import { ShowPackCardsType } from '../../../features/PacksList/packsList-reducer'
 import { SearchPaperSX } from '../../styles/sx/sx_styles'
 import { NumberOfCards } from '../NumberOfCards/NumberOfCards'
 import { ResetFilters } from '../ResetFilters/ResetFilters'
@@ -14,11 +10,10 @@ import { ShowPacksCards } from '../ShowPacksCards/ShowPacksCards'
 import s from './Filters.module.scss'
 
 export const Filters = (props: FiltersPropsType) => {
-  const { value, onChange, showPackCards } = props
-  const dispatch = useAppDispatch()
+  const { value, onChange, showPackCards, updShowPackCards } = props
 
   const changeShowPacksCardsHandler = (butValue: ShowPackCardsType) => {
-    dispatch(updateShowPackCards({ butValue }))
+    updShowPackCards(butValue)
   }
 
   return (
@@ -46,4 +41,5 @@ type FiltersPropsType = {
   max: number
   minCardsCount: number
   maxCardsCount: number
+  updShowPackCards: (butValue: ShowPackCardsType) => void
 }

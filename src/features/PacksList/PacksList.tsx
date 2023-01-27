@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react'
 
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import { PackType } from '../../app/api/cardsAPI/cardsAPITypes'
 import { useAppDispatch, useAppSelector } from '../../app/store'
 import { Filters } from '../../common/components/Filters/Filters'
 import { NotFound } from '../../common/components/NotFound/NotFound'
-import { SuperButton } from '../../common/components/SuperButton/SuperButton'
 import { SuperPagination } from '../../common/components/SuperPagination/SuperPagination'
 import { SuperTable } from '../../common/components/SuperTable/SuperTable'
 import {
@@ -34,18 +33,19 @@ import {
   updatePacksPagination,
   updatePackTC,
   updateSearch,
+  updateShowPackCards,
 } from './packsList-reducer'
 import s from './PacksList.module.scss'
 
 export const PacksList = (props: any) => {
   const dispatch = useAppDispatch()
-  const packs = useAppSelector<PackType[]>(packsData)
-  const page = useAppSelector<number>(pageData)
-  const pageCount = useAppSelector<number>(pageCountData)
-  const sort = useAppSelector<string>(sortPacks)
-  const cardPacksTotalCount = useAppSelector<number>(cardPacksTotalCountData)
-  const search = useAppSelector<string | undefined>(searchData)
-  const showPackCards = useAppSelector<ShowPackCardsType>(showPackCardsData)
+  const packs = useAppSelector(packsData)
+  const page = useAppSelector(pageData)
+  const pageCount = useAppSelector(pageCountData)
+  const sort = useAppSelector(sortPacks)
+  const cardPacksTotalCount = useAppSelector(cardPacksTotalCountData)
+  const search = useAppSelector(searchData)
+  const showPackCards = useAppSelector(showPackCardsData)
 
   const minCardsCount = useAppSelector(minCardsCountData)
   const maxCardsCount = useAppSelector(maxCardsCountData)
@@ -53,6 +53,8 @@ export const PacksList = (props: any) => {
   const max = useAppSelector(maxData)
 
   const navigate = useNavigate()
+
+  const [searchParams, setSearchParams] = useSearchParams()
 
   const createNewPackHandler = (packName: string, isPrivatePack: boolean) => {
     const cardsPack = { cardsPack: { name: packName, deckCover: '', private: isPrivatePack } }
@@ -84,15 +86,24 @@ export const PacksList = (props: any) => {
     dispatch(updateSearch({ newValue }))
   }
 
+  const updShowPackCards = (butValue: ShowPackCardsType) => {
+    dispatch(updateShowPackCards({ butValue }))
+    setSearchParams({ accessory: butValue })
+  }
+
   useEffect(() => {
-    dispatch(getPacksTC())
-  }, [page, pageCount, search, sort, showPackCards, minCardsCount, maxCardsCount, min, max])
+    // const params: SearchPramsType = Object.fromEntries(searchParams)
+    // const accessory = params.accessory || 'all'
+    //
+    debugger
+    // dispatch(updateShowPackCards({ butValue: accessory }))
+    dispatch(getPacksTC({}))
+  }, [page, pageCount, search, sort, minCardsCount, maxCardsCount, min, max])
 
   return (
     <>
       <div className={s.head}>
         <h1>Packs list</h1>
-        {/*<SuperButton title={'Add new pack'} onClick={createNewPackHandler} />*/}
         <AddNewPackModal title={'Add new pack'} createNewPackHandler={createNewPackHandler} />
       </div>
       <div>
@@ -104,6 +115,7 @@ export const PacksList = (props: any) => {
           max={max}
           minCardsCount={minCardsCount}
           maxCardsCount={maxCardsCount}
+          updShowPackCards={updShowPackCards}
         />
         {cardPacksTotalCount ? (
           <div className={s.wrapper}>
@@ -129,4 +141,8 @@ export const PacksList = (props: any) => {
       </div>
     </>
   )
+}
+
+type SearchPramsType = {
+  accessory?: ShowPackCardsType
 }
