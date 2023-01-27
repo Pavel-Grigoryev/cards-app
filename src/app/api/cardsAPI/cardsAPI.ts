@@ -17,9 +17,9 @@ import {
 
 export const cardsAPI = {
   ///////////////////////////Packs
-  getPacks(data: GetPacksType) {
+  getPacks(params: GetPacksType) {
     return instance.get<GetPacksResponseType>(`/cards/pack`, {
-      params: { ...data },
+      params,
     })
   },
   createNewPack(data: CreateNewPackType) {
@@ -32,9 +32,9 @@ export const cardsAPI = {
     return instance.put('/cards/pack', data)
   },
   ///////////////////////////Cards
-  getCards(data: GetCardsType) {
+  getCards(params: GetCardsType) {
     return instance.get<GetCardsType, AxiosResponse<GetCardsResponseType>>(`/cards/card`, {
-      params: { ...data },
+      params,
     })
   },
   createNewCard(data: CreateNewCardType) {
