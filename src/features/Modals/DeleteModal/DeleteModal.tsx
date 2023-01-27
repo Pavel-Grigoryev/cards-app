@@ -11,6 +11,7 @@ export const DeleteModal: FC<DeleteCardModalPropsType> = ({
   name,
   deleteItem,
   disabledButton,
+  type,
 }) => {
   const [open, setOpen] = useState(false)
 
@@ -18,12 +19,13 @@ export const DeleteModal: FC<DeleteCardModalPropsType> = ({
     deleteItem()
     setOpen(false)
   }
+  const header = type === 'pack' ? 'Delete Pack' : 'Delete Card'
 
   return (
     <>
       <SuperModal
         title={title}
-        modalHeader={'Delete Pack'}
+        modalHeader={header}
         open={open}
         handleOpen={() => setOpen(true)}
         handleClose={() => setOpen(false)}
@@ -63,4 +65,5 @@ type DeleteCardModalPropsType = {
   name: string
   deleteItem: () => void
   disabledButton: boolean
+  type: string
 }

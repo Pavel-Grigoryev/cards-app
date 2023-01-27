@@ -18,8 +18,6 @@ import { EditPackModal } from '../../../../features/Modals/EditPackModal/EditPac
 import { isLoading } from '../../../selectors/app-selector'
 import { userIdData } from '../../../selectors/profile-selector'
 
-import s from './SuperTableBody.module.scss'
-
 type SuperTableBodyPropsType = {
   data: PackType[] | CardType[]
   studyHandler?: (cardId: string) => void
@@ -115,6 +113,7 @@ export const SuperTableBody = (props: SuperTableBodyPropsType) => {
                   <DeleteModal
                     title={<DeleteIcon fontSize={'small'} />}
                     name={row.name || row.question}
+                    type={props.data[0].type}
                     disabledButton={status === 'loading'}
                     deleteItem={() => props.deleteHandler(row._id)}
                   />
