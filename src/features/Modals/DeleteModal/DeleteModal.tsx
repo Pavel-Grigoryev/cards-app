@@ -2,12 +2,16 @@ import React, { FC, useState } from 'react'
 
 import Button from '@mui/material/Button'
 
-import { StyleSXPropsType } from '../../../common/components/SuperButton/SuperButton'
 import { SuperModal } from '../../../common/components/SuperModal/SuperModal'
 
 import s from './DeleteModal.module.scss'
 
-export const DeleteModal: FC<DeleteCardModalPropsType> = ({ title, name, deleteItem }) => {
+export const DeleteModal: FC<DeleteCardModalPropsType> = ({
+  title,
+  name,
+  deleteItem,
+  disabledButton,
+}) => {
   const [open, setOpen] = useState(false)
 
   const deleteHandler = () => {
@@ -23,6 +27,7 @@ export const DeleteModal: FC<DeleteCardModalPropsType> = ({ title, name, deleteI
         open={open}
         handleOpen={() => setOpen(true)}
         handleClose={() => setOpen(false)}
+        disabledButton={disabledButton}
       >
         <div className={s.wrapper}>
           <p className={s.desc}>
@@ -57,4 +62,5 @@ type DeleteCardModalPropsType = {
   title: any
   name: string
   deleteItem: () => void
+  disabledButton: boolean
 }

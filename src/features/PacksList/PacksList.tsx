@@ -21,7 +21,7 @@ import {
   sortPacks,
 } from '../../common/selectors/packs-selector'
 import { packsListTableNames } from '../../common/utils/tableHeaderData'
-import { AddNewPackModal } from '../Modals/AddNewPackModal'
+import { AddNewPackModal } from '../Modals/AddNewPackModal/AddNewPackModal'
 
 import {
   createNewPackTC,
@@ -73,8 +73,8 @@ export const PacksList = (props: any) => {
     navigate(`/packPage/${packId}`)
   }
 
-  const updatePackHandler = (packId: string) => {
-    dispatch(updatePackTC({ cardsPack: { _id: packId, name: 'New Name' } }))
+  const updatePackHandler = (packId: string, packName: string, isPrivatePack: boolean) => {
+    dispatch(updatePackTC({ cardsPack: { _id: packId, name: packName, private: isPrivatePack } }))
   }
 
   const changePaginationHandler = (page: number, pageCount: number) => {
@@ -121,7 +121,7 @@ export const PacksList = (props: any) => {
               headerNames={packsListTableNames}
               bodyData={packs}
               deleteHandler={deletePackHandler}
-              updateHandler={updatePackHandler}
+              updatePackHandler={updatePackHandler}
               studyHandler={props.studyPackHandler}
               sortingHandler={sortingHandler}
               openPackHandler={openPackHandler}

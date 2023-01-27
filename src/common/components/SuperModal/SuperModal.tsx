@@ -1,10 +1,13 @@
 import React, { FC, PropsWithChildren, ReactNode } from 'react'
 
+import CloseIcon from '@mui/icons-material/Close'
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
+import IconButton from '@mui/material/IconButton'
 import Modal from '@mui/material/Modal'
 
 import { StyleSXPropsType, SuperButton } from '../SuperButton/SuperButton'
+
+import s from './SuperModal.module.scss'
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -25,6 +28,8 @@ type ModalPropsType = {
   handleClose: () => void
   handleOpen: () => void
   styleSX?: StyleSXPropsType
+  disabledButton?: boolean
+  disabledSaveButton?: boolean
 }
 
 export const SuperModal: FC<PropsWithChildren<ModalPropsType>> = ({
@@ -34,19 +39,17 @@ export const SuperModal: FC<PropsWithChildren<ModalPropsType>> = ({
   open,
   handleClose,
   handleOpen,
+  disabledButton,
+  disabledSaveButton,
 }) => {
   return (
     <div>
       {typeof title === 'string' ? (
-        <SuperButton title={title} onClick={handleOpen} />
+        <SuperButton title={title} onClick={handleOpen} disabled={disabledSaveButton} />
       ) : (
-        <Button
-          sx={{ color: 'rgba(0,0,0,0.54)', minWidth: '0px' }}
-          variant="text"
-          onClick={handleOpen}
-        >
+        <IconButton onClick={handleOpen} disabled={disabledButton}>
           {title}
-        </Button>
+        </IconButton>
       )}
       <Modal
         open={open}
@@ -54,7 +57,17 @@ export const SuperModal: FC<PropsWithChildren<ModalPropsType>> = ({
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>{children}</Box>
+        <Box sx={style}>
+          <h5 className={s.header}>
+            {modalHeader}
+            <span className={s.close}>
+              <IconButton>
+                <CloseIcon onClick={handleClose} />
+              </IconButton>
+            </span>
+          </h5>
+          {children}
+        </Box>
       </Modal>
     </div>
   )

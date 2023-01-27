@@ -51,7 +51,6 @@ export const PackPage = () => {
   const { id } = useParams<string>()
 
   const createNewCardHandler = (question: string, answer: string) => {
-    debugger
     if (id) {
       dispatch(createCardTC({ card: { cardsPack_id: id, question, answer } }))
     }
@@ -110,7 +109,6 @@ export const PackPage = () => {
             <SuperTable
               headerNames={packPageTableNames}
               bodyData={cards}
-              updateHandler={cardId => {}}
               deleteHandler={deleteCardHandler}
               sortingHandler={sortingHandler}
               updateCardHandler={updateCardHandler}
