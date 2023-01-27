@@ -77,7 +77,7 @@ export const SuperTableBody = (props: SuperTableBodyPropsType) => {
                   onClick={e => {
                     props.studyHandler?.(row._id)
                   }}
-                  disabled={(!row.cardsCount && row.user_id !== userId) || status === 'loading'}
+                  disabled={!row.cardsCount || status === 'loading'}
                 >
                   <SchoolIcon fontSize={'small'} />
                 </IconButton>
