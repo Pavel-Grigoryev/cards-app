@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
-import { PackType } from '../../app/api/cardsAPI/cardsAPITypes'
 import { useAppDispatch, useAppSelector } from '../../app/store'
 import { Filters } from '../../common/components/Filters/Filters'
 import { NotFound } from '../../common/components/NotFound/NotFound'
@@ -92,13 +91,12 @@ export const PacksList = (props: any) => {
   }
 
   useEffect(() => {
-    // const params: SearchPramsType = Object.fromEntries(searchParams)
-    // const accessory = params.accessory || 'all'
-    //
-    debugger
-    // dispatch(updateShowPackCards({ butValue: accessory }))
-    dispatch(getPacksTC({}))
-  }, [page, pageCount, search, sort, minCardsCount, maxCardsCount, min, max])
+    const params: SearchPramsType = Object.fromEntries(searchParams)
+    const accessory = params.accessory || 'all'
+
+    dispatch(updateShowPackCards({ butValue: accessory }))
+    dispatch(getPacksTC({ showPackCards: accessory }))
+  }, [page, pageCount, search, sort, min, max])
 
   return (
     <>

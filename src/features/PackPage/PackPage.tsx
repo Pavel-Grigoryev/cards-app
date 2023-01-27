@@ -91,7 +91,6 @@ export const PackPage = () => {
       <div className={s.head}>
         <h1>{packName}</h1>
         {userPackId === userId ? (
-          // <SuperButton title={'Add new card'} onClick={createNewCardHandler} />
           <AddNewCardModal title={'Add new card'} createNewCardHandler={createNewCardHandler} />
         ) : (
           <SuperButton title={'Learn to pack'} onClick={() => {}} />
