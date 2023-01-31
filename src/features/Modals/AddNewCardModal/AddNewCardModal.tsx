@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, useState } from 'react'
+import React, { FC, useState } from 'react'
 
 import FormControl from '@mui/material/FormControl'
 import Input from '@mui/material/Input'
@@ -25,7 +25,6 @@ export const AddNewCardModal: FC<AddNewCardModalPropsType> = ({ title, createNew
   const [open, setOpen] = useState(false)
 
   const handleChange = (e: SelectChangeEvent) => {
-    debugger
     setMode(e.target.value)
   }
 

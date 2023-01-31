@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 
 import IconButton from '@mui/material/IconButton'
 
@@ -19,6 +19,10 @@ export const InputAvatar = () => {
 
   const avatar = useAppSelector(avatarData)
   const { updateProfileTC } = useActions(profileThunks)
+
+  useEffect(() => {
+    setIsAvaBroken(false)
+  }, [avatar])
 
   const errorHandler = () => {
     setIsAvaBroken(true)

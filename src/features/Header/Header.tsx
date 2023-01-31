@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import AppBar from '@mui/material/AppBar'
 import Container from '@mui/material/Container'
@@ -32,6 +32,10 @@ export const Header = () => {
   const errorHandler = () => {
     setIsAvaBroken(true)
   }
+
+  useEffect(() => {
+    setIsAvaBroken(false)
+  }, [avatar])
 
   return (
     <>

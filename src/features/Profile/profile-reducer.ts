@@ -53,6 +53,7 @@ export const updateProfileTC =
       } else {
         const newProfileModel: ProfilePayloadType = {
           name: profile.name,
+          avatar: profile.avatar,
           ...profileUpd,
         }
         const res = await authAPI.updateProfile(newProfileModel)
