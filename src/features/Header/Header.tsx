@@ -4,13 +4,13 @@ import AppBar from '@mui/material/AppBar'
 import Container from '@mui/material/Container'
 import LinearProgress from '@mui/material/LinearProgress'
 import Toolbar from '@mui/material/Toolbar'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import s from './Header.module.scss'
 import { ProfileLink } from './ProfileLink/ProfileLink'
 
 import { useAppSelector } from 'app/store'
-import logo from 'assets/images/logo.png'
+import logo from 'assets/images/logo.svg'
 import noAva from 'assets/images/no_avatar.svg'
 import { SuperButton } from 'common/components/SuperButton/SuperButton'
 import { SuperTooltip } from 'common/components/SuperTooltip/SuperTooltip'
@@ -42,7 +42,9 @@ export const Header = () => {
           }}
         >
           <Toolbar className={s.toolbar} style={{ padding: '0' }}>
-            <img className={s.image} src={logo} alt="Logo image" />
+            <Link to={PATH.PACKS_LIST}>
+              <img className={s.image} src={logo} alt="Logo image" />
+            </Link>
             {isLoggedIn ? (
               <div className={s.profileBlock}>
                 <p className={s.profileName}>{name}</p>
