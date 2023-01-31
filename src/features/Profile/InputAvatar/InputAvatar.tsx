@@ -49,7 +49,12 @@ export const InputAvatar = () => {
         />
       </div>
       <IconButton className={s.butLabel} component="label" sx={{ ...ProfileChangeAvaButton }}>
-        <input type="file" onChange={uploadHandler} style={{ display: 'none' }} />
+        <input
+          type="file"
+          onChange={uploadHandler}
+          style={{ display: 'none' }}
+          accept={'image/*'}
+        />
         <img className={s.profileImg} src={camera} alt="camera" />
       </IconButton>
     </>
