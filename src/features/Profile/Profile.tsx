@@ -5,7 +5,6 @@ import Button from '@mui/material/Button'
 
 import { RequestStatusType } from '../../app/app-reducer'
 import { useAppDispatch, useAppSelector } from '../../app/store'
-import camera from '../../assets/images/camera.png'
 import logoutImg from '../../assets/images/logout.svg'
 import { EditableSpan } from '../../common/components/EditableSpan/EditableSpan'
 import { Preloader } from '../../common/components/Preloader/Preloader'
@@ -16,6 +15,7 @@ import { entityStatusData, profileData } from '../../common/selectors/profile-se
 import { ContainerSX } from '../../common/styles/sx/sx_styles'
 import { logoutTC } from '../auth/auth-reducer'
 
+import { InputAvatar } from './InputAvatar/InputAvatar'
 import { profileThunks, ProfileType } from './profile-reducer'
 import s from './Profile.module.scss'
 
@@ -49,12 +49,7 @@ export const Profile = () => {
               {entityStatus === 'loading' && <Preloader contStyle={{ opacity: '0.5' }} />}
               <h1 className={s.title}>Personal Information</h1>
               <div className={s.imageBlock}>
-                <div className={s.profileImgWrap}>
-                  <img className={s.profileImg} src={profile?.avatar} alt="User image" />
-                </div>
-                <div className={s.butImgWrap}>
-                  <img className={s.profileImg} src={camera} alt="" />
-                </div>
+                <InputAvatar />
               </div>
               <EditableSpan value={profile?.name} onChange={onChangeNameHandler} />
               <p className={s.email}>{profile?.email}</p>

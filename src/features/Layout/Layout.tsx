@@ -5,17 +5,14 @@ import { Outlet } from 'react-router-dom'
 
 import { Header } from '../Header/Header'
 
+import s from './Layout.module.scss'
+
 export const Layout = () => {
   return (
     <>
       <Header />
       <main>
-        <Container
-          style={{
-            maxWidth: '1056px',
-            paddingTop: '64px',
-          }}
-        >
+        <Container className={s.container}>
           <Outlet />
         </Container>
       </main>

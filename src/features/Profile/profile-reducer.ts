@@ -1,12 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 
-import { authAPI } from '../../app/api/authAPI/authAPI'
-import { ProfilePayloadType } from '../../app/api/authAPI/authAPITypes'
-import { RequestStatusType, setAppStatusAC } from '../../app/app-reducer'
-import { AppThunk } from '../../app/store'
-import avatar from '../../assets/images/avatar.jpg'
-import { handleServerNetworkError } from '../../common/utils/error-utils'
+import { authAPI } from 'app/api/authAPI/authAPI'
+import { ProfilePayloadType } from 'app/api/authAPI/authAPITypes'
+import { RequestStatusType, setAppStatusAC } from 'app/app-reducer'
+import { AppThunk } from 'app/store'
+import { handleServerNetworkError } from 'common/utils/error-utils'
 
 const initialState = {
   profile: {} as ProfileType,
@@ -18,7 +17,7 @@ const slice = createSlice({
   initialState,
   reducers: {
     setProfileAC(state, action: PayloadAction<{ profile: ProfileType }>) {
-      state.profile = { ...action.payload.profile, avatar: avatar }
+      state.profile = action.payload.profile
     },
     updateProfileAC(state, action: PayloadAction<{ profileUpd: ProfileUpdateType }>) {
       state.profile = { ...state.profile, ...action.payload.profileUpd }

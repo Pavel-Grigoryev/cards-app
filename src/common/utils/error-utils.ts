@@ -7,7 +7,7 @@ export const handleServerNetworkError = (
   err: AxiosError<{ error: string }>,
   dispatch: Dispatch
 ) => {
-  const error = err.response ? err.response.data.error : err.message
+  const error = err.response?.data.error ? err.response.data.error : err.message
 
   dispatch(setAppErrorAC({ error }))
   dispatch(setAppStatusAC({ status: 'failed' }))

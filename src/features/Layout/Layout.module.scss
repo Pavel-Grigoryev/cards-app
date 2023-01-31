@@ -1,0 +1,8 @@
+.container {
+  max-width: 1056px!important;
+  padding-top: 64px;
+
+  @media screen and (max-width: 461px) {
+    padding-top: 84px;
+  }
+}

@@ -29,34 +29,6 @@
   margin-bottom: 17px;
 }
 
-.profileImgWrap {
-  width: 96px;
-  height: 96px;
-  border-radius: 50%;
-  overflow: hidden;
-  position: relative;
-}
-
-.butImgWrap {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  overflow: hidden;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-}
-
-.profileImg {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  top: 0;
-  left: 0;
-
-}
-
 .email {
   opacity: 0.5;
   margin-bottom: 30px;

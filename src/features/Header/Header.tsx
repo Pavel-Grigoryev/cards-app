@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import AppBar from '@mui/material/AppBar'
 import Container from '@mui/material/Container'
@@ -6,26 +6,32 @@ import LinearProgress from '@mui/material/LinearProgress'
 import Toolbar from '@mui/material/Toolbar'
 import { useNavigate } from 'react-router-dom'
 
-import { RequestStatusType } from '../../app/app-reducer'
-import { useAppSelector } from '../../app/store'
-import { SuperButton } from '../../common/components/SuperButton/SuperButton'
-import { SuperTooltip } from '../../common/components/SuperTooltip/SuperTooltip'
-import { PATH } from '../../common/routes/routes'
-import { ProfileType } from '../Profile/profile-reducer'
-
 import s from './Header.module.scss'
 import { ProfileLink } from './ProfileLink/ProfileLink'
 
+import { useAppSelector } from 'app/store'
 import logo from 'assets/images/logo.png'
+import noAva from 'assets/images/no_avatar.svg'
+import { SuperButton } from 'common/components/SuperButton/SuperButton'
+import { SuperTooltip } from 'common/components/SuperTooltip/SuperTooltip'
+import { PATH } from 'common/routes/routes'
+import { statusData } from 'common/selectors/app-selector'
+import { isLoggedInSelector } from 'common/selectors/auth-selector'
+import { avatarData, nameData } from 'common/selectors/profile-selector'
 
 export const Header = () => {
   const navigate = useNavigate()
 
-  const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
+  const [isAvaBroken, setIsAvaBroken] = useState(false)
 
-  const status = useAppSelector<RequestStatusType>(state => state.app.status)
+  const isLoggedIn = useAppSelector(isLoggedInSelector)
+  const status = useAppSelector(statusData)
+  const name = useAppSelector(nameData)
+  const avatar = useAppSelector(avatarData)
 
-  const profile = useAppSelector<ProfileType | null>(state => state.userProfile.profile)
+  const errorHandler = () => {
+    setIsAvaBroken(true)
+  }
 
   return (
     <>
@@ -39,10 +45,15 @@ export const Header = () => {
             <img className={s.image} src={logo} alt="Logo image" />
             {isLoggedIn ? (
               <div className={s.profileBlock}>
-                <p className={s.profileName}>{profile?.name}</p>
+                <p className={s.profileName}>{name}</p>
                 <SuperTooltip title={<ProfileLink />} placement={'bottom-end'}>
                   <button className={s.profileImgWrap}>
-                    <img className={s.profileImg} src={profile?.avatar} alt="" />
+                    <img
+                      className={s.profileImg}
+                      src={isAvaBroken ? noAva : avatar}
+                      alt="avatar"
+                      onError={errorHandler}
+                    />
                   </button>
                 </SuperTooltip>
               </div>

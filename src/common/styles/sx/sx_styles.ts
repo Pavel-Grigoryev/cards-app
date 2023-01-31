@@ -44,6 +44,16 @@ export const SearchPaperSX = {
   height: '36px',
 }
 
+export const ProfileChangeAvaButton = {
+  position: 'absolute',
+  bottom: '0',
+  right: '0',
+  width: '32px',
+  height: '32px',
+  borderRadius: '50%',
+  overflow: 'hidden',
+}
+
 //Types
 
 export type SearchPaperSXType = typeof SearchPaperSX

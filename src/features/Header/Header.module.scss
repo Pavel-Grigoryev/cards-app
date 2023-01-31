@@ -1,4 +1,4 @@
-@import '../../common/styles/varaibles';
+@import 'src/common/styles/varaibles';
 
 .header {
   height: 64px;
@@ -52,11 +52,16 @@
   line-height: 24px;
   color: $textColor;
   border-bottom: dashed 1px $textColor;
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
 }
 
 .profileImgWrap {
   width: 36px;
   height: 36px;
+  background-color: #fff;
   border-radius: 50%;
   overflow: hidden;
   position: relative;
