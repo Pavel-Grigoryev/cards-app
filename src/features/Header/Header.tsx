@@ -23,6 +23,7 @@ export const Header = () => {
   const navigate = useNavigate()
 
   const [isAvaBroken, setIsAvaBroken] = useState(false)
+  const [ava, setAva] = useState(noAva)
 
   const isLoggedIn = useAppSelector(isLoggedInSelector)
   const status = useAppSelector(statusData)
@@ -34,7 +35,10 @@ export const Header = () => {
   }
 
   useEffect(() => {
-    setIsAvaBroken(false)
+    if (avatar) {
+      setAva(avatar)
+      setIsAvaBroken(false)
+    }
   }, [avatar])
 
   return (
@@ -56,7 +60,7 @@ export const Header = () => {
                   <button className={s.profileImgWrap}>
                     <img
                       className={s.profileImg}
-                      src={isAvaBroken ? noAva : avatar}
+                      src={isAvaBroken ? noAva : ava}
                       alt="avatar"
                       onError={errorHandler}
                     />
