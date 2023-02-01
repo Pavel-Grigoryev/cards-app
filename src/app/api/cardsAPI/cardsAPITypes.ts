@@ -81,6 +81,8 @@ export type CardType = {
   comments: string
   __v: string
   type: string
+  answerImg?: string
+  questionImg?: string
 }
 
 export type GetCardsResponseType = {
