@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
@@ -31,8 +31,6 @@ type SuperTableBodyPropsType = {
 export const SuperTableBody = (props: SuperTableBodyPropsType) => {
   const userId = useAppSelector(userIdData)
   const status = useAppSelector<RequestStatusType>(isLoading)
-
-  console.log(props)
 
   return (
     <TableBody>

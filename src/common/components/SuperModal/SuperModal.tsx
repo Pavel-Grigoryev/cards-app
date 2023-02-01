@@ -61,8 +61,8 @@ export const SuperModal: FC<PropsWithChildren<ModalPropsType>> = ({
           <h5 className={s.header}>
             {modalHeader}
             <span className={s.close}>
-              <IconButton>
-                <CloseIcon onClick={handleClose} />
+              <IconButton onClick={handleClose}>
+                <CloseIcon />
               </IconButton>
             </span>
           </h5>
