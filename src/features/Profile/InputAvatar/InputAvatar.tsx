@@ -23,7 +23,6 @@ export const InputAvatar = () => {
   const { updateProfileTC } = useActions(profileThunks)
 
   useEffect(() => {
-    debugger
     if (avatar) {
       setAva(avatar)
       setIsAvaBroken(false)
@@ -31,7 +30,6 @@ export const InputAvatar = () => {
   }, [avatar])
 
   const errorHandler = () => {
-    debugger
     setIsAvaBroken(true)
   }
 
