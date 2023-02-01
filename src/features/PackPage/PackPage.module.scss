@@ -1,7 +1,20 @@
 .head {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   padding: 70px 0 28px;
+  row-gap: 15px;
+
+  @media screen and (max-width: 707px) {
+
+  }
+}
+
+.title {
+  max-width: 500px;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
 }
 
 .searchBlock {

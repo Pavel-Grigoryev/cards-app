@@ -56,7 +56,7 @@ export const InputQuestion: FC<InputQuestionType> = ({
     <>
       <div className={s.linkBlock}>
         <p className={s.inputTitle}>{title}</p>
-        <button className={s.inputButton} onClick={selectFileHandler}>
+        <button type={'button'} className={s.inputButton} onClick={selectFileHandler}>
           Change cover
         </button>
         <input

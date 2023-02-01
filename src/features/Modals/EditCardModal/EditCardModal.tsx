@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useState } from 'react'
 
 import FormControl from '@mui/material/FormControl'
 import Input from '@mui/material/Input'
@@ -34,28 +34,15 @@ export const EditCardModal: FC<EditCardModalPropsType> = ({
 }) => {
   const [mode, setMode] = useState<ModeType>('text')
   const [open, setOpen] = useState(false)
-  const handleChange = (e: SelectChangeEvent<string>) => {
+  const handleChange = (e: SelectChangeEvent) => {
     setMode(e.target.value as ModeType)
     formik.resetForm()
   }
 
-  const [memorQuestion, setMemorQuestion] = useState<string>('')
-  const [memorAnswer, setMemorAnswer] = useState<string>('')
-
-  useEffect(() => {
-    if (mode === 'text') {
-      setMemorQuestion(rowQuestion)
-      setMemorAnswer(rowAnswer)
-    } else {
-      setMemorQuestion('1')
-      setMemorAnswer('1')
-    }
-  }, [mode])
-  console.log(memorQuestion + '    ' + memorAnswer)
   const formik = useFormik({
     initialValues: {
-      question: memorQuestion,
-      answer: memorAnswer,
+      question: rowQuestion,
+      answer: rowAnswer,
     },
 
     validationSchema: addNewCardSchema,

@@ -84,10 +84,32 @@ export const PackPage = (props: PackPagePropsType) => {
     newAnswer: string,
     mode: ModeType
   ) => {
+    debugger
     if (mode === 'text') {
-      dispatch(updateCardTC({ card: { _id: cardId, question: newQuestion, answer: newAnswer } }))
+      dispatch(
+        updateCardTC({
+          card: {
+            _id: cardId,
+            question: newQuestion,
+            answer: newAnswer,
+            answerImg: 'data:',
+            questionImg: 'data:',
+          },
+        })
+      )
     } else {
-      dispatch(updateCardTC({ card: { _id: cardId } }))
+      debugger
+      dispatch(
+        updateCardTC({
+          card: {
+            _id: cardId,
+            questionImg: newQuestion,
+            answerImg: newAnswer,
+            question: 'no answer',
+            answer: 'no question',
+          },
+        })
+      )
     }
   }
 
@@ -111,7 +133,7 @@ export const PackPage = (props: PackPagePropsType) => {
     <>
       <ReturnLink path={PATH.PACKS_LIST} title={'Back to Packs List'} />
       <div className={s.head}>
-        <h1>
+        <h1 className={s.title}>
           {packName} {/*{userPackId === userId ? (*/}
           {/*  <SuperTooltip*/}
           {/*    title={<PopLink learn={props.studyPackHandler} />}*/}
