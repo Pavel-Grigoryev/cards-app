@@ -12,6 +12,7 @@ import TableRow from '@mui/material/TableRow'
 import { CardType, PackType } from '../../../../app/api/cardsAPI/cardsAPITypes'
 import { RequestStatusType } from '../../../../app/app-reducer'
 import { useAppSelector } from '../../../../app/store'
+import noImg from '../../../../assets/images/download.png'
 import { DeleteModal } from '../../../../features/Modals/DeleteModal/DeleteModal'
 import { EditCardModal } from '../../../../features/Modals/EditCardModal/EditCardModal'
 import { EditPackModal } from '../../../../features/Modals/EditPackModal/EditPackModal'
@@ -31,6 +32,8 @@ export const SuperTableBody = (props: SuperTableBodyPropsType) => {
   const userId = useAppSelector(userIdData)
   const status = useAppSelector<RequestStatusType>(isLoading)
 
+  console.log(props)
+
   return (
     <TableBody>
       {props.data.map((row: any) => (
@@ -41,6 +44,11 @@ export const SuperTableBody = (props: SuperTableBodyPropsType) => {
             '&:last-child td, &:last-child th': { border: 0 },
           }}
         >
+          {props.data[0].type === 'pack' ? (
+            <TableCell>
+              <img style={{ width: '60px' }} src={row.deckCover ? row.deckCover : noImg}></img>
+            </TableCell>
+          ) : null}
           <TableCell
             onClick={() => {
               row.cardsCount || row.user_id === userId || !row.name
@@ -71,45 +79,45 @@ export const SuperTableBody = (props: SuperTableBodyPropsType) => {
           </TableCell>
 
           {props.data[0].type === 'card' && row.user_id !== userId ? null : (
-            <TableCell align="left" sx={{ display: 'flex', flexDirection: 'row' }}>
-              {row.user_id === userId && props.data[0].type === 'card' ? null : (
-                <IconButton
-                  onClick={e => {
-                    props.studyHandler?.(row._id)
-                  }}
-                  disabled={!row.cardsCount || status === 'loading'}
-                >
-                  <SchoolIcon fontSize={'small'} />
-                </IconButton>
-              )}
-              {row.user_id === userId && (
-                <span style={{ display: 'flex', flexDirection: 'row' }}>
-                  {props.data[0].type === 'card' && (
-                    <EditCardModal
-                      title={<EditIcon fontSize={'small'} />}
-                      rowQuestion={row.question}
-                      disabledButton={status === 'loading'}
-                      rowAnswer={row.answer}
-                      updateCard={(question, answer) => {
-                        if (props.updateCardHandler) {
-                          props.updateCardHandler(row._id, question, answer)
-                        }
-                      }}
-                    />
-                  )}
-                  {props.data[0].type === 'pack' && (
-                    <EditPackModal
-                      title={<EditIcon fontSize={'small'} />}
-                      disabledButton={status === 'loading'}
-                      currentPackName={row.name}
-                      isPrivate={row.private}
-                      updatePack={(packName: string, isPrivatePack: boolean) => {
-                        if (props.updatePackHandler) {
-                          props.updatePackHandler(row._id, packName, isPrivatePack)
-                        }
-                      }}
-                    />
-                  )}
+            <TableCell align="left" style={{ height: '100%' }}>
+              <span style={{ display: 'flex', flexDirection: 'row' }}>
+                {row.user_id === userId && props.data[0].type === 'card' ? null : (
+                  <IconButton
+                    onClick={e => {
+                      props.studyHandler?.(row._id)
+                    }}
+                    disabled={!row.cardsCount || status === 'loading'}
+                  >
+                    <SchoolIcon fontSize={'small'} />
+                  </IconButton>
+                )}
+                {row.user_id === userId && props.data[0].type === 'card' && (
+                  <EditCardModal
+                    title={<EditIcon fontSize={'small'} />}
+                    rowQuestion={row.question}
+                    disabledButton={status === 'loading'}
+                    rowAnswer={row.answer}
+                    updateCard={(question, answer) => {
+                      if (props.updateCardHandler) {
+                        props.updateCardHandler(row._id, question, answer)
+                      }
+                    }}
+                  />
+                )}
+                {row.user_id === userId && props.data[0].type === 'pack' && (
+                  <EditPackModal
+                    title={<EditIcon fontSize={'small'} />}
+                    disabledButton={status === 'loading'}
+                    currentPackName={row.name}
+                    isPrivate={row.private}
+                    updatePack={(packName: string, isPrivatePack: boolean) => {
+                      if (props.updatePackHandler) {
+                        props.updatePackHandler(row._id, packName, isPrivatePack)
+                      }
+                    }}
+                  />
+                )}
+                {row.user_id === userId && (
                   <DeleteModal
                     title={<DeleteIcon fontSize={'small'} />}
                     name={row.name || row.question}
@@ -117,8 +125,8 @@ export const SuperTableBody = (props: SuperTableBodyPropsType) => {
                     disabledButton={status === 'loading'}
                     deleteItem={() => props.deleteHandler(row._id)}
                   />
-                </span>
-              )}
+                )}
+              </span>
             </TableCell>
           )}
         </TableRow>
