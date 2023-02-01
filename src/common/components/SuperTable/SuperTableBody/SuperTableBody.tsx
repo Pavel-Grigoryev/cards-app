@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
@@ -50,7 +50,11 @@ export const SuperTableBody = (props: SuperTableBodyPropsType) => {
         >
           {props.data[0].type === 'pack' ? (
             <TableCell>
-              <img style={{ width: '60px' }} src={row.deckCover ? row.deckCover : noImg}></img>
+              <img
+                alt="cover"
+                style={{ width: '60px' }}
+                src={row.deckCover ? row.deckCover : noImg}
+              ></img>
             </TableCell>
           ) : null}
           <TableCell
@@ -65,17 +69,26 @@ export const SuperTableBody = (props: SuperTableBodyPropsType) => {
               row.name && {
                 cursor: 'pointer',
                 width: '260px',
-                wordBreak: 'break-all',
                 '&:hover': {
                   fontWeight: 'bold',
                 },
               }
             }
           >
-            {row.name || row.question}
+            {row.name ||
+              (row.questionImg ? (
+                <img alt="cover" style={{ width: '60px' }} src={row.questionImg} />
+              ) : (
+                row.question
+              ))}
           </TableCell>
           <TableCell align="left">
-            {(row.cardsCount === 0 ? '0' : row.cardsCount) || row.answer}
+            {(row.cardsCount === 0 ? '0' : row.cardsCount) ||
+              (row.answerImg ? (
+                <img alt="cover" style={{ width: '60px' }} src={row.answerImg} />
+              ) : (
+                row.answer
+              ))}
           </TableCell>
           <TableCell align="left">{row.updated.slice(0, row.updated.indexOf('T'))}</TableCell>
           <TableCell align="left">

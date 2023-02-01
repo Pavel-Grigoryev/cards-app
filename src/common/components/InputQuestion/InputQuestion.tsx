@@ -9,8 +9,8 @@ import { convertFileToBase64 } from 'common/utils/convertFileToBase64'
 type InputQuestionType = {
   title: string
   onChangeImg: (newImg: string) => void
-  formikTouched: boolean | undefined
-  formikErrors: string | undefined
+  formikTouched?: boolean | undefined
+  formikErrors?: string | undefined
 }
 
 export const InputQuestion: FC<InputQuestionType> = ({

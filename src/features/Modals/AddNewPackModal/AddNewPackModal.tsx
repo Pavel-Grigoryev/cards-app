@@ -7,6 +7,7 @@ import Input from '@mui/material/Input'
 import InputLabel from '@mui/material/InputLabel'
 import { useFormik } from 'formik'
 
+import { InputQuestion } from '../../../common/components/InputQuestion/InputQuestion'
 import styles from '../../../common/styles/errors.module.scss'
 import { addNewPackSchema } from '../../../common/utils/validationSchema'
 
@@ -17,7 +18,7 @@ import { SuperModal } from 'common/components/SuperModal/SuperModal'
 
 type AddNewPackModalPropsType = {
   title: string
-  createNewPackHandler: (packName: string, isPrivatePack: boolean) => void
+  createNewPackHandler: (packName: string, isPrivatePack: boolean, deckCover: string) => void
 }
 
 export const AddNewPackModal: FC<AddNewPackModalPropsType> = ({ title, createNewPackHandler }) => {
@@ -25,17 +26,24 @@ export const AddNewPackModal: FC<AddNewPackModalPropsType> = ({ title, createNew
 
   const formik = useFormik({
     initialValues: {
-      packName: 'New Pack',
+      cover: '',
+      packName: '',
       isPrivatePack: false,
     },
 
     validationSchema: addNewPackSchema,
 
     onSubmit: values => {
-      createNewPackHandler(values.packName, values.isPrivatePack)
+      console.log(values)
+      createNewPackHandler(values.packName, values.isPrivatePack, values.cover)
       setOpen(false)
     },
   })
+
+  const onChangeImg = (newImg: string) => {
+    console.log(newImg)
+    formik.setFieldValue('cover', newImg)
+  }
 
   return (
     <SuperModal
@@ -47,6 +55,9 @@ export const AddNewPackModal: FC<AddNewPackModalPropsType> = ({ title, createNew
     >
       <form onSubmit={formik.handleSubmit} className={s.wrapper}>
         <div className={s.inputs}>
+          <FormControl>
+            <InputQuestion title={'Cover:'} onChangeImg={onChangeImg} />
+          </FormControl>
           <FormControl fullWidth sx={{ marginBottom: '15px' }}>
             <InputLabel color={'secondary'}>Name pack</InputLabel>
             <Input

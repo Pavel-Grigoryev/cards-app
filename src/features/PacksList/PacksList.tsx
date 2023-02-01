@@ -56,8 +56,10 @@ export const PacksList = (props: any) => {
     updateShowPackCards,
   } = useActions(packThunks)
 
-  const createNewPackHandler = (packName: string, isPrivatePack: boolean) => {
-    const cardsPack = { cardsPack: { name: packName, deckCover: '', private: isPrivatePack } }
+  const createNewPackHandler = (packName: string, isPrivatePack: boolean, deckCover: string) => {
+    const cardsPack = {
+      cardsPack: { name: packName, deckCover: deckCover, private: isPrivatePack },
+    }
 
     createNewPackTC(cardsPack)
   }
