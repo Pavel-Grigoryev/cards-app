@@ -9,15 +9,16 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 
-import { CardType, PackType } from '../../../../app/api/cardsAPI/cardsAPITypes'
-import { RequestStatusType } from '../../../../app/app-reducer'
-import { useAppSelector } from '../../../../app/store'
-import noImg from '../../../../assets/images/download.png'
-import { DeleteModal } from '../../../../features/Modals/DeleteModal/DeleteModal'
-import { EditCardModal } from '../../../../features/Modals/EditCardModal/EditCardModal'
-import { EditPackModal } from '../../../../features/Modals/EditPackModal/EditPackModal'
-import { isLoading } from '../../../selectors/app-selector'
-import { userIdData } from '../../../selectors/profile-selector'
+import { CardType, PackType } from 'app/api/cardsAPI/cardsAPITypes'
+import { RequestStatusType } from 'app/app-reducer'
+import { useAppSelector } from 'app/store'
+import noImg from 'assets/images/download.png'
+import { isLoading } from 'common/selectors/app-selector'
+import { userIdData } from 'common/selectors/profile-selector'
+import { ModeType } from 'features/Modals/AddNewCardModal/AddNewCardModal'
+import { DeleteModal } from 'features/Modals/DeleteModal/DeleteModal'
+import { EditCardModal } from 'features/Modals/EditCardModal/EditCardModal'
+import { EditPackModal } from 'features/Modals/EditPackModal/EditPackModal'
 
 type SuperTableBodyPropsType = {
   data: PackType[] | CardType[]
@@ -25,7 +26,12 @@ type SuperTableBodyPropsType = {
   updatePackHandler?: (cardId: string, packName: string, isPrivatePack: boolean) => void
   deleteHandler: (cardId: string) => void
   openPackHandler?: (cardId: string) => void
-  updateCardHandler?: (cardId: string, question: string, answer: string) => void
+  updateCardHandler?: (
+    cardId: string,
+    newQuestion: string,
+    newAnswer: string,
+    mode: ModeType
+  ) => void
 }
 
 export const SuperTableBody = (props: SuperTableBodyPropsType) => {
@@ -95,9 +101,9 @@ export const SuperTableBody = (props: SuperTableBodyPropsType) => {
                     rowQuestion={row.question}
                     disabledButton={status === 'loading'}
                     rowAnswer={row.answer}
-                    updateCard={(question, answer) => {
+                    updateCard={(newQuestion, newAnswer, mode) => {
                       if (props.updateCardHandler) {
-                        props.updateCardHandler(row._id, question, answer)
+                        props.updateCardHandler(row._id, newQuestion, newAnswer, mode)
                       }
                     }}
                   />

@@ -115,6 +115,8 @@ export type UpdateCardType = {
     _id: string
     question?: string
     answer?: string
+    answerImg?: string
+    questionImg?: string
   }
 }
 

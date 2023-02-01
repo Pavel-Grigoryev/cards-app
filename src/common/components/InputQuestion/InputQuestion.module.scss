@@ -4,6 +4,10 @@
   margin-bottom: 7px;
   display: flex;
   justify-content: space-between;
+
+  &:nth-child(3) {
+    margin-top: 25px;
+  }
 }
 
 .inputTitle {
@@ -16,6 +20,15 @@
   background-color: inherit;
   text-decoration: underline;
   color: $secodaryColor;
+}
+
+.imgBlock {
+  position: relative;
+  margin-bottom: 10px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
 

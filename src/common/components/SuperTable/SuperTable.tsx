@@ -5,6 +5,7 @@ import Table from '@mui/material/Table'
 import TableContainer from '@mui/material/TableContainer'
 
 import { CardType, PackType } from '../../../app/api/cardsAPI/cardsAPITypes'
+import { ModeType } from '../../../features/Modals/AddNewCardModal/AddNewCardModal'
 import { TableHeaderDataType } from '../../utils/tableHeaderData'
 
 import { SuperTableBody } from './SuperTableBody/SuperTableBody'
@@ -18,7 +19,12 @@ type SuperTablePropsType = {
   studyHandler?: (cardId: string) => void
   updatePackHandler?: (cardId: string, packName: string, isPrivatePack: boolean) => void
   openPackHandler?: (cardId: string) => void
-  updateCardHandler?: (cardId: string, question: string, answer: string) => void
+  updateCardHandler?: (
+    cardId: string,
+    newQuestion: string,
+    newAnswer: string,
+    mode: ModeType
+  ) => void
 }
 
 export const SuperTable = (props: SuperTablePropsType) => {

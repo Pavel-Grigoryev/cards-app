@@ -33,8 +33,8 @@ export const DeleteModal: FC<DeleteCardModalPropsType> = ({
       >
         <div className={s.wrapper}>
           <p className={s.desc}>
-            Do you really want to remove <span className={s.name}>{name}</span>? All cards will be
-            deleted.
+            <span>Do you really want to remove</span> <span className={s.name}>{name}</span>
+            <span>? All cards will be deleted.</span>
           </p>
           <div className={s.buttons}>
             <Button

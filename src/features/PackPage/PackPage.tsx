@@ -2,27 +2,7 @@ import React, { useEffect } from 'react'
 
 import { useParams } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from '../../app/store'
-import { NotFound } from '../../common/components/NotFound/NotFound'
-import { ReturnLink } from '../../common/components/ReturnLink/ReturnLink'
-import { Search } from '../../common/components/Search/Search'
-import { SuperButton } from '../../common/components/SuperButton/SuperButton'
-import { SuperPagination } from '../../common/components/SuperPagination/SuperPagination'
-import { SuperTable } from '../../common/components/SuperTable/SuperTable'
-import { PATH } from '../../common/routes/routes'
-import {
-  cardsData,
-  cardsTotalCountData,
-  packUserId,
-  pageCountData,
-  pageData,
-  searchData,
-  sortCards,
-} from '../../common/selectors/cards-selector'
-import { userIdData } from '../../common/selectors/profile-selector'
-import { SearchPaperSX } from '../../common/styles/sx/sx_styles'
-import { packPageTableNames } from '../../common/utils/tableHeaderData'
-import { AddNewCardModal } from '../Modals/AddNewCardModal/AddNewCardModal'
+import { AddNewCardModal, ModeType } from '../Modals/AddNewCardModal/AddNewCardModal'
 
 import {
   createCardTC,
@@ -34,6 +14,27 @@ import {
   updateCardTC,
 } from './packPage-reducer'
 import s from './PackPage.module.scss'
+
+import { useAppDispatch, useAppSelector } from 'app/store'
+import { NotFound } from 'common/components/NotFound/NotFound'
+import { ReturnLink } from 'common/components/ReturnLink/ReturnLink'
+import { Search } from 'common/components/Search/Search'
+import { SuperButton } from 'common/components/SuperButton/SuperButton'
+import { SuperPagination } from 'common/components/SuperPagination/SuperPagination'
+import { SuperTable } from 'common/components/SuperTable/SuperTable'
+import { PATH } from 'common/routes/routes'
+import {
+  cardsData,
+  cardsTotalCountData,
+  packUserId,
+  pageCountData,
+  pageData,
+  searchData,
+  sortCards,
+} from 'common/selectors/cards-selector'
+import { userIdData } from 'common/selectors/profile-selector'
+import { SearchPaperSX } from 'common/styles/sx/sx_styles'
+import { packPageTableNames } from 'common/utils/tableHeaderData'
 
 type PackPagePropsType = {
   studyPackHandler: (cardId: string) => void
@@ -53,9 +54,19 @@ export const PackPage = (props: PackPagePropsType) => {
 
   const { id } = useParams<string>()
 
-  const createNewCardHandler = (question: string, answer: string) => {
+  const createNewCardHandler = (newQuestion: string, newAnswer: string, mode: ModeType) => {
     if (id) {
-      dispatch(createCardTC({ card: { cardsPack_id: id, question, answer } }))
+      if (mode === 'text') {
+        dispatch(
+          createCardTC({ card: { cardsPack_id: id, question: newQuestion, answer: newAnswer } })
+        )
+      } else {
+        dispatch(
+          createCardTC({
+            card: { cardsPack_id: id, questionImg: newQuestion, answerImg: newAnswer },
+          })
+        )
+      }
     }
   }
 
@@ -67,8 +78,17 @@ export const PackPage = (props: PackPagePropsType) => {
     dispatch(setSortCards({ sortCards }))
   }
 
-  const updateCardHandler = (cardId: string, question: string, answer: string) => {
-    dispatch(updateCardTC({ card: { _id: cardId, question, answer } }))
+  const updateCardHandler = (
+    cardId: string,
+    newQuestion: string,
+    newAnswer: string,
+    mode: ModeType
+  ) => {
+    if (mode === 'text') {
+      dispatch(updateCardTC({ card: { _id: cardId, question: newQuestion, answer: newAnswer } }))
+    } else {
+      dispatch(updateCardTC({ card: { _id: cardId } }))
+    }
   }
 
   const changeSearchHandler = (newValue: string | undefined) => {
