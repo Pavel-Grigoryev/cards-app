@@ -32,8 +32,6 @@ export const SuperTableBody = (props: SuperTableBodyPropsType) => {
   const userId = useAppSelector(userIdData)
   const status = useAppSelector<RequestStatusType>(isLoading)
 
-  console.log(props)
-
   return (
     <TableBody>
       {props.data.map((row: any) => (

@@ -18,7 +18,6 @@ export const InputAvatar = () => {
   const [isAvaBroken, setIsAvaBroken] = useState(false)
   const [ava, setAva] = useState(noAva)
 
-  console.log(isAvaBroken)
   const avatar = useAppSelector(avatarData)
   const { updateProfileTC } = useActions(profileThunks)
 

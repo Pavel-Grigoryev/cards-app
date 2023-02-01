@@ -18,15 +18,15 @@ import { SuperModal } from 'common/components/SuperModal/SuperModal'
 
 type AddNewCardModalPropsType = {
   title: any
-  createNewCardHandler: (question: string, answer: string) => void
+  createNewCardHandler: (question: string, answer: string, mode: ModeType) => void
 }
 
 export const AddNewCardModal: FC<AddNewCardModalPropsType> = ({ title, createNewCardHandler }) => {
-  const [mode, setMode] = useState<string>('text')
+  const [mode, setMode] = useState<ModeType>('text')
   const [open, setOpen] = useState(false)
 
   const handleChange = (e: SelectChangeEvent) => {
-    setMode(e.target.value)
+    setMode(e.target.value as ModeType)
   }
 
   const formik = useFormik({
@@ -40,15 +40,13 @@ export const AddNewCardModal: FC<AddNewCardModalPropsType> = ({ title, createNew
     onSubmit: values => {
       debugger
       console.log(values)
-      createNewCardHandler(values.question, values.answer)
+      createNewCardHandler(values.question, values.answer, mode)
       formik.resetForm()
       setOpen(false)
     },
   })
 
   const onChangeImg = (newImg: string) => {
-    console.log(newImg)
-    debugger
     formik.setFieldValue('question', newImg)
   }
 
@@ -126,3 +124,7 @@ export const AddNewCardModal: FC<AddNewCardModalPropsType> = ({ title, createNew
     </SuperModal>
   )
 }
+
+//Types
+
+export type ModeType = 'text' | 'image'
