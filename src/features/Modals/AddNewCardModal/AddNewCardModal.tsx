@@ -18,7 +18,7 @@ import { SuperModal } from 'common/components/SuperModal/SuperModal'
 
 type AddNewCardModalPropsType = {
   title: any
-  createNewCardHandler: (question: string, answer: string, questionImg: string) => void
+  createNewCardHandler: (question: string, answer: string) => void
 }
 
 export const AddNewCardModal: FC<AddNewCardModalPropsType> = ({ title, createNewCardHandler }) => {
@@ -33,7 +33,6 @@ export const AddNewCardModal: FC<AddNewCardModalPropsType> = ({ title, createNew
     initialValues: {
       question: '',
       answer: '',
-      questionImg: '',
     },
 
     validationSchema: addNewCardSchema,
@@ -41,7 +40,7 @@ export const AddNewCardModal: FC<AddNewCardModalPropsType> = ({ title, createNew
     onSubmit: values => {
       debugger
       console.log(values)
-      createNewCardHandler(values.question, values.answer, values.questionImg)
+      createNewCardHandler(values.question, values.answer)
       formik.resetForm()
       setOpen(false)
     },
@@ -50,7 +49,7 @@ export const AddNewCardModal: FC<AddNewCardModalPropsType> = ({ title, createNew
   const onChangeImg = (newImg: string) => {
     console.log(newImg)
     debugger
-    formik.setFieldValue('questionImg', newImg, false)
+    formik.setFieldValue('question', newImg)
   }
 
   return (
@@ -80,28 +79,25 @@ export const AddNewCardModal: FC<AddNewCardModalPropsType> = ({ title, createNew
                 <MenuItem value={'image'}>Image</MenuItem>
               </Select>
             </FormControl>
-
-            <FormControl fullWidth sx={{ marginBottom: '15px' }}>
-              <InputLabel color={'secondary'}>Question</InputLabel>
-              <Input
-                id="standard-basic"
-                type={'text'}
-                color={'secondary'}
-                placeholder={'Question'}
-                {...formik.getFieldProps('question')}
-              />
-              {formik.touched.question && formik.errors.question && (
-                <div className={styles.errorText}>{formik.errors.question}</div>
-              )}
-            </FormControl>
-
-            <FormControl>
-              <InputQuestion
-                title={'Question:'}
-                formikGetFieldProps={{ ...formik.getFieldProps('questionImg') }}
-              />
-            </FormControl>
-
+            {mode === 'text' ? (
+              <FormControl fullWidth sx={{ marginBottom: '15px' }}>
+                <InputLabel color={'secondary'}>Question</InputLabel>
+                <Input
+                  id="standard-basic"
+                  type={'text'}
+                  color={'secondary'}
+                  placeholder={'Question'}
+                  {...formik.getFieldProps('question')}
+                />
+                {formik.touched.question && formik.errors.question && (
+                  <div className={styles.errorText}>{formik.errors.question}</div>
+                )}
+              </FormControl>
+            ) : (
+              <FormControl>
+                <InputQuestion title={'Question:'} onChangeImg={onChangeImg} />
+              </FormControl>
+            )}
             <FormControl fullWidth>
               <InputLabel color={'secondary'}>Answer</InputLabel>
               <Input

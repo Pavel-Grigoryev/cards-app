@@ -53,9 +53,9 @@ export const PackPage = (props: PackPagePropsType) => {
 
   const { id } = useParams<string>()
 
-  const createNewCardHandler = (question: string, answer: string, questionImg: string) => {
+  const createNewCardHandler = (question: string, answer: string) => {
     if (id) {
-      dispatch(createCardTC({ card: { cardsPack_id: id, question, answer, questionImg } }))
+      dispatch(createCardTC({ card: { cardsPack_id: id, question, answer } }))
     }
   }
 

@@ -16,15 +16,22 @@ import { convertFileToBase64 } from 'common/utils/convertFileToBase64'
 
 export const InputAvatar = () => {
   const [isAvaBroken, setIsAvaBroken] = useState(false)
+  const [ava, setAva] = useState(noAva)
 
+  console.log(isAvaBroken)
   const avatar = useAppSelector(avatarData)
   const { updateProfileTC } = useActions(profileThunks)
 
   useEffect(() => {
-    setIsAvaBroken(false)
+    debugger
+    if (avatar) {
+      setAva(avatar)
+      setIsAvaBroken(false)
+    }
   }, [avatar])
 
   const errorHandler = () => {
+    debugger
     setIsAvaBroken(true)
   }
 
@@ -47,7 +54,7 @@ export const InputAvatar = () => {
       <div className={s.profileImgWrap}>
         <img
           className={s.profileImg}
-          src={isAvaBroken ? noAva : avatar}
+          src={isAvaBroken ? noAva : ava}
           onError={errorHandler}
           alt="User image"
         />

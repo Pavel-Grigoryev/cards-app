@@ -1,26 +1,18 @@
-import React, { ChangeEvent, FC, useEffect, useRef, useState } from 'react'
-
-import IconButton from '@mui/material/IconButton'
+import React, { ChangeEvent, FC, useRef, useState } from 'react'
 
 import s from './InputQuestion.module.scss'
 
-import { useAppSelector } from 'app/store'
-import camera from 'assets/images/camera.png'
 import noImg from 'assets/images/noImage.jpg'
-import { avatarData } from 'common/selectors/profile-selector'
-import { ProfileChangeAvaButton } from 'common/styles/sx/sx_styles'
 import { convertFileToBase64 } from 'common/utils/convertFileToBase64'
 
 type InputQuestionType = {
   title: string
-  formikGetFieldProps: any
+  onChangeImg: (newImg: string) => void
 }
 
-export const InputQuestion: FC<InputQuestionType> = ({ title, formikGetFieldProps }) => {
+export const InputQuestion: FC<InputQuestionType> = ({ title, onChangeImg }) => {
   const [isImgBroken, setIsImgBroken] = useState(false)
   const [questImq, setQuestImq] = useState(noImg)
-
-  const avatar = 'fdfdf'
 
   // useEffect(() => {
   //   setIsImgBroken(false)
@@ -44,7 +36,7 @@ export const InputQuestion: FC<InputQuestionType> = ({ title, formikGetFieldProp
         convertFileToBase64(file, (file64: string) => {
           setQuestImq(file64)
           setIsImgBroken(false)
-          //onChangeImg(file64)
+          onChangeImg(file64)
         })
       } else {
         console.error('Error: ', 'The file is too large')
@@ -61,7 +53,7 @@ export const InputQuestion: FC<InputQuestionType> = ({ title, formikGetFieldProp
         </button>
         <input
           type="file"
-          {...formikGetFieldProps}
+          onChange={uploadHandler}
           ref={inputRef}
           style={{ display: 'none' }}
           accept={'image/*'}
