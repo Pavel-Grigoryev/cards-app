@@ -43,7 +43,6 @@ export const EditCardModal: FC<EditCardModalPropsType> = ({
   const [memorAnswer, setMemorAnswer] = useState<string>('')
 
   useEffect(() => {
-    debugger
     if (mode === 'text') {
       setMemorQuestion(rowQuestion)
       setMemorAnswer(rowAnswer)

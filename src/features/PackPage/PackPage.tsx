@@ -84,13 +84,10 @@ export const PackPage = (props: PackPagePropsType) => {
     newAnswer: string,
     mode: ModeType
   ) => {
-    debugger
     if (mode === 'text') {
       dispatch(updateCardTC({ card: { _id: cardId, question: newQuestion, answer: newAnswer } }))
     } else {
-      dispatch(
-        updateCardTC({ card: { _id: cardId, questionImg: newQuestion, answerImg: newAnswer } })
-      )
+      dispatch(updateCardTC({ card: { _id: cardId } }))
     }
   }
 
