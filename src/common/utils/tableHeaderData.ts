@@ -12,6 +12,7 @@ export const packPageTableNames: TableHeaderDataType[] = [
 ]
 
 export const packsListTableNames: TableHeaderDataType[] = [
+  { name: 'Cover', sortName: 'updated' },
   { name: 'Name', sortName: 'name' },
   { name: 'Cards', sortName: 'cardsCount' },
   { name: 'Last Updated', sortName: 'updated' },
