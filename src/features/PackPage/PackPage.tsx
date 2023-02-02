@@ -92,8 +92,8 @@ export const PackPage = (props: PackPagePropsType) => {
             _id: cardId,
             question: newQuestion,
             answer: newAnswer,
-            answerImg: 'data:',
-            questionImg: 'data:',
+            answerImg: 'no_image',
+            questionImg: 'no_image:',
           },
         })
       )

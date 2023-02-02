@@ -1,0 +1,44 @@
+.errorPage {
+  height: calc(100vh - 64px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media screen and (max-width: 461px) {
+    height: calc(100vh - 84px);
+  }
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  column-gap: 60px;
+}
+
+.textBlock{
+
+  @media screen and (max-width: 744px) {
+    margin-bottom: 40px;
+  }
+}
+
+.title {
+  font-size: 50px;
+  line-height: 61px;
+  margin-bottom: 11px;
+}
+
+.desc {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 36px;
+}
+
+.imageBlock {
+  overflow: hidden;
+}
+
+.image {
+  max-width: 100%;
+}

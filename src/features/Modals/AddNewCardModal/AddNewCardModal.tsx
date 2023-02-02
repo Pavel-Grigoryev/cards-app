@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useCallback, useState } from 'react'
 
 import FormControl from '@mui/material/FormControl'
 import Input from '@mui/material/Input'
@@ -43,13 +43,13 @@ export const AddNewCardModal: FC<AddNewCardModalPropsType> = ({ title, createNew
     },
   })
 
-  const onChangeQuestImg = (newImg: string) => {
+  const onChangeQuestImg = useCallback((newImg: string) => {
     formik.setFieldValue('question', newImg)
-  }
+  }, [])
 
-  const onChangeAnswerImg = (newImg: string) => {
+  const onChangeAnswerImg = useCallback((newImg: string) => {
     formik.setFieldValue('answer', newImg)
-  }
+  }, [])
 
   return (
     <SuperModal
