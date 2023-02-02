@@ -76,8 +76,15 @@ export const PacksList = (props: any) => {
     navigate(`/packPage/${packId}`)
   }
 
-  const updatePackHandler = (packId: string, packName: string, isPrivatePack: boolean) => {
-    updatePackTC({ cardsPack: { _id: packId, name: packName, private: isPrivatePack } })
+  const updatePackHandler = (
+    packId: string,
+    packName: string,
+    isPrivatePack: boolean,
+    cover: string
+  ) => {
+    updatePackTC({
+      cardsPack: { _id: packId, name: packName, private: isPrivatePack, deckCover: cover },
+    })
   }
 
   const changePaginationHandler = (page: number, pageCount: number) => {

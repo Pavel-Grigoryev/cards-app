@@ -34,14 +34,12 @@ export const AddNewPackModal: FC<AddNewPackModalPropsType> = ({ title, createNew
     validationSchema: addNewPackSchema,
 
     onSubmit: values => {
-      console.log(values)
       createNewPackHandler(values.packName, values.isPrivatePack, values.cover)
       setOpen(false)
     },
   })
 
   const onChangeImg = (newImg: string) => {
-    console.log(newImg)
     formik.setFieldValue('cover', newImg)
   }
 

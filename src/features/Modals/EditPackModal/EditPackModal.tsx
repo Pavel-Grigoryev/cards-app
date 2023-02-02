@@ -7,6 +7,7 @@ import Input from '@mui/material/Input'
 import InputLabel from '@mui/material/InputLabel'
 import { useFormik } from 'formik'
 
+import { InputQuestion } from '../../../common/components/InputQuestion/InputQuestion'
 import styles from '../../../common/styles/errors.module.scss'
 import { addNewCardSchema, addNewPackSchema } from '../../../common/utils/validationSchema'
 
@@ -17,10 +18,11 @@ import { SuperModal } from 'common/components/SuperModal/SuperModal'
 
 type EditPackModalPropsType = {
   title: any
-  updatePack: (packName: string, isPrivatePack: boolean) => void
+  updatePack: (packName: string, isPrivatePack: boolean, cover: string) => void
   currentPackName: string
   isPrivate: boolean
   disabledButton: boolean
+  coverImg: string
 }
 
 export const EditPackModal: FC<EditPackModalPropsType> = ({
@@ -29,11 +31,13 @@ export const EditPackModal: FC<EditPackModalPropsType> = ({
   disabledButton,
   currentPackName,
   isPrivate,
+  coverImg,
 }) => {
   const [open, setOpen] = useState(false)
 
   const formik = useFormik({
     initialValues: {
+      cover: coverImg,
       packName: currentPackName,
       isPrivatePack: isPrivate,
     },
@@ -41,10 +45,14 @@ export const EditPackModal: FC<EditPackModalPropsType> = ({
     validationSchema: addNewPackSchema,
 
     onSubmit: values => {
-      updatePack(values.packName, values.isPrivatePack)
+      updatePack(values.packName, values.isPrivatePack, values.cover)
       setOpen(false)
     },
   })
+
+  const onChangeImg = (newImg: string) => {
+    formik.setFieldValue('cover', newImg)
+  }
 
   return (
     <SuperModal
@@ -57,6 +65,9 @@ export const EditPackModal: FC<EditPackModalPropsType> = ({
     >
       <form onSubmit={formik.handleSubmit} className={s.wrapper}>
         <div className={s.inputs}>
+          <FormControl>
+            <InputQuestion title={'Cover:'} onChangeImg={onChangeImg} currentImg={coverImg} />
+          </FormControl>
           <FormControl fullWidth sx={{ marginBottom: '15px' }}>
             <InputLabel color={'secondary'}>Name pack</InputLabel>
             <Input

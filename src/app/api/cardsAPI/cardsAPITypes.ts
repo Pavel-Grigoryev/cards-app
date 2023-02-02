@@ -52,6 +52,7 @@ export type UpdatePackType = {
     _id: string
     name?: string
     private: boolean
+    deckCover?: string
   }
 }
 

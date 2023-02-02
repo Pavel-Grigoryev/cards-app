@@ -11,6 +11,7 @@ type InputQuestionType = {
   onChangeImg: (newImg: string) => void
   formikTouched?: boolean | undefined
   formikErrors?: string | undefined
+  currentImg?: string
 }
 
 export const InputQuestion: FC<InputQuestionType> = ({
@@ -18,9 +19,10 @@ export const InputQuestion: FC<InputQuestionType> = ({
   onChangeImg,
   formikTouched,
   formikErrors,
+  currentImg,
 }) => {
   const [isImgBroken, setIsImgBroken] = useState(false)
-  const [questImq, setQuestImq] = useState(noImg)
+  const [questImq, setQuestImq] = useState(currentImg ? currentImg : noImg)
 
   // useEffect(() => {
   //   setIsImgBroken(false)
