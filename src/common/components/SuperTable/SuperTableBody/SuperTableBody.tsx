@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
@@ -23,7 +23,12 @@ import { EditPackModal } from 'features/Modals/EditPackModal/EditPackModal'
 type SuperTableBodyPropsType = {
   data: PackType[] | CardType[]
   studyHandler?: (cardId: string) => void
-  updatePackHandler?: (cardId: string, packName: string, isPrivatePack: boolean) => void
+  updatePackHandler?: (
+    cardId: string,
+    packName: string,
+    isPrivatePack: boolean,
+    cover: string
+  ) => void
   deleteHandler: (cardId: string) => void
   openPackHandler?: (cardId: string) => void
   updateCardHandler?: (
@@ -35,8 +40,18 @@ type SuperTableBodyPropsType = {
 }
 
 export const SuperTableBody = (props: SuperTableBodyPropsType) => {
+  // const [isImgBroken, setIsImgBroken] = useState(false)
   const userId = useAppSelector(userIdData)
   const status = useAppSelector<RequestStatusType>(isLoading)
+
+  const errorHandler = (imgId: string) => {
+    // setIsImgBroken(true)
+    const imgContainer: HTMLImageElement | null = document.getElementById(imgId) as HTMLImageElement
+
+    if (imgContainer) {
+      imgContainer.src = noImg
+    }
+  }
 
   return (
     <TableBody>
@@ -53,7 +68,9 @@ export const SuperTableBody = (props: SuperTableBodyPropsType) => {
               <img
                 alt="cover"
                 style={{ width: '60px' }}
+                id={row._id}
                 src={row.deckCover ? row.deckCover : noImg}
+                onError={() => errorHandler(row._id)}
               ></img>
             </TableCell>
           ) : null}
@@ -68,26 +85,69 @@ export const SuperTableBody = (props: SuperTableBodyPropsType) => {
             sx={
               row.name && {
                 cursor: 'pointer',
-                width: '260px',
                 '&:hover': {
                   fontWeight: 'bold',
                 },
               }
             }
           >
-            {row.name ||
+            {(row.name && (
+              <span
+                style={{
+                  display: 'block',
+                  width: '260px',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+              >
+                {row.name}
+              </span>
+            )) ||
               (row.questionImg ? (
-                <img alt="cover" style={{ width: '60px' }} src={row.questionImg} />
+                <img
+                  alt="cover"
+                  id={row._id}
+                  style={{ width: '60px' }}
+                  src={row.questionImg}
+                  onError={() => errorHandler(row._id)}
+                />
               ) : (
-                row.question
+                <span
+                  style={{
+                    display: 'block',
+                    width: '160px',
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                  }}
+                >
+                  {row.question}
+                </span>
               ))}
           </TableCell>
           <TableCell align="left">
             {(row.cardsCount === 0 ? '0' : row.cardsCount) ||
               (row.answerImg ? (
-                <img alt="cover" style={{ width: '60px' }} src={row.answerImg} />
+                <img
+                  alt="cover"
+                  id={row._id}
+                  style={{ width: '60px' }}
+                  src={row.answerImg}
+                  onError={() => errorHandler(row._id)}
+                />
               ) : (
-                row.answer
+                <span
+                  style={{
+                    display: 'block',
+                    width: '160px',
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                  }}
+                >
+                  {row.answer}
+                </span>
               ))}
           </TableCell>
           <TableCell align="left">{row.updated.slice(0, row.updated.indexOf('T'))}</TableCell>
@@ -127,9 +187,10 @@ export const SuperTableBody = (props: SuperTableBodyPropsType) => {
                     disabledButton={status === 'loading'}
                     currentPackName={row.name}
                     isPrivate={row.private}
-                    updatePack={(packName: string, isPrivatePack: boolean) => {
+                    coverImg={row.deckCover}
+                    updatePack={(packName: string, isPrivatePack: boolean, cover: string) => {
                       if (props.updatePackHandler) {
-                        props.updatePackHandler(row._id, packName, isPrivatePack)
+                        props.updatePackHandler(row._id, packName, isPrivatePack, cover)
                       }
                     }}
                   />

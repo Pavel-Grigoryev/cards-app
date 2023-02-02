@@ -17,7 +17,12 @@ type SuperTablePropsType = {
   deleteHandler: (cardId: string) => void
   sortingHandler: (sortCards: string) => void
   studyHandler?: (cardId: string) => void
-  updatePackHandler?: (cardId: string, packName: string, isPrivatePack: boolean) => void
+  updatePackHandler?: (
+    cardId: string,
+    packName: string,
+    isPrivatePack: boolean,
+    cover: string
+  ) => void
   openPackHandler?: (cardId: string) => void
   updateCardHandler?: (
     cardId: string,
