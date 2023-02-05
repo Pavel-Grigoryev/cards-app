@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
@@ -13,6 +13,7 @@ import { CardType, PackType } from 'app/api/cardsAPI/cardsAPITypes'
 import { RequestStatusType } from 'app/app-reducer'
 import { useAppSelector } from 'app/store'
 import noImg from 'assets/images/download.png'
+import { NEW_CARD } from 'common/constants/newCardEmptyProp'
 import { isLoading } from 'common/selectors/app-selector'
 import { userIdData } from 'common/selectors/profile-selector'
 import { ModeType } from 'features/Modals/AddNewCardModal/AddNewCardModal'
@@ -45,7 +46,6 @@ export const SuperTableBody = (props: SuperTableBodyPropsType) => {
   const status = useAppSelector<RequestStatusType>(isLoading)
 
   const errorHandler = (imgId: string) => {
-    // setIsImgBroken(true)
     const imgContainer: HTMLImageElement | null = document.getElementById(imgId) as HTMLImageElement
 
     if (imgContainer) {
@@ -104,7 +104,7 @@ export const SuperTableBody = (props: SuperTableBodyPropsType) => {
                 {row.name}
               </span>
             )) ||
-              (row.questionImg ? (
+              (row.questionImg !== NEW_CARD.EMPTY_IMG ? (
                 <img
                   alt="cover"
                   id={row._id}
@@ -128,7 +128,7 @@ export const SuperTableBody = (props: SuperTableBodyPropsType) => {
           </TableCell>
           <TableCell align="left">
             {(row.cardsCount === 0 ? '0' : row.cardsCount) ||
-              (row.answerImg ? (
+              (row.answerImg !== NEW_CARD.EMPTY_IMG ? (
                 <img
                   alt="cover"
                   id={row._id}
@@ -172,8 +172,10 @@ export const SuperTableBody = (props: SuperTableBodyPropsType) => {
                   <EditCardModal
                     title={<EditIcon fontSize={'small'} />}
                     rowQuestion={row.question}
+                    rowQuestionImg={row.questionImg}
                     disabledButton={status === 'loading'}
                     rowAnswer={row.answer}
+                    rowAnswerImg={row.answerImg}
                     updateCard={(newQuestion, newAnswer, mode) => {
                       if (props.updateCardHandler) {
                         props.updateCardHandler(row._id, newQuestion, newAnswer, mode)

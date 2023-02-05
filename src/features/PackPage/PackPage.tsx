@@ -22,6 +22,7 @@ import { Search } from 'common/components/Search/Search'
 import { SuperButton } from 'common/components/SuperButton/SuperButton'
 import { SuperPagination } from 'common/components/SuperPagination/SuperPagination'
 import { SuperTable } from 'common/components/SuperTable/SuperTable'
+import { NEW_CARD } from 'common/constants/newCardEmptyProp'
 import { PATH } from 'common/routes/routes'
 import {
   cardsData,
@@ -58,12 +59,26 @@ export const PackPage = (props: PackPagePropsType) => {
     if (id) {
       if (mode === 'text') {
         dispatch(
-          createCardTC({ card: { cardsPack_id: id, question: newQuestion, answer: newAnswer } })
+          createCardTC({
+            card: {
+              cardsPack_id: id,
+              question: newQuestion,
+              answer: newAnswer,
+              answerImg: NEW_CARD.EMPTY_IMG,
+              questionImg: NEW_CARD.EMPTY_IMG,
+            },
+          })
         )
       } else {
         dispatch(
           createCardTC({
-            card: { cardsPack_id: id, questionImg: newQuestion, answerImg: newAnswer },
+            card: {
+              cardsPack_id: id,
+              questionImg: newQuestion,
+              answerImg: newAnswer,
+              question: NEW_CARD.EMPTY_QUES,
+              answer: NEW_CARD.EMPTY_ANS,
+            },
           })
         )
       }
@@ -84,7 +99,6 @@ export const PackPage = (props: PackPagePropsType) => {
     newAnswer: string,
     mode: ModeType
   ) => {
-    debugger
     if (mode === 'text') {
       dispatch(
         updateCardTC({
@@ -92,21 +106,20 @@ export const PackPage = (props: PackPagePropsType) => {
             _id: cardId,
             question: newQuestion,
             answer: newAnswer,
-            answerImg: 'no_image',
-            questionImg: 'no_image:',
+            answerImg: NEW_CARD.EMPTY_IMG,
+            questionImg: NEW_CARD.EMPTY_IMG,
           },
         })
       )
     } else {
-      debugger
       dispatch(
         updateCardTC({
           card: {
             _id: cardId,
             questionImg: newQuestion,
             answerImg: newAnswer,
-            question: 'no answer',
-            answer: 'no question',
+            question: NEW_CARD.EMPTY_QUES,
+            answer: NEW_CARD.EMPTY_ANS,
           },
         })
       )

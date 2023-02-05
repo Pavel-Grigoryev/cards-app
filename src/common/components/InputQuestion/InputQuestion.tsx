@@ -1,5 +1,7 @@
 import React, { ChangeEvent, FC, memo, useRef, useState } from 'react'
 
+import { NEW_CARD } from '../../constants/newCardEmptyProp'
+
 import s from './InputQuestion.module.scss'
 
 import noImg from 'assets/images/noImage.jpg'
@@ -16,11 +18,15 @@ type InputQuestionType = {
 
 export const InputQuestion: FC<InputQuestionType> = memo(
   ({ title, onChangeImg, formikTouched, formikErrors, currentImg }) => {
+    const [questImq, setQuestImq] = useState(
+      currentImg && currentImg !== NEW_CARD.EMPTY_IMG ? currentImg : noImg
+    )
     const [isImgBroken, setIsImgBroken] = useState(false)
-    const [questImq, setQuestImq] = useState(currentImg ? currentImg : noImg)
 
     const errorHandler = () => {
       setIsImgBroken(true)
+      onChangeImg('')
+      setQuestImq('')
     }
 
     const inputRef = useRef<HTMLInputElement>(null)
@@ -36,8 +42,8 @@ export const InputQuestion: FC<InputQuestionType> = memo(
         if (file.size < 4000000) {
           convertFileToBase64(file, (file64: string) => {
             setQuestImq(file64)
-            setIsImgBroken(false)
             onChangeImg(file64)
+            setIsImgBroken(false)
           })
         } else {
           console.error('Error: ', 'The file is too large')
@@ -69,7 +75,10 @@ export const InputQuestion: FC<InputQuestionType> = memo(
               alt="User image"
             />
           </div>
-          {formikTouched && formikErrors && <div className={styles.errorText}>{formikErrors}</div>}
+          <div className={styles.errorText}>
+            {formikTouched && formikErrors && <span>{formikErrors}</span>}
+            {!questImq && <span>. This file is not supported (only jpg, png, svg) </span>}
+          </div>
         </div>
       </>
     )

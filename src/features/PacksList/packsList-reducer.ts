@@ -116,8 +116,6 @@ export const getPacksTC = (): AppThunk => async (dispatch, getState) => {
       sortPacks,
     })
 
-    console.log(res.data)
-
     dispatch(getPacks({ data: res.data }))
     dispatch(setPacksCount({ values: [res.data.minCardsCount, res.data.maxCardsCount] }))
     dispatch(setAppStatusAC({ status: 'succeeded' }))
