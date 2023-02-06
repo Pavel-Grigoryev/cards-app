@@ -104,6 +104,7 @@ export const AddNewCardModal: FC<AddNewCardModalPropsType> = ({ title, createNew
                     type={'text'}
                     color={'secondary'}
                     placeholder={'Answer'}
+                    {...formik.getFieldProps('answer')}
                   />
                   {formik.touched.answer && formik.errors.answer && (
                     <div className={styles.errorText}>{formik.errors.answer}</div>
