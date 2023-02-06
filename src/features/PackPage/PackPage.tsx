@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 
 import { useParams } from 'react-router-dom'
 
-import { Dropdown } from '../../common/components/Dropdown/Dropdown'
 import { AddNewCardModal, ModeType } from '../Modals/AddNewCardModal/AddNewCardModal'
 
 import {
@@ -18,14 +17,15 @@ import s from './PackPage.module.scss'
 
 import { useAppDispatch, useAppSelector } from 'app/store'
 import pop from 'assets/images/pop.png'
+import { Dropdown } from 'common/components/Dropdown/Dropdown'
 import { NotFound } from 'common/components/NotFound/NotFound'
 import { ReturnLink } from 'common/components/ReturnLink/ReturnLink'
 import { Search } from 'common/components/Search/Search'
 import { SuperButton } from 'common/components/SuperButton/SuperButton'
 import { SuperPagination } from 'common/components/SuperPagination/SuperPagination'
 import { SuperTable } from 'common/components/SuperTable/SuperTable'
-import { NEW_CARD } from 'common/constants/newCardEmptyProp'
 import { SuperTooltip } from 'common/components/SuperTooltip/SuperTooltip'
+import { NEW_CARD } from 'common/constants/newCardEmptyProp'
 import { PATH } from 'common/routes/routes'
 import {
   cardsData,
