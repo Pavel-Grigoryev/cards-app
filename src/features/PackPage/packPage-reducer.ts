@@ -25,6 +25,8 @@ const initialState = {
   search: '' as string | undefined,
   sortCards: '',
   packName: '',
+  packPrivate: false,
+  packDeckCover: '',
 }
 
 const slice = createSlice({
@@ -38,6 +40,8 @@ const slice = createSlice({
         packUserId: action.payload.data.packUserId,
         packName: action.payload.data.packName,
         sortCards: state.sortCards,
+        packPrivate: action.payload.data.packPrivate,
+        packDeckCover: action.payload.data.packDeckCover,
       }
     },
     updateCardsPagination(state, action: PayloadAction<{ page: number; pageCount: number }>) {
@@ -61,6 +65,9 @@ const slice = createSlice({
         cards: state.cards.map(c => (c._id === card_id ? { ...c, shots: shots, grade: grade } : c)),
       }
     },
+    changePackName(state, action: PayloadAction<{ packName: string }>) {
+      state.packName = action.payload.packName
+    },
   },
 })
 
@@ -68,8 +75,14 @@ export const packPageReducer = slice.reducer
 
 // Actions
 
-export const { getCards, updateCardsSearch, updateCardsPagination, setSortCards, updateCardGrade } =
-  slice.actions
+export const {
+  getCards,
+  updateCardsSearch,
+  updateCardsPagination,
+  setSortCards,
+  updateCardGrade,
+  changePackName,
+} = slice.actions
 
 //Thunks
 

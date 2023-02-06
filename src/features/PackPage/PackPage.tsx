@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 
 import { useParams } from 'react-router-dom'
 
+import { Dropdown } from '../../common/components/Dropdown/Dropdown'
 import { AddNewCardModal, ModeType } from '../Modals/AddNewCardModal/AddNewCardModal'
 
 import {
@@ -16,6 +17,7 @@ import {
 import s from './PackPage.module.scss'
 
 import { useAppDispatch, useAppSelector } from 'app/store'
+import pop from 'assets/images/pop.png'
 import { NotFound } from 'common/components/NotFound/NotFound'
 import { ReturnLink } from 'common/components/ReturnLink/ReturnLink'
 import { Search } from 'common/components/Search/Search'
@@ -23,6 +25,7 @@ import { SuperButton } from 'common/components/SuperButton/SuperButton'
 import { SuperPagination } from 'common/components/SuperPagination/SuperPagination'
 import { SuperTable } from 'common/components/SuperTable/SuperTable'
 import { NEW_CARD } from 'common/constants/newCardEmptyProp'
+import { SuperTooltip } from 'common/components/SuperTooltip/SuperTooltip'
 import { PATH } from 'common/routes/routes'
 import {
   cardsData,
@@ -99,6 +102,7 @@ export const PackPage = (props: PackPagePropsType) => {
     newAnswer: string,
     mode: ModeType
   ) => {
+    debugger
     if (mode === 'text') {
       dispatch(
         updateCardTC({
@@ -112,6 +116,7 @@ export const PackPage = (props: PackPagePropsType) => {
         })
       )
     } else {
+      debugger
       dispatch(
         updateCardTC({
           card: {
@@ -147,18 +152,19 @@ export const PackPage = (props: PackPagePropsType) => {
       <ReturnLink path={PATH.PACKS_LIST} title={'Back to Packs List'} />
       <div className={s.head}>
         <h1 className={s.title}>
-          {packName} {/*{userPackId === userId ? (*/}
-          {/*  <SuperTooltip*/}
-          {/*    title={<PopLink learn={props.studyPackHandler} />}*/}
-          {/*    placement={'bottom-end'}*/}
-          {/*  >*/}
-          {/*    <button className={s.popImgWrap}>*/}
-          {/*      <img className={s.popImg} src={pop} alt="" />*/}
-          {/*    </button>*/}
-          {/*  </SuperTooltip>*/}
-          {/*) : (*/}
-          {/*  ''*/}
-          {/*)}*/}
+          {packName}
+          {userPackId === userId ? (
+            <SuperTooltip
+              title={<Dropdown learn={props.studyPackHandler} />}
+              placement={'bottom-end'}
+            >
+              <button className={s.popImgWrap}>
+                <img className={s.popImg} src={pop} alt="" />
+              </button>
+            </SuperTooltip>
+          ) : (
+            ''
+          )}
         </h1>
         {userPackId === userId ? (
           <div>

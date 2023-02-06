@@ -11,6 +11,7 @@ import {
 import { setAppErrorAC, setAppStatusAC } from '../../app/app-reducer'
 import { AppThunk } from '../../app/store'
 import { handleServerNetworkError } from '../../common/utils/error-utils'
+import { changePackName } from '../PackPage/packPage-reducer'
 
 const initialState = {
   cardPacks: [] as PackType[],
@@ -165,6 +166,7 @@ export const updatePackTC =
     try {
       const res = await cardsAPI.updatePack(data)
 
+      dispatch(changePackName({ packName: res.data.updatedCardsPack.name }))
       dispatch(getPacksTC())
       dispatch(setAppStatusAC({ status: 'succeeded' }))
     } catch (err: AxiosError<{ error: string }> | any) {

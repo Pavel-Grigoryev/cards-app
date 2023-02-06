@@ -1,0 +1,29 @@
+@import '../../styles/varaibles';
+
+.block{
+  li:hover {
+
+  }
+  .linkBlock {
+
+
+    .image {
+      width: 24px;
+      height: 24px;
+    }
+
+    .button {
+      display: flex;
+      align-items: center;
+      background-color: inherit;
+    }
+
+    .title {
+      margin: 10px;
+      font-size: 17px;
+      line-height: 24px;
+      color: $textColor;
+    }
+  }
+}
+

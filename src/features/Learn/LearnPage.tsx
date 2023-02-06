@@ -35,15 +35,15 @@ export const LearnPage = () => {
   const [isChecked, setIsChecked] = useState<boolean>(false)
   const [first, setFirst] = useState<boolean>(true)
   const [card, setCard] = useState<CardType>({
-    answer: 'answer',
-    question: 'question',
+    answer: '',
+    question: '',
     cardsPack_id: '',
     grade: 0,
     shots: 0,
     user_id: '',
     created: '',
     updated: '',
-    _id: 'fake',
+    _id: '',
     rating: 0,
     comments: '',
     __v: '',
@@ -77,13 +77,26 @@ export const LearnPage = () => {
         <h1 className={s.title}>Learn {`"${packName}"`}</h1>
         <div className={s.case}>
           <div>
-            <div className={s.question}>
-              Question: {card.question}
-              <div className={s.rating}>
-                <Rating precision={0.1} readOnly value={card.grade} />
+            {card.questionImg ? (
+              <div>
+                <div className={s.question}>
+                  Question:
+                  <div className={s.rating}>
+                    <Rating precision={0.1} readOnly value={card.grade} />
+                  </div>
+                </div>
+                <div className={s.imageBlock}>
+                  <img className={s.image} src={card.questionImg} alt={'Question image'} />
+                </div>
               </div>
-            </div>
-
+            ) : (
+              <div className={s.question}>
+                Question: {card.question}
+                <div className={s.rating}>
+                  <Rating precision={0.1} readOnly value={card.grade} />
+                </div>
+              </div>
+            )}
             <div className={s.attempts}>
               <span>Number of attempts to answer the question: </span>
               <span className={s.attemptsNum}>{card.shots}</span>
@@ -100,10 +113,20 @@ export const LearnPage = () => {
             )}
             {isChecked && (
               <>
-                <div className={s.answerCase}>
-                  <span className={s.answer}>Answer: </span>
-                  <span className={s.answerText}>{card.answer}</span>
-                </div>
+                {card.answerImg ? (
+                  <div>
+                    <div className={s.question}>Answer:</div>
+                    <div className={s.imageBlock}>
+                      <img className={s.image} src={card.answerImg} alt={'Answer image'} />
+                    </div>
+                  </div>
+                ) : (
+                  <div className={s.answerCase}>
+                    <span className={s.answer}>Answer: </span>
+                    <span className={s.answerText}>{card.answer}</span>
+                  </div>
+                )}
+
                 <FormControl className={s.rateCase}>
                   <div className={s.rateLabel}>Rate yourself:</div>
                   <RadioGroup onChange={setGradeHandler} className={s.radioButton}>

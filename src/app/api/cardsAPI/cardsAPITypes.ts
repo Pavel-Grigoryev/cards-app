@@ -95,6 +95,8 @@ export type GetCardsResponseType = {
   pageCount: number
   packUserId: string
   packName: string
+  packPrivate: boolean
+  packDeckCover: string
 }
 
 export type CreateNewCardType = {
