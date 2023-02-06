@@ -6,6 +6,7 @@ import s from '../EditCardModal.module.scss'
 
 import { InputQuestion } from 'common/components/InputQuestion/InputQuestion'
 import { SuperButton } from 'common/components/SuperButton/SuperButton'
+import { NEW_CARD } from 'common/constants/newCardEmptyProp'
 
 type InputImgPropsType = {
   rowQuestionImg: string
@@ -17,10 +18,13 @@ export const InputImg: React.FC<InputImgPropsType> = ({
   rowQuestionImg,
   rowAnswerImg,
 }) => {
+  const cardRowQuestionImg = rowQuestionImg === NEW_CARD.EMPTY_IMG ? '' : rowQuestionImg
+  const cardRowAnswerImg = rowQuestionImg === NEW_CARD.EMPTY_IMG ? '' : rowAnswerImg
+
   const formik = useFormik({
     initialValues: {
-      questionImg: '',
-      answerImg: '',
+      questionImg: cardRowQuestionImg,
+      answerImg: cardRowAnswerImg,
     },
 
     validate: values => {
