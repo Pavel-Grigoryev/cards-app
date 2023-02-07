@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { Navigate, useParams } from 'react-router-dom'
 
@@ -18,6 +18,7 @@ import {
 import s from './PackPage.module.scss'
 
 import { useAppDispatch, useAppSelector } from 'app/store'
+import noImg from 'assets/images/download.png'
 import pop from 'assets/images/pop.png'
 import { Dropdown } from 'common/components/Dropdown/Dropdown'
 import { NotFound } from 'common/components/NotFound/NotFound'
@@ -32,6 +33,7 @@ import {
   cardsData,
   cardsTotalCountData,
   packCardsDeleteStatusData,
+  packDeckCover,
   packNameData,
   packUserId,
   pageCountData,
@@ -58,8 +60,15 @@ export const PackPage = (props: PackPagePropsType) => {
   const userId = useAppSelector(userIdData)
   const packName = useAppSelector(packNameData)
   const packCardsDeleteStatus = useAppSelector(packCardsDeleteStatusData)
+  const packCover = useAppSelector(packDeckCover)
 
   const { id } = useParams<string>()
+
+  const [isImgBroken, setImgBroken] = useState(false)
+
+  const errorHandler = () => {
+    setImgBroken(true)
+  }
 
   const createNewCardHandler = (newQuestion: string, newAnswer: string, mode: ModeType) => {
     if (id) {
@@ -140,6 +149,8 @@ export const PackPage = (props: PackPagePropsType) => {
     dispatch(updateCardsPagination({ page, pageCount }))
   }
 
+  console.log(isImgBroken)
+
   useEffect(() => {
     if (id) {
       dispatch(
@@ -190,6 +201,15 @@ export const PackPage = (props: PackPagePropsType) => {
           <SuperButton title={'Learn to pack'} onClick={() => props.studyPackHandler(id!)} />
         )}
       </div>
+      {packCover && (
+        <img
+          alt={'cover'}
+          src={isImgBroken ? noImg : packCover}
+          className={s.deckCover}
+          onError={errorHandler}
+        />
+      )}
+
       <div>
         <div className={s.searchBlock}>
           <Search

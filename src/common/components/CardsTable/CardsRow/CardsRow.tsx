@@ -39,8 +39,6 @@ export const CardsRow: FC<CardsRowPropsType> = ({ row, deleteHandler, updateCard
     setBroken(true)
   }
 
-  console.log(row)
-
   return (
     <TableRow
       key={row._id}

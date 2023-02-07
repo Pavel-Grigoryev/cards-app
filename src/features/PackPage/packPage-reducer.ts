@@ -70,6 +70,11 @@ const slice = createSlice({
     changePackName(state, action: PayloadAction<{ packName: string }>) {
       state.packName = action.payload.packName
     },
+
+    setPackDeckCover: (state, action: PayloadAction<string>) => {
+      state.packDeckCover = action.payload
+    },
+
     changePackCardsDeleteStatus(
       state,
       action: PayloadAction<{ packCardsDeleteStatus: RequestStatusType }>
@@ -90,6 +95,7 @@ export const {
   setSortCards,
   updateCardGrade,
   changePackName,
+  setPackDeckCover,
   changePackCardsDeleteStatus,
 } = slice.actions
 
@@ -104,6 +110,7 @@ export const getCardsTC =
       const res = await cardsAPI.getCards({ ...data })
 
       dispatch(getCards({ data: res.data }))
+      dispatch(setPackDeckCover(res.data.packDeckCover))
       dispatch(setAppStatusAC({ status: 'succeeded' }))
     } catch (e) {
       if (axios.isAxiosError(e)) {
