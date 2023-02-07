@@ -149,8 +149,6 @@ export const PackPage = (props: PackPagePropsType) => {
     dispatch(updateCardsPagination({ page, pageCount }))
   }
 
-  console.log(isImgBroken)
-
   useEffect(() => {
     if (id) {
       dispatch(
