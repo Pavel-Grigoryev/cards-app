@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
+import ClickAwayListener from '@mui/material/ClickAwayListener'
 import { Navigate, useParams } from 'react-router-dom'
 
 import { CardsTable } from '../../common/components/CardsTable/CardsTable'
