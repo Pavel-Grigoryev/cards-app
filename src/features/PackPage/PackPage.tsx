@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
+import ClickAwayListener from '@mui/material/ClickAwayListener'
 import { Navigate, useParams } from 'react-router-dom'
 
 import { CardsTable } from '../../common/components/CardsTable/CardsTable'
@@ -60,6 +61,8 @@ export const PackPage = (props: PackPagePropsType) => {
   const packCardsDeleteStatus = useAppSelector(packCardsDeleteStatusData)
 
   const { id } = useParams<string>()
+
+  const [open, setOpen] = useState(false)
 
   const createNewCardHandler = (newQuestion: string, newAnswer: string, mode: ModeType) => {
     if (id) {
@@ -140,6 +143,14 @@ export const PackPage = (props: PackPagePropsType) => {
     dispatch(updateCardsPagination({ page, pageCount }))
   }
 
+  const handleTooltipOpen = () => {
+    setOpen(true)
+  }
+
+  const handleTooltipClose = () => {
+    setOpen(false)
+  }
+
   useEffect(() => {
     if (id) {
       dispatch(
@@ -160,21 +171,31 @@ export const PackPage = (props: PackPagePropsType) => {
     <>
       <ReturnLink path={PATH.PACKS_LIST} title={'Back to Packs List'} />
       <div className={s.head}>
-        <h1 className={s.title}>
-          {packName}
+        <div className={s.titleWrapper}>
+          <h1 className={s.title}>{packName}</h1>
           {userPackId === userId ? (
-            <SuperTooltip
-              title={<Dropdown learn={props.studyPackHandler} />}
-              placement={'bottom-end'}
-            >
-              <button className={s.popImgWrap}>
-                <img className={s.popImg} src={pop} alt="" />
-              </button>
-            </SuperTooltip>
+            <ClickAwayListener onClickAway={handleTooltipClose}>
+              <div>
+                <SuperTooltip
+                  title={<Dropdown learn={props.studyPackHandler} />}
+                  placement={'bottom-end'}
+                  open={open}
+                  disableFocusListener
+                  disableHoverListener
+                  disableTouchListener
+                  className={s.toolTip}
+                >
+                  <button type={'button'} className={s.popImgWrap}>
+                    <img className={s.popImg} src={pop} alt="" onClick={handleTooltipOpen} />
+                  </button>
+                </SuperTooltip>
+              </div>
+            </ClickAwayListener>
           ) : (
             ''
           )}
-        </h1>
+        </div>
+
         {userPackId === userId ? (
           <div>
             <AddNewCardModal title={'Add new card'} createNewCardHandler={createNewCardHandler} />

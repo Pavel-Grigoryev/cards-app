@@ -18,7 +18,7 @@ import { SuperButton } from 'common/components/SuperButton/SuperButton'
 
 type EditPackModalPropsType = {
   title: any
-  updatePack: (packName: string, isPrivatePack: boolean) => void
+  updatePack: (packName: string, isPrivatePack: boolean, cover: string) => void
   currentPackName: string
   isPrivate: boolean
   disabledButton: boolean
@@ -41,12 +41,14 @@ export const EditPackModal: FC<EditPackModalPropsType> = ({
     initialValues: {
       packName: currentPackName,
       isPrivatePack: isPrivate,
+      cover: coverImg,
     },
 
     validationSchema: addNewPackSchema,
 
     onSubmit: values => {
-      updatePack(values.packName, values.isPrivatePack)
+      debugger
+      updatePack(values.packName, values.isPrivatePack, values.cover)
       setOpen(false)
     },
   })

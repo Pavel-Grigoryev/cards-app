@@ -47,7 +47,7 @@ export const ModalWin: FC<PropsWithChildren<ModalPropsType>> = ({
   return (
     <div>
       <li className={s.linkBlock}>
-        <button className={s.button} onClick={handleOpen}>
+        <button type={'button'} className={s.button} onClick={handleOpen}>
           <img className={s.image} src={img} alt="" />
           <span className={s.title}>{title}</span>
         </button>
@@ -62,7 +62,7 @@ export const ModalWin: FC<PropsWithChildren<ModalPropsType>> = ({
           <h5 className={s.header}>
             {modalHeader}
             <span className={s.close}>
-              <IconButton onClick={handleClose}>
+              <IconButton type={'button'} onClick={handleClose}>
                 <CloseIcon />
               </IconButton>
             </span>

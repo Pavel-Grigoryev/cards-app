@@ -10,6 +10,10 @@
   }
 }
 
+.titleWrapper {
+  display: flex;
+}
+
 .title {
   max-width: 500px;
   white-space: nowrap;
@@ -33,4 +37,8 @@
 .popImg{
   width: 21px;
   height: 21px;
+}
+
+.toolTip {
+  z-index: 1000 !important;
 }

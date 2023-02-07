@@ -46,26 +46,29 @@ export const Dropdown = (props: DropdownPropsType) => {
 
   return (
     <ul className={s.block}>
-      <EditPackModal
-        title={'Edit'}
-        disabledButton={status === 'loading'}
-        currentPackName={packName}
-        isPrivate={isPrivate}
-        coverImg={coverImg}
-        updatePack={(packName: string, isPrivatePack: boolean) => {
-          updatePackHandler(id!, packName, isPrivatePack)
-        }}
-        img={edit}
-      />
-
-      <DeleteModal
-        title={'Delete'}
-        name={packName}
-        type={'pack'}
-        disabledButton={status === 'loading'}
-        deleteItem={() => deletePackHandler(id!)}
-        img={del}
-      />
+      <li>
+        <EditPackModal
+          title={'Edit'}
+          disabledButton={status === 'loading'}
+          currentPackName={packName}
+          isPrivate={isPrivate}
+          coverImg={coverImg}
+          updatePack={(packName: string, isPrivatePack: boolean) => {
+            updatePackHandler(id!, packName, isPrivatePack)
+          }}
+          img={edit}
+        />
+      </li>
+      <li>
+        <DeleteModal
+          title={'Delete'}
+          name={packName}
+          type={'pack'}
+          disabledButton={status === 'loading'}
+          deleteItem={() => deletePackHandler(id!)}
+          img={del}
+        />
+      </li>
       <li className={s.linkBlock}>
         <button className={s.button} onClick={() => learnPack()}>
           <img className={s.image} src={learn} alt="" />
