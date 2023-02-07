@@ -18,3 +18,5 @@ export const packCardsDeleteStatusData = (state: AppRootStateType) =>
   state.cards.packCardsDeleteStatus
 
 export const packNameData = (state: AppRootStateType) => state.cards.packName
+
+export const packDeckCover = (state: AppRootStateType) => state.cards.packDeckCover

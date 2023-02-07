@@ -25,7 +25,6 @@ import {
   showPackCardsData,
   sortPacks,
 } from 'common/selectors/packs-selector'
-import { packsListTableNames } from 'common/utils/tableHeaderData'
 
 export const PacksList = (props: any) => {
   const page = useAppSelector(pageData)

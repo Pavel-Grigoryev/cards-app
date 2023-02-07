@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 
-import ClickAwayListener from '@mui/material/ClickAwayListener'
 import { Navigate, useParams } from 'react-router-dom'
 
 import { CardsTable } from '../../common/components/CardsTable/CardsTable'
@@ -19,6 +18,7 @@ import {
 import s from './PackPage.module.scss'
 
 import { useAppDispatch, useAppSelector } from 'app/store'
+import noImg from 'assets/images/download.png'
 import pop from 'assets/images/pop.png'
 import { Dropdown } from 'common/components/Dropdown/Dropdown'
 import { NotFound } from 'common/components/NotFound/NotFound'
@@ -33,6 +33,7 @@ import {
   cardsData,
   cardsTotalCountData,
   packCardsDeleteStatusData,
+  packDeckCover,
   packNameData,
   packUserId,
   pageCountData,
@@ -61,6 +62,12 @@ export const PackPage = (props: PackPagePropsType) => {
   const packCardsDeleteStatus = useAppSelector(packCardsDeleteStatusData)
 
   const { id } = useParams<string>()
+
+  const [isImgBroken, setImgBroken] = useState(false)
+
+  const errorHandler = () => {
+    setImgBroken(true)
+  }
 
   const [open, setOpen] = useState(false)
 
@@ -211,6 +218,15 @@ export const PackPage = (props: PackPagePropsType) => {
           <SuperButton title={'Learn to pack'} onClick={() => props.studyPackHandler(id!)} />
         )}
       </div>
+      {packCover && (
+        <img
+          alt={'cover'}
+          src={isImgBroken ? noImg : packCover}
+          className={s.deckCover}
+          onError={errorHandler}
+        />
+      )}
+
       <div>
         <div className={s.searchBlock}>
           <Search

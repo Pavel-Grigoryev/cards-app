@@ -28,6 +28,13 @@ export const NumberOfCards = (props: NumberOfCardsType) => {
     dispatch(setCardsCount({ values: value }))
   }, [value])
 
+  useEffect(() => {
+    if ((value[0] === props.minCardsCount && value[1] === props.maxCardsCount) || value[1] === 0)
+      return
+
+    setValue([props.min, props.max])
+  }, [])
+
   return (
     <div className={s.main}>
       <p className={s.title}>Number of cards</p>
