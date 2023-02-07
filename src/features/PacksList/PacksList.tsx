@@ -5,8 +5,8 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useAppSelector } from '../../app/store'
 import { Filters } from '../../common/components/Filters/Filters'
 import { NotFound } from '../../common/components/NotFound/NotFound'
+import { PacksTable } from '../../common/components/PacksTable/PacksTable'
 import { SuperPagination } from '../../common/components/SuperPagination/SuperPagination'
-import { SuperTable } from '../../common/components/SuperTable/SuperTable'
 import { useActions } from '../../common/hooks/useActions'
 import {
   cardPacksTotalCountData,
@@ -14,21 +14,18 @@ import {
   maxData,
   minCardsCountData,
   minData,
-  packsData,
   pageCountData,
   pageData,
   searchData,
   showPackCardsData,
   sortPacks,
 } from '../../common/selectors/packs-selector'
-import { packsListTableNames } from '../../common/utils/tableHeaderData'
 import { AddNewPackModal } from '../Modals/AddNewPackModal/AddNewPackModal'
 
 import { packThunks, ShowPackCardsType } from './packsList-reducer'
 import s from './PacksList.module.scss'
 
 export const PacksList = (props: any) => {
-  const packs = useAppSelector(packsData)
   const page = useAppSelector(pageData)
   const pageCount = useAppSelector(pageCountData)
   const sort = useAppSelector(sortPacks)
@@ -127,9 +124,7 @@ export const PacksList = (props: any) => {
         />
         {cardPacksTotalCount ? (
           <div className={s.wrapper}>
-            <SuperTable
-              headerNames={packsListTableNames}
-              bodyData={packs}
+            <PacksTable
               deleteHandler={deletePackHandler}
               updatePackHandler={updatePackHandler}
               studyHandler={props.studyPackHandler}
