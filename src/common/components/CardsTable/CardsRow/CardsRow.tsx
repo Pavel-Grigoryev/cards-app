@@ -107,8 +107,8 @@ export const CardsRow: FC<CardsRowPropsType> = ({ row, deleteHandler, updateCard
               <EditCardModal
                 title={<EditIcon fontSize={'small'} />}
                 rowQuestion={row.question}
-                rowAnswerImg={row.answerImg}
-                rowQuestionImg={row.questionImg}
+                rowAnswerImg={row.answerImg ? row.answerImg : NEW_CARD.EMPTY_IMG}
+                rowQuestionImg={row.questionImg ? row.questionImg : NEW_CARD.EMPTY_IMG}
                 disabledButton={status === 'loading'}
                 rowAnswer={row.answer}
                 updateCard={(newQuestion, newAnswer, mode) => {

@@ -10,8 +10,8 @@ import s from './PacksList.module.scss'
 import { useAppSelector } from 'app/store'
 import { Filters } from 'common/components/Filters/Filters'
 import { NotFound } from 'common/components/NotFound/NotFound'
+import { PacksTable } from 'common/components/PacksTable/PacksTable'
 import { SuperPagination } from 'common/components/SuperPagination/SuperPagination'
-import { PacksTable } from '../../common/components/PacksTable/PacksTable'
 import { useActions } from 'common/hooks/useActions'
 import {
   cardPacksTotalCountData,
