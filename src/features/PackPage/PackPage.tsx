@@ -3,7 +3,6 @@ import React, { useEffect } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 
 import { CardsTable } from '../../common/components/CardsTable/CardsTable'
-import { Dropdown } from '../../common/components/Dropdown/Dropdown'
 import { AddNewCardModal, ModeType } from '../Modals/AddNewCardModal/AddNewCardModal'
 
 import {

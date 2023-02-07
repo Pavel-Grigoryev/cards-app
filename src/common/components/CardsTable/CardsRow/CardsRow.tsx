@@ -11,6 +11,7 @@ import { useAppSelector } from '../../../../app/store'
 import { ModeType } from '../../../../features/Modals/AddNewCardModal/AddNewCardModal'
 import { DeleteModal } from '../../../../features/Modals/DeleteModal/DeleteModal'
 import { EditCardModal } from '../../../../features/Modals/EditCardModal/EditCardModal'
+import { NEW_CARD } from '../../../constants/newCardEmptyProp'
 import { isLoading } from '../../../selectors/app-selector'
 import { userIdData } from '../../../selectors/profile-selector'
 
@@ -49,7 +50,7 @@ export const CardsRow: FC<CardsRowPropsType> = ({ row, deleteHandler, updateCard
       }}
     >
       <TableCell component="th" scope="row">
-        {row.questionImg && row.questionImg !== 'no_image' ? (
+        {row.questionImg && row.questionImg !== NEW_CARD.EMPTY_IMG ? (
           <img
             alt="cover"
             id={row._id}
@@ -72,7 +73,7 @@ export const CardsRow: FC<CardsRowPropsType> = ({ row, deleteHandler, updateCard
         )}
       </TableCell>
       <TableCell align="left">
-        {row.answerImg && row.answerImg !== 'no_image' ? (
+        {row.answerImg && row.answerImg !== NEW_CARD.EMPTY_IMG ? (
           <img
             alt="cover"
             id={row._id}
@@ -106,6 +107,8 @@ export const CardsRow: FC<CardsRowPropsType> = ({ row, deleteHandler, updateCard
               <EditCardModal
                 title={<EditIcon fontSize={'small'} />}
                 rowQuestion={row.question}
+                rowAnswerImg={row.answerImg}
+                rowQuestionImg={row.questionImg}
                 disabledButton={status === 'loading'}
                 rowAnswer={row.answer}
                 updateCard={(newQuestion, newAnswer, mode) => {
