@@ -9,6 +9,7 @@ import { CardType } from '../../app/api/cardsAPI/cardsAPITypes'
 import { useAppDispatch, useAppSelector } from '../../app/store'
 import { ReturnLink } from '../../common/components/ReturnLink/ReturnLink'
 import { SuperButton } from '../../common/components/SuperButton/SuperButton'
+import { NEW_CARD } from '../../common/constants/newCardEmptyProp'
 import { PATH } from '../../common/routes/routes'
 import { cardsData } from '../../common/selectors/cards-selector'
 import { getCardsTC, sendCardGradeTC } from '../PackPage/packPage-reducer'
@@ -77,7 +78,7 @@ export const LearnPage = () => {
         <h1 className={s.title}>Learn {`"${packName}"`}</h1>
         <div className={s.case}>
           <div>
-            {card.questionImg ? (
+            {card.questionImg && card.questionImg !== NEW_CARD.EMPTY_IMG ? (
               <div>
                 <div className={s.question}>
                   Question:
@@ -113,7 +114,7 @@ export const LearnPage = () => {
             )}
             {isChecked && (
               <>
-                {card.answerImg ? (
+                {card.answerImg && card.answerImg !== NEW_CARD.EMPTY_IMG ? (
                   <div>
                     <div className={s.question}>Answer:</div>
                     <div className={s.imageBlock}>
