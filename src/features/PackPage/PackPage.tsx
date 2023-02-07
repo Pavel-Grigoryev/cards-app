@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react'
 
-import { useParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 
 import { CardsTable } from '../../common/components/CardsTable/CardsTable'
 import { Dropdown } from '../../common/components/Dropdown/Dropdown'
 import { AddNewCardModal, ModeType } from '../Modals/AddNewCardModal/AddNewCardModal'
 
 import {
+  changePackCardsDeleteStatus,
   createCardTC,
   deleteCardTC,
   getCardsTC,
@@ -19,16 +20,20 @@ import s from './PackPage.module.scss'
 
 import { useAppDispatch, useAppSelector } from 'app/store'
 import pop from 'assets/images/pop.png'
+import { Dropdown } from 'common/components/Dropdown/Dropdown'
 import { NotFound } from 'common/components/NotFound/NotFound'
 import { ReturnLink } from 'common/components/ReturnLink/ReturnLink'
 import { Search } from 'common/components/Search/Search'
 import { SuperButton } from 'common/components/SuperButton/SuperButton'
 import { SuperPagination } from 'common/components/SuperPagination/SuperPagination'
 import { SuperTooltip } from 'common/components/SuperTooltip/SuperTooltip'
+import { NEW_CARD } from 'common/constants/newCardEmptyProp'
 import { PATH } from 'common/routes/routes'
 import {
   cardsData,
   cardsTotalCountData,
+  packCardsDeleteStatusData,
+  packNameData,
   packUserId,
   pageCountData,
   pageData,
@@ -52,7 +57,8 @@ export const PackPage = (props: PackPagePropsType) => {
   const sort = useAppSelector(sortCards)
   const userPackId = useAppSelector(packUserId)
   const userId = useAppSelector(userIdData)
-  const packName = useAppSelector(state => state.cards.packName)
+  const packName = useAppSelector(packNameData)
+  const packCardsDeleteStatus = useAppSelector(packCardsDeleteStatusData)
 
   const { id } = useParams<string>()
 
@@ -60,12 +66,26 @@ export const PackPage = (props: PackPagePropsType) => {
     if (id) {
       if (mode === 'text') {
         dispatch(
-          createCardTC({ card: { cardsPack_id: id, question: newQuestion, answer: newAnswer } })
+          createCardTC({
+            card: {
+              cardsPack_id: id,
+              question: newQuestion,
+              answer: newAnswer,
+              answerImg: NEW_CARD.EMPTY_IMG,
+              questionImg: NEW_CARD.EMPTY_IMG,
+            },
+          })
         )
       } else {
         dispatch(
           createCardTC({
-            card: { cardsPack_id: id, questionImg: newQuestion, answerImg: newAnswer },
+            card: {
+              cardsPack_id: id,
+              questionImg: newQuestion,
+              answerImg: newAnswer,
+              question: NEW_CARD.EMPTY_QUES,
+              answer: NEW_CARD.EMPTY_ANS,
+            },
           })
         )
       }
@@ -86,7 +106,6 @@ export const PackPage = (props: PackPagePropsType) => {
     newAnswer: string,
     mode: ModeType
   ) => {
-    debugger
     if (mode === 'text') {
       dispatch(
         updateCardTC({
@@ -94,21 +113,20 @@ export const PackPage = (props: PackPagePropsType) => {
             _id: cardId,
             question: newQuestion,
             answer: newAnswer,
-            answerImg: 'no_image',
-            questionImg: 'no_image',
+            answerImg: NEW_CARD.EMPTY_IMG,
+            questionImg: NEW_CARD.EMPTY_IMG,
           },
         })
       )
     } else {
-      debugger
       dispatch(
         updateCardTC({
           card: {
             _id: cardId,
             questionImg: newQuestion,
             answerImg: newAnswer,
-            question: 'no answer',
-            answer: 'no question',
+            question: NEW_CARD.EMPTY_QUES,
+            answer: NEW_CARD.EMPTY_ANS,
           },
         })
       )
@@ -129,7 +147,15 @@ export const PackPage = (props: PackPagePropsType) => {
         getCardsTC({ cardsPack_id: id, cardQuestion: search, page, pageCount, sortCards: sort })
       )
     }
+
+    return () => {
+      dispatch(changePackCardsDeleteStatus({ packCardsDeleteStatus: 'idle' }))
+    }
   }, [search, page, pageCount, sort])
+
+  if (packCardsDeleteStatus === 'succeeded') {
+    return <Navigate to={PATH.PACKS_LIST} />
+  }
 
   return (
     <>

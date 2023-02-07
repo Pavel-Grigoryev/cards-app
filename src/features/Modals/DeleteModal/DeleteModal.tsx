@@ -6,6 +6,8 @@ import { SuperModal } from '../../../common/components/SuperModal/SuperModal'
 
 import s from './DeleteModal.module.scss'
 
+import { NEW_CARD } from 'common/constants/newCardEmptyProp'
+
 export const DeleteModal: FC<DeleteCardModalPropsType> = ({
   title,
   name,
@@ -14,6 +16,8 @@ export const DeleteModal: FC<DeleteCardModalPropsType> = ({
   type,
 }) => {
   const [open, setOpen] = useState(false)
+
+  const cardName = name === NEW_CARD.EMPTY_QUES ? 'card' : name
 
   const deleteHandler = () => {
     deleteItem()
@@ -33,7 +37,7 @@ export const DeleteModal: FC<DeleteCardModalPropsType> = ({
       >
         <div className={s.wrapper}>
           <p className={s.desc}>
-            <span>Do you really want to remove</span> <span className={s.name}>{name}</span>
+            <span>Do you really want to remove</span> <span className={s.name}>{cardName}</span>
             <span>? All cards will be deleted.</span>
           </p>
           <div className={s.buttons}>

@@ -26,6 +26,8 @@ export const AddNewCardModal: FC<AddNewCardModalPropsType> = ({ title, createNew
 
   const handleChange = (e: SelectChangeEvent) => {
     setMode(e.target.value as ModeType)
+    formik.setFieldValue('answer', '')
+    formik.setFieldValue('question', '')
   }
 
   const formik = useFormik({
@@ -33,6 +35,8 @@ export const AddNewCardModal: FC<AddNewCardModalPropsType> = ({ title, createNew
       question: '',
       answer: '',
     },
+    validateOnBlur: false,
+    validateOnMount: false,
 
     validationSchema: addNewCardSchema,
 
@@ -115,6 +119,7 @@ export const AddNewCardModal: FC<AddNewCardModalPropsType> = ({ title, createNew
                   formikTouched={formik.touched.question}
                   formikErrors={formik.errors.question}
                 />
+
                 <InputQuestion
                   title={'Answer:'}
                   onChangeImg={onChangeAnswerImg}

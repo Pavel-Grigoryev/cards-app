@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 
-import { cardsAPI } from '../../app/api/cardsAPI/cardsAPI'
+import { cardsAPI } from 'app/api/cardsAPI/cardsAPI'
 import {
   CardType,
   CreateNewCardType,
@@ -9,10 +9,10 @@ import {
   GetCardsType,
   SendCardGradeType,
   UpdateCardType,
-} from '../../app/api/cardsAPI/cardsAPITypes'
-import { setAppStatusAC } from '../../app/app-reducer'
-import { AppThunk } from '../../app/store'
-import { handleServerNetworkError } from '../../common/utils/error-utils'
+} from 'app/api/cardsAPI/cardsAPITypes'
+import { RequestStatusType, setAppStatusAC } from 'app/app-reducer'
+import { AppThunk } from 'app/store'
+import { handleServerNetworkError } from 'common/utils/error-utils'
 
 const initialState = {
   cards: [] as CardType[],
@@ -27,6 +27,7 @@ const initialState = {
   packName: '',
   packPrivate: false,
   packDeckCover: '',
+  packCardsDeleteStatus: 'idle' as RequestStatusType,
 }
 
 const slice = createSlice({
@@ -42,6 +43,7 @@ const slice = createSlice({
         sortCards: state.sortCards,
         packPrivate: action.payload.data.packPrivate,
         packDeckCover: action.payload.data.packDeckCover,
+        packCardsDeleteStatus: 'idle',
       }
     },
     updateCardsPagination(state, action: PayloadAction<{ page: number; pageCount: number }>) {
@@ -68,6 +70,12 @@ const slice = createSlice({
     changePackName(state, action: PayloadAction<{ packName: string }>) {
       state.packName = action.payload.packName
     },
+    changePackCardsDeleteStatus(
+      state,
+      action: PayloadAction<{ packCardsDeleteStatus: RequestStatusType }>
+    ) {
+      state.packCardsDeleteStatus = action.payload.packCardsDeleteStatus
+    },
   },
 })
 
@@ -82,6 +90,7 @@ export const {
   setSortCards,
   updateCardGrade,
   changePackName,
+  changePackCardsDeleteStatus,
 } = slice.actions
 
 //Thunks

@@ -1,21 +1,20 @@
 import React from 'react'
 
-import { useNavigate, useParams } from 'react-router-dom'
-
-import { RequestStatusType } from '../../../app/app-reducer'
-import { useAppDispatch, useAppSelector } from '../../../app/store'
-import { deletePackTC, updatePackTC } from '../../../features/PacksList/packsList-reducer'
-import { PATH } from '../../routes/routes'
-import { isLoading } from '../../selectors/app-selector'
-import { cardsTotalCountData } from '../../selectors/cards-selector'
+import { useParams } from 'react-router-dom'
 
 import s from './Dropdown.module.scss'
 import { DeleteModal } from './Modal/DeleteModal/DeleteModal'
 import { EditPackModal } from './Modal/EditPackModal/EditPackModal'
 
+import { RequestStatusType } from 'app/app-reducer'
+import { useAppDispatch, useAppSelector } from 'app/store'
 import del from 'assets/images/Delete.png'
 import edit from 'assets/images/Edit.png'
 import learn from 'assets/images/Learn.png'
+import { isLoading } from 'common/selectors/app-selector'
+import { cardsTotalCountData } from 'common/selectors/cards-selector'
+import { changePackCardsDeleteStatus } from 'features/PackPage/packPage-reducer'
+import { deletePackTC, updatePackTC } from 'features/PacksList/packsList-reducer'
 
 export const Dropdown = (props: DropdownPropsType) => {
   const dispatch = useAppDispatch()
@@ -26,8 +25,6 @@ export const Dropdown = (props: DropdownPropsType) => {
   const isPrivate = useAppSelector(state => state.cards.packPrivate)
   const coverImg = useAppSelector(state => state.cards.packDeckCover)
 
-  const navigate = useNavigate()
-
   const { id } = useParams<string>()
 
   const updatePackHandler = (packId: string, packName: string, isPrivatePack: boolean) => {
@@ -35,8 +32,8 @@ export const Dropdown = (props: DropdownPropsType) => {
   }
 
   const deletePackHandler = (packId: string) => {
+    dispatch(changePackCardsDeleteStatus({ packCardsDeleteStatus: 'loading' }))
     dispatch(deletePackTC(packId))
-    // navigate(PATH.PACKS_LIST)
   }
 
   const learnPack = () => {
