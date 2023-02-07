@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 
 import { useParams } from 'react-router-dom'
 
+import { CardsTable } from '../../common/components/CardsTable/CardsTable'
 import { Dropdown } from '../../common/components/Dropdown/Dropdown'
 import { AddNewCardModal, ModeType } from '../Modals/AddNewCardModal/AddNewCardModal'
 
@@ -23,7 +24,6 @@ import { ReturnLink } from 'common/components/ReturnLink/ReturnLink'
 import { Search } from 'common/components/Search/Search'
 import { SuperButton } from 'common/components/SuperButton/SuperButton'
 import { SuperPagination } from 'common/components/SuperPagination/SuperPagination'
-import { SuperTable } from 'common/components/SuperTable/SuperTable'
 import { SuperTooltip } from 'common/components/SuperTooltip/SuperTooltip'
 import { PATH } from 'common/routes/routes'
 import {
@@ -37,7 +37,6 @@ import {
 } from 'common/selectors/cards-selector'
 import { userIdData } from 'common/selectors/profile-selector'
 import { SearchPaperSX } from 'common/styles/sx/sx_styles'
-import { packPageTableNames } from 'common/utils/tableHeaderData'
 
 type PackPagePropsType = {
   studyPackHandler: (cardId: string) => void
@@ -96,7 +95,7 @@ export const PackPage = (props: PackPagePropsType) => {
             question: newQuestion,
             answer: newAnswer,
             answerImg: 'no_image',
-            questionImg: 'no_image:',
+            questionImg: 'no_image',
           },
         })
       )
@@ -177,9 +176,7 @@ export const PackPage = (props: PackPagePropsType) => {
 
         {cardsTotalCount ? (
           <div className={s.wrapper}>
-            <SuperTable
-              headerNames={packPageTableNames}
-              bodyData={cards}
+            <CardsTable
               deleteHandler={deleteCardHandler}
               sortingHandler={sortingHandler}
               updateCardHandler={updateCardHandler}
