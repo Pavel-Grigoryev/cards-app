@@ -61,6 +61,9 @@ export const PackPage = (props: PackPagePropsType) => {
   const userId = useAppSelector(userIdData)
   const packName = useAppSelector(packNameData)
   const packCardsDeleteStatus = useAppSelector(packCardsDeleteStatusData)
+  const packCover = useAppSelector(packDeckCover)
+
+  console.log(packCover)
 
   const { id } = useParams<string>()
 
@@ -185,7 +188,12 @@ export const PackPage = (props: PackPagePropsType) => {
             <ClickAwayListener onClickAway={handleTooltipClose}>
               <div>
                 <SuperTooltip
-                  title={<Dropdown learn={props.studyPackHandler} />}
+                  title={
+                    <Dropdown
+                      learn={props.studyPackHandler}
+                      handleTooltipClose={handleTooltipClose}
+                    />
+                  }
                   placement={'bottom-end'}
                   open={open}
                   disableFocusListener
@@ -220,12 +228,14 @@ export const PackPage = (props: PackPagePropsType) => {
         )}
       </div>
       {packCover && (
-        <img
-          alt={'cover'}
-          src={isImgBroken ? noImg : packCover}
-          className={s.deckCover}
-          onError={errorHandler}
-        />
+        <div className={s.deckCoverBlock}>
+          <img
+            alt={'cover'}
+            src={isImgBroken ? noImg : packCover}
+            className={s.deckCover}
+            onError={errorHandler}
+          />
+        </div>
       )}
 
       <div>

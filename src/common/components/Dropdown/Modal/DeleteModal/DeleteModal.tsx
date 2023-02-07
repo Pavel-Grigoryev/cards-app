@@ -13,12 +13,14 @@ export const DeleteModal: FC<DeleteCardModalPropsType> = ({
   disabledButton,
   type,
   img,
+  handleTooltipClose,
 }) => {
   const [open, setOpen] = useState(false)
 
   const deleteHandler = () => {
     deleteItem()
     setOpen(false)
+    handleTooltipClose()
   }
   const header = type === 'pack' ? 'Delete Pack' : 'Delete Card'
 
@@ -69,4 +71,5 @@ type DeleteCardModalPropsType = {
   disabledButton: boolean
   type: string
   img: string
+  handleTooltipClose: () => void
 }

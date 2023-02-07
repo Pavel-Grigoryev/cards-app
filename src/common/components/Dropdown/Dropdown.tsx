@@ -27,8 +27,17 @@ export const Dropdown = (props: DropdownPropsType) => {
 
   const { id } = useParams<string>()
 
-  const updatePackHandler = (packId: string, packName: string, isPrivatePack: boolean) => {
-    dispatch(updatePackTC({ cardsPack: { _id: packId, name: packName, private: isPrivatePack } }))
+  const updatePackHandler = (
+    packId: string,
+    packName: string,
+    isPrivatePack: boolean,
+    cover: string
+  ) => {
+    dispatch(
+      updatePackTC({
+        cardsPack: { _id: packId, name: packName, private: isPrivatePack, deckCover: cover },
+      })
+    )
   }
 
   const deletePackHandler = (packId: string) => {
@@ -53,10 +62,11 @@ export const Dropdown = (props: DropdownPropsType) => {
           currentPackName={packName}
           isPrivate={isPrivate}
           coverImg={coverImg}
-          updatePack={(packName: string, isPrivatePack: boolean) => {
-            updatePackHandler(id!, packName, isPrivatePack)
+          updatePack={(packName: string, isPrivatePack: boolean, cover: string) => {
+            updatePackHandler(id!, packName, isPrivatePack, cover)
           }}
           img={edit}
+          handleTooltipClose={props.handleTooltipClose}
         />
       </li>
       <li>
@@ -67,6 +77,7 @@ export const Dropdown = (props: DropdownPropsType) => {
           disabledButton={status === 'loading'}
           deleteItem={() => deletePackHandler(id!)}
           img={del}
+          handleTooltipClose={props.handleTooltipClose}
         />
       </li>
       <li className={s.linkBlock}>
@@ -81,4 +92,5 @@ export const Dropdown = (props: DropdownPropsType) => {
 
 type DropdownPropsType = {
   learn: (packId: string) => void
+  handleTooltipClose: () => void
 }

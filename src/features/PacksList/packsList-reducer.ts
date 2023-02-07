@@ -1,7 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios, { AxiosError } from 'axios'
 
-import { changePackCardsDeleteStatus, changePackName } from '../PackPage/packPage-reducer'
+import {
+  changePackCardsDeleteStatus,
+  changePackName,
+  setPackDeckCover,
+} from '../PackPage/packPage-reducer'
 
 import { cardsAPI } from 'app/api/cardsAPI/cardsAPI'
 import {
@@ -174,6 +178,7 @@ export const updatePackTC =
       const res = await cardsAPI.updatePack(data)
 
       dispatch(changePackName({ packName: res.data.updatedCardsPack.name }))
+      dispatch(setPackDeckCover(res.data.updatedCardsPack.deckCover))
       dispatch(getPacksTC())
       dispatch(setAppStatusAC({ status: 'succeeded' }))
     } catch (err: AxiosError<{ error: string }> | any) {

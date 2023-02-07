@@ -24,6 +24,7 @@ type EditPackModalPropsType = {
   disabledButton: boolean
   img: string
   coverImg: string
+  handleTooltipClose: () => void
 }
 
 export const EditPackModal: FC<EditPackModalPropsType> = ({
@@ -34,6 +35,7 @@ export const EditPackModal: FC<EditPackModalPropsType> = ({
   isPrivate,
   img,
   coverImg,
+  handleTooltipClose,
 }) => {
   const [open, setOpen] = useState(false)
 
@@ -47,9 +49,9 @@ export const EditPackModal: FC<EditPackModalPropsType> = ({
     validationSchema: addNewPackSchema,
 
     onSubmit: values => {
-      debugger
       updatePack(values.packName, values.isPrivatePack, values.cover)
       setOpen(false)
+      handleTooltipClose()
     },
   })
 
@@ -72,7 +74,7 @@ export const EditPackModal: FC<EditPackModalPropsType> = ({
           <FormControl>
             <InputQuestion title={'Cover:'} onChangeImg={onChangeImg} currentImg={coverImg} />
           </FormControl>
-          <FormControl fullWidth sx={{ marginBottom: '15px' }}>
+          <FormControl fullWidth sx={{ margin: '20px 0 15px' }}>
             <InputLabel color={'secondary'}>Name pack</InputLabel>
             <Input
               id="standard-basic"
