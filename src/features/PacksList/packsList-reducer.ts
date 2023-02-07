@@ -1,17 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios, { AxiosError } from 'axios'
 
-import { cardsAPI } from '../../app/api/cardsAPI/cardsAPI'
+import { changePackCardsDeleteStatus, changePackName } from '../PackPage/packPage-reducer'
+
+import { cardsAPI } from 'app/api/cardsAPI/cardsAPI'
 import {
   CreateNewPackType,
   GetPacksResponseType,
   PackType,
   UpdatePackType,
-} from '../../app/api/cardsAPI/cardsAPITypes'
-import { setAppErrorAC, setAppStatusAC } from '../../app/app-reducer'
-import { AppThunk } from '../../app/store'
-import { handleServerNetworkError } from '../../common/utils/error-utils'
-import { changePackName } from '../PackPage/packPage-reducer'
+} from 'app/api/cardsAPI/cardsAPITypes'
+import { setAppErrorAC, setAppStatusAC } from 'app/app-reducer'
+import { AppThunk } from 'app/store'
+import { handleServerNetworkError } from 'common/utils/error-utils'
 
 const initialState = {
   cardPacks: [] as PackType[],
@@ -145,12 +146,18 @@ export const createNewPackTC =
 
 export const deletePackTC =
   (data: string): AppThunk =>
-  async dispatch => {
+  async (dispatch, getState) => {
     dispatch(setAppStatusAC({ status: 'loading' }))
+    const packCardsDeleteStatus = getState().cards.packCardsDeleteStatus
+
     try {
       const res = await cardsAPI.deletePack(data)
 
-      dispatch(getPacksTC())
+      if (packCardsDeleteStatus !== 'loading') {
+        dispatch(getPacksTC())
+      } else {
+        dispatch(changePackCardsDeleteStatus({ packCardsDeleteStatus: 'succeeded' }))
+      }
       dispatch(setAppStatusAC({ status: 'succeeded' }))
     } catch (e) {
       if (axios.isAxiosError(e)) {

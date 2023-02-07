@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react'
 
-import { useParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 
 import { AddNewCardModal, ModeType } from '../Modals/AddNewCardModal/AddNewCardModal'
 
 import {
+  changePackCardsDeleteStatus,
   createCardTC,
   deleteCardTC,
   getCardsTC,
@@ -30,6 +31,8 @@ import { PATH } from 'common/routes/routes'
 import {
   cardsData,
   cardsTotalCountData,
+  packCardsDeleteStatusData,
+  packNameData,
   packUserId,
   pageCountData,
   pageData,
@@ -54,7 +57,8 @@ export const PackPage = (props: PackPagePropsType) => {
   const sort = useAppSelector(sortCards)
   const userPackId = useAppSelector(packUserId)
   const userId = useAppSelector(userIdData)
-  const packName = useAppSelector(state => state.cards.packName)
+  const packName = useAppSelector(packNameData)
+  const packCardsDeleteStatus = useAppSelector(packCardsDeleteStatusData)
 
   const { id } = useParams<string>()
 
@@ -102,7 +106,6 @@ export const PackPage = (props: PackPagePropsType) => {
     newAnswer: string,
     mode: ModeType
   ) => {
-    debugger
     if (mode === 'text') {
       dispatch(
         updateCardTC({
@@ -116,7 +119,6 @@ export const PackPage = (props: PackPagePropsType) => {
         })
       )
     } else {
-      debugger
       dispatch(
         updateCardTC({
           card: {
@@ -145,7 +147,15 @@ export const PackPage = (props: PackPagePropsType) => {
         getCardsTC({ cardsPack_id: id, cardQuestion: search, page, pageCount, sortCards: sort })
       )
     }
+
+    return () => {
+      dispatch(changePackCardsDeleteStatus({ packCardsDeleteStatus: 'idle' }))
+    }
   }, [search, page, pageCount, sort])
+
+  if (packCardsDeleteStatus === 'succeeded') {
+    return <Navigate to={PATH.PACKS_LIST} />
+  }
 
   return (
     <>

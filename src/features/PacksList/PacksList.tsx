@@ -2,12 +2,17 @@ import React, { useEffect } from 'react'
 
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
-import { useAppSelector } from '../../app/store'
-import { Filters } from '../../common/components/Filters/Filters'
-import { NotFound } from '../../common/components/NotFound/NotFound'
-import { SuperPagination } from '../../common/components/SuperPagination/SuperPagination'
-import { SuperTable } from '../../common/components/SuperTable/SuperTable'
-import { useActions } from '../../common/hooks/useActions'
+import { AddNewPackModal } from '../Modals/AddNewPackModal/AddNewPackModal'
+
+import { packThunks, ShowPackCardsType } from './packsList-reducer'
+import s from './PacksList.module.scss'
+
+import { useAppSelector } from 'app/store'
+import { Filters } from 'common/components/Filters/Filters'
+import { NotFound } from 'common/components/NotFound/NotFound'
+import { SuperPagination } from 'common/components/SuperPagination/SuperPagination'
+import { SuperTable } from 'common/components/SuperTable/SuperTable'
+import { useActions } from 'common/hooks/useActions'
 import {
   cardPacksTotalCountData,
   maxCardsCountData,
@@ -20,12 +25,8 @@ import {
   searchData,
   showPackCardsData,
   sortPacks,
-} from '../../common/selectors/packs-selector'
-import { packsListTableNames } from '../../common/utils/tableHeaderData'
-import { AddNewPackModal } from '../Modals/AddNewPackModal/AddNewPackModal'
-
-import { packThunks, ShowPackCardsType } from './packsList-reducer'
-import s from './PacksList.module.scss'
+} from 'common/selectors/packs-selector'
+import { packsListTableNames } from 'common/utils/tableHeaderData'
 
 export const PacksList = (props: any) => {
   const packs = useAppSelector(packsData)
