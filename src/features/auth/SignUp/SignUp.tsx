@@ -5,22 +5,15 @@ import FormControl from '@mui/material/FormControl'
 import { useFormik } from 'formik'
 import { Navigate, NavLink } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from '../../../app/store'
-import { SuperButton } from '../../../common/components/SuperButton/SuperButton'
-import {
-  SuperEmailInput,
-  SuperPasswordInput,
-} from '../../../common/components/SuperInputs/SuperInputs'
-import { PATH } from '../../../common/routes/routes'
-import {
-  ContainerSX,
-  FormControlSX,
-  FormGroupSX,
-  FormLabelSX,
-} from '../../../common/styles/sx/sx_styles'
-import { signupSchema } from '../../../common/utils/validationSchema'
 import { signUpTC } from '../auth-reducer'
 import styles from '../Auth.module.scss'
+
+import { useAppDispatch, useAppSelector } from 'app/store'
+import { SuperButton } from 'common/components/SuperButton/SuperButton'
+import { SuperEmailInput, SuperPasswordInput } from 'common/components/SuperInputs/SuperInputs'
+import { PATH } from 'common/routes/routes'
+import { ContainerSX, FormControlSX, FormGroupSX, FormLabelSX } from 'common/styles/sx/sx_styles'
+import { signupSchema } from 'common/utils/validationSchema'
 
 export const SignUp = () => {
   const dispatch = useAppDispatch()

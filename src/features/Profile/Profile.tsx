@@ -3,21 +3,22 @@ import React, { useCallback } from 'react'
 import { Grid } from '@mui/material'
 import Button from '@mui/material/Button'
 
-import { RequestStatusType } from '../../app/app-reducer'
-import { useAppDispatch, useAppSelector } from '../../app/store'
-import logoutImg from '../../assets/images/logout.svg'
-import { EditableSpan } from '../../common/components/EditableSpan/EditableSpan'
-import { Preloader } from '../../common/components/Preloader/Preloader'
-import { ReturnLink } from '../../common/components/ReturnLink/ReturnLink'
-import { useActions } from '../../common/hooks/useActions'
-import { PATH } from '../../common/routes/routes'
-import { entityStatusData, profileData } from '../../common/selectors/profile-selector'
-import { ContainerSX } from '../../common/styles/sx/sx_styles'
 import { logoutTC } from '../auth/auth-reducer'
 
 import { InputAvatar } from './InputAvatar/InputAvatar'
 import { profileThunks, ProfileType } from './profile-reducer'
 import s from './Profile.module.scss'
+
+import { RequestStatusType } from 'app/app-reducer'
+import { useAppDispatch, useAppSelector } from 'app/store'
+import logoutImg from 'assets/images/logout.svg'
+import { EditableSpan } from 'common/components/EditableSpan/EditableSpan'
+import { Preloader } from 'common/components/Preloader/Preloader'
+import { ReturnLink } from 'common/components/ReturnLink/ReturnLink'
+import { useActions } from 'common/hooks/useActions'
+import { PATH } from 'common/routes/routes'
+import { entityStatusData, profileData } from 'common/selectors/profile-selector'
+import { ContainerSX } from 'common/styles/sx/sx_styles'
 
 export const Profile = () => {
   const profile = useAppSelector<ProfileType | null>(profileData)

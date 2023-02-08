@@ -2,8 +2,6 @@ import React, { ChangeEvent, useEffect, useState } from 'react'
 
 import IconButton from '@mui/material/IconButton'
 
-import { useActions } from '../../../common/hooks/useActions'
-import { ProfileChangeAvaButton } from '../../../common/styles/sx/sx_styles'
 import { profileThunks } from '../profile-reducer'
 
 import s from './InputAvatar.module.scss'
@@ -11,7 +9,9 @@ import s from './InputAvatar.module.scss'
 import { useAppSelector } from 'app/store'
 import camera from 'assets/images/camera.png'
 import noAva from 'assets/images/no_avatar.svg'
+import { useActions } from 'common/hooks/useActions'
 import { avatarData } from 'common/selectors/profile-selector'
+import { ProfileChangeAvaButton } from 'common/styles/sx/sx_styles'
 import { convertFileToBase64 } from 'common/utils/convertFileToBase64'
 
 export const InputAvatar = () => {

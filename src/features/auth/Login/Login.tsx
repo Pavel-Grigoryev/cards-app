@@ -9,25 +9,23 @@ import Grid from '@mui/material/Grid'
 import { useFormik } from 'formik'
 import { Navigate, NavLink } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from '../../../app/store'
-import { SuperButton } from '../../../common/components/SuperButton/SuperButton'
-import {
-  SuperEmailInput,
-  SuperPasswordInput,
-} from '../../../common/components/SuperInputs/SuperInputs'
-import { PATH } from '../../../common/routes/routes'
+import { signInTC } from '../auth-reducer'
+import styles from '../Auth.module.scss'
+
+import stylesLogin from './Login.module.scss'
+
+import { useAppDispatch, useAppSelector } from 'app/store'
+import { SuperButton } from 'common/components/SuperButton/SuperButton'
+import { SuperEmailInput, SuperPasswordInput } from 'common/components/SuperInputs/SuperInputs'
+import { PATH } from 'common/routes/routes'
 import {
   ContainerSX,
   FormControlLabelSX,
   FormControlSX,
   FormGroupSX,
   FormLabelSX,
-} from '../../../common/styles/sx/sx_styles'
-import { loginSchema } from '../../../common/utils/validationSchema'
-import { signInTC } from '../auth-reducer'
-import styles from '../Auth.module.scss'
-
-import stylesLogin from './Login.module.scss'
+} from 'common/styles/sx/sx_styles'
+import { loginSchema } from 'common/utils/validationSchema'
 
 export const Login = () => {
   const dispatch = useAppDispatch()

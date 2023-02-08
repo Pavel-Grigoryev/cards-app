@@ -1,11 +1,10 @@
 import React from 'react'
 
+import { ThemeProvider, createTheme } from '@mui/material/styles'
 import ReactDOM from 'react-dom/client'
 import './index.scss'
 import { Provider } from 'react-redux'
 import { HashRouter } from 'react-router-dom'
-// eslint-disable-next-line import/order
-import { ThemeProvider, createTheme } from '@mui/material/styles'
 
 import App from './app/App'
 import { store } from './app/store'

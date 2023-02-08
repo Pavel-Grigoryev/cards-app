@@ -5,17 +5,18 @@ import FormControl from '@mui/material/FormControl'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import { useParams } from 'react-router-dom'
 
-import { CardType } from '../../app/api/cardsAPI/cardsAPITypes'
-import { useAppDispatch, useAppSelector } from '../../app/store'
-import { ReturnLink } from '../../common/components/ReturnLink/ReturnLink'
-import { SuperButton } from '../../common/components/SuperButton/SuperButton'
-import { NEW_CARD } from '../../common/constants/newCardEmptyProp'
-import { PATH } from '../../common/routes/routes'
-import { cardsData } from '../../common/selectors/cards-selector'
 import { getCardsTC, sendCardGradeTC } from '../PackPage/packPage-reducer'
 
 import s from './LearnPage.module.scss'
 import { getCard } from './learnPageRandom'
+
+import { CardType } from 'app/api/cardsAPI/cardsAPITypes'
+import { useAppDispatch, useAppSelector } from 'app/store'
+import { ReturnLink } from 'common/components/ReturnLink/ReturnLink'
+import { SuperButton } from 'common/components/SuperButton/SuperButton'
+import { NEW_CARD } from 'common/constants/newCardEmptyProp'
+import { PATH } from 'common/routes/routes'
+import { cardsData } from 'common/selectors/cards-selector'
 
 const grades = [
   { value: 1, label: "Didn't know" },

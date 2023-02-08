@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useState } from 'react'
+import React, { FC, useState } from 'react'
 
 import Checkbox from '@mui/material/Checkbox'
 import FormControl from '@mui/material/FormControl'
@@ -7,14 +7,13 @@ import Input from '@mui/material/Input'
 import InputLabel from '@mui/material/InputLabel'
 import { useFormik } from 'formik'
 
-import { InputQuestion } from '../../../common/components/InputQuestion/InputQuestion'
-import styles from '../../../common/styles/errors.module.scss'
-import { addNewCardSchema, addNewPackSchema } from '../../../common/utils/validationSchema'
-
 import s from './EditPackModal.module.scss'
 
+import { InputQuestion } from 'common/components/InputQuestion/InputQuestion'
 import { SuperButton } from 'common/components/SuperButton/SuperButton'
 import { SuperModal } from 'common/components/SuperModal/SuperModal'
+import styles from 'common/styles/errors.module.scss'
+import { addNewPackSchema } from 'common/utils/validationSchema'
 
 type EditPackModalPropsType = {
   title: any

@@ -6,16 +6,15 @@ import Rating from '@mui/material/Rating'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 
-import { CardType } from '../../../../app/api/cardsAPI/cardsAPITypes'
-import { useAppSelector } from '../../../../app/store'
-import { ModeType } from '../../../../features/Modals/AddNewCardModal/AddNewCardModal'
-import { DeleteModal } from '../../../../features/Modals/DeleteModal/DeleteModal'
-import { EditCardModal } from '../../../../features/Modals/EditCardModal/EditCardModal'
-import { NEW_CARD } from '../../../constants/newCardEmptyProp'
-import { isLoading } from '../../../selectors/app-selector'
-import { userIdData } from '../../../selectors/profile-selector'
-
+import { CardType } from 'app/api/cardsAPI/cardsAPITypes'
+import { useAppSelector } from 'app/store'
 import noImg from 'assets/images/download.png'
+import { NEW_CARD } from 'common/constants/newCardEmptyProp'
+import { isLoading } from 'common/selectors/app-selector'
+import { userIdData } from 'common/selectors/profile-selector'
+import { ModeType } from 'features/Modals/AddNewCardModal/AddNewCardModal'
+import { DeleteModal } from 'features/Modals/DeleteModal/DeleteModal'
+import { EditCardModal } from 'features/Modals/EditCardModal/EditCardModal'
 
 type CardsRowPropsType = {
   row: CardType

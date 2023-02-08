@@ -7,14 +7,14 @@ import Input from '@mui/material/Input'
 import InputLabel from '@mui/material/InputLabel'
 import { useFormik } from 'formik'
 
-import styles from '../../../../styles/errors.module.scss'
-import { addNewPackSchema } from '../../../../utils/validationSchema'
-import { InputQuestion } from '../../../InputQuestion/InputQuestion'
 import { ModalWin } from '../ModalWin'
 
 import s from './EditPackModal.module.scss'
 
+import { InputQuestion } from 'common/components/InputQuestion/InputQuestion'
 import { SuperButton } from 'common/components/SuperButton/SuperButton'
+import styles from 'common/styles/errors.module.scss'
+import { addNewPackSchema } from 'common/utils/validationSchema'
 
 type EditPackModalPropsType = {
   title: any

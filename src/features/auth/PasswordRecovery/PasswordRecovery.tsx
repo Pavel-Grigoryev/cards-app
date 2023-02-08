@@ -7,22 +7,23 @@ import Grid from '@mui/material/Grid'
 import { useFormik } from 'formik'
 import { NavLink } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from '../../../app/store'
-import { SuperButton } from '../../../common/components/SuperButton/SuperButton'
-import { SuperEmailInput } from '../../../common/components/SuperInputs/SuperInputs'
-import { PATH } from '../../../common/routes/routes'
-import {
-  ContainerSX,
-  FormLabelSX,
-  PassRecoveryFormControlSX,
-  PassRecoveryFormGroupSX,
-} from '../../../common/styles/sx/sx_styles'
-import { passwordRecoverySchema } from '../../../common/utils/validationSchema'
 import { passwordRecoveryTC } from '../auth-reducer'
 import styles from '../Auth.module.scss'
 
 import { CheckEmail } from './CheckEmail'
 import stylePR from './PasswordRecovery.module.scss'
+
+import { useAppDispatch, useAppSelector } from 'app/store'
+import { SuperButton } from 'common/components/SuperButton/SuperButton'
+import { SuperEmailInput } from 'common/components/SuperInputs/SuperInputs'
+import { PATH } from 'common/routes/routes'
+import {
+  ContainerSX,
+  FormLabelSX,
+  PassRecoveryFormControlSX,
+  PassRecoveryFormGroupSX,
+} from 'common/styles/sx/sx_styles'
+import { passwordRecoverySchema } from 'common/utils/validationSchema'
 
 export const PasswordRecovery = () => {
   const dispatch = useAppDispatch()

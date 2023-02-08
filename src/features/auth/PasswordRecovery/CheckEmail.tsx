@@ -2,14 +2,15 @@ import React from 'react'
 
 import Grid from '@mui/material/Grid'
 
-import { useAppDispatch, useAppSelector } from '../../../app/store'
-import sendMessagePic from '../../../assets/images/sendMessage.png'
-import { SuperButton } from '../../../common/components/SuperButton/SuperButton'
-import { PATH } from '../../../common/routes/routes'
-import { ContainerSX } from '../../../common/styles/sx/sx_styles'
 import { checkEmailAC, saveEmailAC } from '../auth-reducer'
 
 import stylePR from './PasswordRecovery.module.scss'
+
+import { useAppDispatch, useAppSelector } from 'app/store'
+import sendMessagePic from 'assets/images/sendMessage.png'
+import { SuperButton } from 'common/components/SuperButton/SuperButton'
+import { PATH } from 'common/routes/routes'
+import { ContainerSX } from 'common/styles/sx/sx_styles'
 
 export const CheckEmail = () => {
   const dispatch = useAppDispatch()

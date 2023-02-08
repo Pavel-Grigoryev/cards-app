@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import ClickAwayListener from '@mui/material/ClickAwayListener'
 import { Navigate, useParams } from 'react-router-dom'
 
-import { CardsTable } from '../../common/components/CardsTable/CardsTable'
 import { AddNewCardModal, ModeType } from '../Modals/AddNewCardModal/AddNewCardModal'
 
 import {
@@ -21,6 +20,7 @@ import s from './PackPage.module.scss'
 import { useAppDispatch, useAppSelector } from 'app/store'
 import noImg from 'assets/images/download.png'
 import pop from 'assets/images/pop.png'
+import { CardsTable } from 'common/components/CardsTable/CardsTable'
 import { Dropdown } from 'common/components/Dropdown/Dropdown'
 import { NotFound } from 'common/components/NotFound/NotFound'
 import { ReturnLink } from 'common/components/ReturnLink/ReturnLink'

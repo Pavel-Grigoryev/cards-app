@@ -1,17 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 
-import { authAPI } from '../../app/api/authAPI/authAPI'
+import { clearProfileDataAC, setProfileAC } from '../Profile/profile-reducer'
+
+import { authAPI } from 'app/api/authAPI/authAPI'
 import {
   AuthType,
   DataRecovType,
   ForgotType,
   SetNewPasswordType,
-} from '../../app/api/authAPI/authAPITypes'
-import { setAppStatusAC } from '../../app/app-reducer'
-import { AppThunk } from '../../app/store'
-import { handleServerNetworkError } from '../../common/utils/error-utils'
-import { clearProfileDataAC, setProfileAC } from '../Profile/profile-reducer'
+} from 'app/api/authAPI/authAPITypes'
+import { setAppStatusAC } from 'app/app-reducer'
+import { AppThunk } from 'app/store'
+import { handleServerNetworkError } from 'common/utils/error-utils'
 
 const initialState = {
   isLoggedIn: false,

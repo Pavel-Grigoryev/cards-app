@@ -2,10 +2,9 @@ import React, { FC, useState } from 'react'
 
 import Button from '@mui/material/Button'
 
-import { SuperModal } from '../../../common/components/SuperModal/SuperModal'
-
 import s from './DeleteModal.module.scss'
 
+import { SuperModal } from 'common/components/SuperModal/SuperModal'
 import { NEW_CARD } from 'common/constants/newCardEmptyProp'
 
 export const DeleteModal: FC<DeleteCardModalPropsType> = ({

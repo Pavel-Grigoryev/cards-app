@@ -1,32 +1,30 @@
 import React, { useEffect } from 'react'
 
 import './App.css'
-import { Navigate, Route, Routes, Outlet, useNavigate } from 'react-router-dom'
-
-import { ErrorSnackbar } from '../common/components/ErrorSnackbar/ErrorSnackbar'
-import { Preloader } from '../common/components/Preloader/Preloader'
-import { SuperModal } from '../common/components/SuperModal/SuperModal'
-import { useActions } from '../common/hooks/useActions'
-import { PATH } from '../common/routes/routes'
-import { isInitializedSelector } from '../common/selectors/app-selector'
-import { isLoggedInSelector } from '../common/selectors/auth-selector'
-import { TestPage } from '../common/testPage/TestPage'
-import { CreateNewPassword } from '../features/auth/CreateNewPassword/CreateNewPassword'
-import { Login } from '../features/auth/Login/Login'
-import { PasswordRecovery } from '../features/auth/PasswordRecovery/PasswordRecovery'
-import { SignUp } from '../features/auth/SignUp/SignUp'
-import { Error404 } from '../features/Error404/Error404'
-import { Layout } from '../features/Layout/Layout'
-import { LearnPage } from '../features/Learn/LearnPage'
-import { PackPage } from '../features/PackPage/PackPage'
-import { PacksList } from '../features/PacksList/PacksList'
-import { Profile } from '../features/Profile/Profile'
+import { Navigate, Outlet, Route, Routes, useNavigate } from 'react-router-dom'
 
 import { appThunks } from './app-reducer'
-import { useAppDispatch, useAppSelector } from './store'
+import { useAppSelector } from './store'
+
+import { ErrorSnackbar } from 'common/components/ErrorSnackbar/ErrorSnackbar'
+import { Preloader } from 'common/components/Preloader/Preloader'
+import { useActions } from 'common/hooks/useActions'
+import { PATH } from 'common/routes/routes'
+import { isInitializedSelector } from 'common/selectors/app-selector'
+import { isLoggedInSelector } from 'common/selectors/auth-selector'
+import { TestPage } from 'common/testPage/TestPage'
+import { CreateNewPassword } from 'features/auth/CreateNewPassword/CreateNewPassword'
+import { Login } from 'features/auth/Login/Login'
+import { PasswordRecovery } from 'features/auth/PasswordRecovery/PasswordRecovery'
+import { SignUp } from 'features/auth/SignUp/SignUp'
+import { Error404 } from 'features/Error404/Error404'
+import { Layout } from 'features/Layout/Layout'
+import { LearnPage } from 'features/Learn/LearnPage'
+import { PackPage } from 'features/PackPage/PackPage'
+import { PacksList } from 'features/PacksList/PacksList'
+import { Profile } from 'features/Profile/Profile'
 
 const App = () => {
-  const dispatch = useAppDispatch()
   const isLoggedIn = useAppSelector<boolean>(isLoggedInSelector)
   const isInitialized = useAppSelector<boolean>(isInitializedSelector)
   const navigate = useNavigate()
